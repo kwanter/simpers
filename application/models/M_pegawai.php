@@ -131,10 +131,7 @@ class M_pegawai extends MY_Model{
 
         $result = $this->save_where($this->table,$data);
 
-        if($result['status'])
-            return TRUE;
-        else
-            return FALSE;
+        return $result;
     }
 
     public function updateData($post){
@@ -304,6 +301,14 @@ class M_pegawai extends MY_Model{
 
         if($query->num_rows() > 0)
             return $query->row()->nama_karyawan;
+    }
+
+    function simpan_upload($id,$gambar){
+        $where = array('id_karyawan' => $id);
+        $data = array('foto' => $gambar);
+        $this->db->update($this->table,$data,$where);
+
+        return $this->db->affected_rows();
     }
 }
 ?>

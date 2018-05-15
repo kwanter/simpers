@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <div class="x_content">
             <?php echo $this->session->flashdata('notif');?>
-            <form id="form-edit" data-parsley-validate="" action="<?php echo base_url('pegawai/updateData')?>" method="POST" class="form-horizontal form-label-left" novalidate="">
+            <form id="form-edit" data-parsley-validate="" action="<?php echo base_url('pegawai/updateData')?>" method="POST" enctype="multipart/form-data" class="form-horizontal form-label-left" novalidate="">
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nik">NIK / NIPP
                     </label>
@@ -215,7 +215,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="form-group">
                     <label for="foto" class="control-label col-md-3 col-sm-3 col-xs-12">Pas Foto</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
-                        <input id="foto" required="required" class="form-control col-md-7 col-xs-12" name="foto" type="file">
+                        <input id="foto" class="dropify form-control col-md-7 col-xs-12" data-show-errors="true" data-default-file="<?php echo base_url('pictures/').$attr['pegawai']['foto']?>" name="foto" type="file">
                     </div>
                 </div>
                 <div class="ln_solid"></div>
@@ -258,6 +258,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             $('#kecamatan_domisili').attr("required","required");
                             $('#kota_domisili').attr("required","required");
                             $('#provinsi_domisili').attr("required","required");
+                        }
+                    });
+                });
+
+                $(document).ready(function(){
+                    $('.dropify').dropify({
+                        messages: {
+                            default : 'Drag atau drop untuk memilih gambar',
+                            replace : 'Ganti',
+                            remove  : 'Hapus',
+                            error   : 'error'
                         }
                     });
                 });

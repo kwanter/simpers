@@ -90,6 +90,7 @@
       <script src="<?php echo base_url('assets/js/popper.js')?>"></script>
       <!--===============================================================================================-->
       <script src="<?php echo base_url('assets/js/tilt.jquery.min.js')?>"></script>
+      <script type="text/javascript" src="<?php echo base_url('assets/js/dropify.min.js')?>"></script>
       <script >
           $('.js-tilt').tilt({
               scale: 1.1
@@ -135,6 +136,7 @@
       <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/animate.css')?>">
       <!--===============================================================================================-->
       <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/jquery-ui.min.css')?>">
+      <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/dropify.min.css')?>">
   </head>
   <body class="nav-md">
     <div class="container body">

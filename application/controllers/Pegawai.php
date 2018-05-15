@@ -79,8 +79,25 @@ class Pegawai extends MY_Controller
     public function addData()
     {
         $result = $this->pegawai->saveData($_POST);
+        $config['upload_path'] = './pictures/'; //path folder
+        $config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; //type yang dapat diakses bisa anda sesuaikan
+        //$config['encrypt_name'] = TRUE; //nama yang terupload nantinya
+        $config['max_size'] = '5000';
+        $this->upload->initialize($config);
 
-        if ($result)
+        if($this->upload->do_upload('foto'))
+        {
+            $gbr     = $this->upload->data();
+            $gambar  = $gbr['file_name']; //Mengambil file name dari gambar yang diupload
+            $this->pegawai->simpan_upload($result['insert_id'],$gambar);
+
+            $status = TRUE;
+        }else{
+            echo $this->upload->display_errors('<p>', '</p>');
+            $status = FALSE;
+        }
+
+        if ($result['status'] && $status)
             $this->session->set_flashdata('notif', '<div class="alert alert-success" role="alert"> 
                                                                     Data Berhasil Ditambahkan , <a href="javascript:void(0)" title="Kembali Ke Halaman Depan" onclick="master();"> Kembali...</a>
                                                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -101,9 +118,28 @@ class Pegawai extends MY_Controller
     public function updateData()
     {
         $id = $this->input->post('id_karyawan');
+
+        $config['upload_path'] = './pictures/'; //path folder
+        $config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; //type yang dapat diakses bisa anda sesuaikan
+        //$config['encrypt_name'] = TRUE; //nama yang terupload nantinya
+        $config['max_size'] = '5000';
+        $this->upload->initialize($config);
+
+        if($this->upload->do_upload('foto'))
+        {
+            $gbr     = $this->upload->data();
+            $gambar  = $gbr['file_name']; //Mengambil file name dari gambar yang diupload
+            $this->pegawai->simpan_upload($id,$gambar);
+
+            $status = TRUE;
+        }else{
+            echo $this->upload->display_errors('<p>', '</p>');
+            $status = FALSE;
+        }
+
         $result = $this->pegawai->updateData($_POST);
 
-        if ($result)
+        if ($result && $status)
             $this->session->set_flashdata('notif', '<div class="alert alert-success" role="alert"> 
                                                                     Data Berhasil Di Update, <a href="javascript:void(0)" title="Kembali Ke Halaman Depan" onclick="master();"> Kembali...</a>
                                                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -130,5 +166,25 @@ class Pegawai extends MY_Controller
         echo json_encode($data);
     }
 
+    function upload_image($id){
+        $config['upload_path'] = './pictures/'; //path folder
+        $config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; //type yang dapat diakses bisa anda sesuaikan
+        //$config['encrypt_name'] = TRUE; //nama yang terupload nantinya
+        $config['max_size'] = '5000';
+        $foto = $_POST['foto'];
+        $this->upload->initialize($config);
+
+        if($this->upload->do_upload($foto))
+        {
+            $gbr     = $this->upload->data();
+            $gambar  = $gbr['file_name']; //Mengambil file name dari gambar yang diupload
+            $this->pegawai->simpan_upload($id,$gambar);
+
+            return TRUE;
+        }else{
+            echo $this->upload->display_errors('<p>', '</p>');
+            return FALSE;
+        }
+    }
 }
 ?>
