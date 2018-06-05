@@ -31,6 +31,7 @@ class Jabatan extends MY_Controller{
             $row[] = '<center style="font-size: small">'.$this->indonesian_date('d M Y',$jabatan->tgl_berlaku,'');
             $row[] = '<center style="font-size: small">'.$jabatan->nama_jabatan;
             $row[] = '<center style="font-size: small">'.$jabatan->job_title;
+            $row[] = '<center style="font-size: small">'.$jabatan->unit_kerja;
 
             if($jabatan->status_karyawan == 'CK')
                 $jabatan->status_karyawan = 'Calon Karyawan';
@@ -125,7 +126,8 @@ class Jabatan extends MY_Controller{
                     $arr_result[] = array(
                         'label'     => $row->jabatan,
                         'job_title' => $row->job_title,
-                        'id'        => $row->id_nomenklatur
+                        'id'        => $row->id_nomenklatur,
+                        'uker'      => $row->nama_uker
                     );
                 }
                 echo json_encode($arr_result);

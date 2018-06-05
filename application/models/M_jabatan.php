@@ -52,6 +52,7 @@ class M_jabatan extends MY_Model {
         $jabatan = $this->db->escape_str($post['jabatan']);
         $job_title = $this->db->escape_str($post['job_title']);
         $status_karyawan = $this->db->escape_str($post['status_karyawan']);
+        $unit_kerja = $this->db->escape_str($post['unit_kerja']);
         $kj = $this->db->escape_str($post['kj']);
         $periode = $this->db->escape_str($post['periode']);
 
@@ -62,6 +63,7 @@ class M_jabatan extends MY_Model {
             'id_nomenklatur'    => $id_nomen,
             'nama_jabatan'      => $jabatan,
             'job_title'         => $job_title,
+            'unit_kerja'        => $unit_kerja,
             'status_karyawan'   => $status_karyawan,
             'kelas_jabatan'     => $kj,
             'periode'           => $periode,
@@ -91,6 +93,7 @@ class M_jabatan extends MY_Model {
         $id_nomen = $this->db->escape_str($post['id_nomen']);
         $jabatan = $this->db->escape_str($post['jabatan']);
         $job_title = $this->db->escape_str($post['job_title']);
+        $unit_kerja = $this->db->escape_str($post['unit_kerja']);
         $status_karyawan = $this->db->escape_str($post['status_karyawan']);
         $kj = $this->db->escape_str($post['kj']);
         $periode = $this->db->escape_str($post['periode']);
@@ -106,6 +109,7 @@ class M_jabatan extends MY_Model {
             'id_nomenklatur'    => $id_nomen,
             'nama_jabatan'      => $jabatan,
             'job_title'         => $job_title,
+            'unit_kerja'        => $unit_kerja,
             'status_karyawan'   => $status_karyawan,
             'kelas_jabatan'     => $kj,
             'periode'           => $periode,
@@ -149,6 +153,16 @@ class M_jabatan extends MY_Model {
         $this->db->set('status','non-aktif');
         $this->db->where('id_riwayatjabatan',$id);
         $this->db->update($this->table);
+    }
+
+    public function get_jabatan_cv($id){
+        $this->db->from($this->table);
+        $this->db->where('id_karyawan',$id);
+        $this->db->order_by('tgl_berlaku','desc');
+        $result = $this->db->get();
+
+        if($result->num_rows() > 0)
+            return $result->result();
     }
 }
 ?>

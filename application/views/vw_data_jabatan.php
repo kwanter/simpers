@@ -49,6 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <th><center>Tanggal Berlaku</th>
                                         <th><center>Nama Jabatan</th>
                                         <th><center>Job Title</th>
+                                        <th><center>Unit Kerja</th>
                                         <th><center>Status Karyawan</th>
                                         <th><center>Kelas Jabatan</th>
                                         <th><center>Periode</th>
@@ -65,6 +66,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <th><center>Tanggal Berlaku</th>
                                         <th><center>Nama Jabatan</th>
                                         <th><center>Job Title</th>
+                                        <th><center>Unit Kerja</th>
                                         <th><center>Status Karyawan</th>
                                         <th><center>Kelas Jabatan</th>
                                         <th><center>Periode</th>

@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_keluarga extends MY_Model {
     var $table             = 'm_keluarga';
     var $table_hubkeluarga = 'm_hubungankeluarga';
+    var $table_keluarga    = 'vw_keluarga_cv';
 
     var $column_order     = array('id_keluarga'); //set column field database for datatable orderable
     var $column_search    = array('nama_keluarga'); //set column field database for datatable searchable
@@ -178,6 +179,16 @@ class M_keluarga extends MY_Model {
 
         if($query->num_rows() > 0)
             return $query->row()->id_karyawan;
+    }
+
+    public function get_keluarga_cv($id){
+        $this->db->from($this->table_keluarga);
+        $this->db->where('id_karyawan',$id);
+        $this->db->order_by('level','asc');
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+            return $query->result();
     }
 }
 ?>

@@ -50,6 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <th><center>Tanggal Akhir</th>
                                         <th><center>Durasi Diklat</th>
                                         <th><center>Tema Diklat</th>
+                                        <th><center>Lokasi</th>
                                         <th><center>Penyelenggara</th>
                                         <th><center>No Sertifikat</th>
                                         <th><center>Nilai</th>
@@ -67,6 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <th><center>Tanggal Akhir</th>
                                         <th><center>Durasi Diklat</th>
                                         <th><center>Tema Diklat</th>
+                                        <th><center>Lokasi</th>
                                         <th><center>Penyelenggara</th>
                                         <th><center>No Sertifikat</th>
                                         <th><center>Nilai</th>
@@ -97,6 +99,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     function edit(id) {
         window.location.replace('<?php echo site_url('diklat/edit/')?>'+id);
+    }
+
+    function print(sertifikat) {
+        window.open('<?php echo site_url('sertifikat/')?>'+sertifikat,'_blank');
+        window.focus();
+    }
+
+    function xprint() {
+        alert('Dokumen Belum Di Upload');
     }
 
     function tampil() {
@@ -136,7 +147,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             //Set column definition initialisation properties.
             columnDefs: [
                 {
-                    "targets": [ 0 ,-1,-2,-3,-4,-5,-6,-7,-8,-9,-10], //first column / numbering column
+                    "targets": [ 0 ,-1,-2,-3,-4,-5,-6,-7,-8,-9,-10,-11], //first column / numbering column
                     "orderable" : false
                 },
             ],

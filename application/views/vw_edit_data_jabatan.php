@@ -63,6 +63,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         $('#tampung').val(ui.item.label); // display the selected text
                                         $('#job_title').val(ui.item.job_title); // display the selected text
                                         $('#id_nomen').val(ui.item.id); // save selected id to input
+                                        $('#unit_kerja').val(ui.item.uker); // save selected id to input
                                         return false;
                                     }
                                 });
@@ -81,6 +82,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <label for="job_title" class="control-label col-md-3 col-sm-3 col-xs-12">Job Title</label>
                     <div class="col-md-5 col-sm-3 col-xs-12">
                         <input id="job_title" name="job_title" value="<?php echo $attr['jabatan']->job_title?>" required="required" class="form-control col-md-5 col-xs-8" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="job_title" class="control-label col-md-3 col-sm-3 col-xs-12">Unit Kerja</label>
+                    <div class="col-md-5 col-sm-3 col-xs-12">
+                        <input id="unit_kerja" value="<?php echo $attr['jabatan']->unit_kerja?>" name="unit_kerja" required="required" class="form-control col-md-5 col-xs-8" type="text">
                     </div>
                 </div>
                 <div class="form-group">

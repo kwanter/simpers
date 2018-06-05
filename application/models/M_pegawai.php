@@ -2,12 +2,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_pegawai extends MY_Model{
-    var $table            = 'm_karyawan';
-    var $table_sosial     = 'm_karyawan_kartu';
+    var $table         = 'm_karyawan';
+    var $table_sosial  = 'm_karyawan_kartu';
+    var $table_cv      = 'vw_biodata_cv_karyawan';
+    var $table_mk      = 'vw_masa_kerja_cv';
 
-    var $column_order     = array('id_karyawan', 'nik'); //set column field database for datatable orderable
-    var $column_search    = array('nik','nama_karyawan'); //set column field database for datatable searchable
-    var $order            = array('id_karyawan' => 'asc'); // default order
+    var $column_order  = array('id_karyawan', 'nik'); //set column field database for datatable orderable
+    var $column_search = array('nik','nama_karyawan'); //set column field database for datatable searchable
+    var $order         = array('id_karyawan' => 'asc'); // default order
 
     public function get_datatables()
     {
@@ -303,12 +305,33 @@ class M_pegawai extends MY_Model{
             return $query->row()->nama_karyawan;
     }
 
-    function simpan_upload($id,$gambar){
+    function simpan_upload($id,$gambar,$type){
         $where = array('id_karyawan' => $id);
-        $data = array('foto' => $gambar);
+        $data = array(
+            'foto'      => $gambar,
+            'type_foto' => $type
+        );
         $this->db->update($this->table,$data,$where);
 
         return $this->db->affected_rows();
+    }
+
+    function get_biodata_cv_karyawan($id){
+        $this->db->from($this->table_cv);
+        $this->db->where('id_karyawan',$id);
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+            return $query->row_array();
+    }
+
+    function get_masa_kerja_cv($id){
+        $this->db->from($this->table_mk);
+        $this->db->where('id_karyawan',$id);
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+            return $query->row_array();
     }
 }
 ?>

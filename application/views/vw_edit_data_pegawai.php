@@ -74,7 +74,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <input id="alamat_ktp" value="<?php echo $attr['pegawai']['alamat_ktp']?>" name="alamat_ktp" required="required" class="form-control col-md-7 col-xs-12" type="text">
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback">
-                        <input id="kode_pos_ktp" value="<?php echo $attr['pegawai']['kode_pos_ktp']?>" name="kode_pos_ktp" data-inputmask="'mask': '99999'" placeholder="Kode Pos" required="required" class="form-control col-md-7 col-xs-12" type="text">
+                        <input id="kode_pos_ktp" value="<?php echo $attr['pegawai']['kode_pos_ktp']?>" name="kode_pos_ktp" data-inputmask="'mask': '99999'" placeholder="Kode Pos" class="form-control col-md-7 col-xs-12" type="text">
                     </div>
                 </div>
                 <div class="form-group">
@@ -110,7 +110,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <input id="alamat_domisili" value="<?php echo $attr['pegawai']['alamat_domisili']?>" name="alamat_domisili" required="required" class="form-control col-md-7 col-xs-12" type="text">
                         </div>
                         <div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback">
-                            <input id="kode_pos_domisili" value="<?php echo $attr['pegawai']['kode_pos_domisili']?>" name="kode_pos_domisili" data-inputmask="'mask': '99999'" placeholder="Kode Pos KTP" required="required" class="form-control col-md-7 col-xs-12" type="text">
+                            <input id="kode_pos_domisili" value="<?php echo $attr['pegawai']['kode_pos_domisili']?>" name="kode_pos_domisili" data-inputmask="'mask': '99999'" placeholder="Kode Pos KTP" class="form-control col-md-7 col-xs-12" type="text">
                         </div>
                     </div>
                     <div class="form-group">
@@ -152,7 +152,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <input id="no_telp" value="<?php echo $attr['pegawai']['no_telp']?>" name="no_telp" required="required" data-inputmask="'mask': '9999-9999999'" class="form-control col-md-7 col-xs-12" type="text">
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-12">
-                        <input id="no_hp" value="<?php echo $attr['pegawai']['no_hp']?>" name="no_hp" required="required" data-inputmask="'mask': '9999-9999-9999'" class="form-control col-md-7 col-xs-12" type="text">
+                        <input id="no_hp" value="<?php echo $attr['pegawai']['no_hp']?>" name="no_hp" data-inputmask="'mask': '9999-9999-9999'" class="form-control col-md-7 col-xs-12" type="text">
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-12">
                         <input id="no_hp_2" value="<?php echo $attr['pegawai']['no_hp_2']?>" name="no_hp_2" data-inputmask="'mask': '9999-9999-9999'" class="form-control col-md-7 col-xs-12" type="text">

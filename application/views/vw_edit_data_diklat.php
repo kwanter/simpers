@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <div class="x_content">
             <?php echo $this->session->flashdata('notif');?>
-            <form id="form-input" data-parsley-validate="" action="<?php echo base_url('diklat/updateData')?>" method="POST" class="form-horizontal form-label-left" novalidate="">
+            <form id="form-input" data-parsley-validate="" action="<?php echo base_url('diklat/updateData')?>" method="POST" enctype="multipart/form-data" class="form-horizontal form-label-left" novalidate="">
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nik">NIK / Nama Karyawan<span class="required"></span>
                     <input type="hidden" value="<?php echo $attr['diklat']['id_diklatkaryawan']?>" id="id_diklat" name="id_diklat">
@@ -61,9 +61,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="lokasi" class="control-label col-md-3 col-sm-3 col-xs-12">Lokasi</label>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <input id="lokasi" name="lokasi" value="<?php echo $attr['diklat']['lokasi'] ?>" required="required" class="form-control col-md-7 col-xs-12" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="penyelenggara" class="control-label col-md-3 col-sm-3 col-xs-12">Penyelenggara</label>
                     <div class="col-md-4 col-sm-4 col-xs-12">
-                        <input id="penyelenggaraa" name="penyelenggara" value="<?php echo $attr['diklat']['penyelenggara'] ?>" required="required" class="form-control col-md-7 col-xs-12" type="text">
+                        <input id="penyelenggara" name="penyelenggara" value="<?php echo $attr['diklat']['penyelenggara'] ?>" required="required" class="form-control col-md-7 col-xs-12" type="text">
                     </div>
                 </div>
                 <div class="form-group">
@@ -75,13 +81,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="form-group">
                     <label for="nilai" class="control-label col-md-3 col-sm-3 col-xs-12">Nilai</label>
                     <div class="col-md-1 col-sm-4 col-xs-12">
-                        <input id="nilai" name="nilai" required="required" value="<?php echo $attr['diklat']['nilai'] ?>" class="form-control col-md-7 col-xs-12" type="text">
+                        <input id="nilai" name="nilai" value="<?php echo $attr['diklat']['nilai'] ?>" class="form-control col-md-7 col-xs-12" type="text">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="skala_nilai" class="control-label col-md-3 col-sm-3 col-xs-12">Skala Nilai</label>
                     <div class="col-md-1 col-sm-4 col-xs-12">
-                        <input id="skala_nilai" name="skala_nilai" required="required" value="<?php echo $attr['diklat']['skala_nilai'] ?>" class="form-control col-md-7 col-xs-12" type="text">
+                        <input id="skala_nilai" name="skala_nilai" value="<?php echo $attr['diklat']['skala_nilai'] ?>" class="form-control col-md-7 col-xs-12" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sertifikat" class="control-label col-md-3 col-sm-3 col-xs-12">Sertifikat</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <input id="sertifikat" data-show-errors="true" class="dropify form-control col-md-7 col-xs-12" data-default-file="<?php echo base_url('sertifikat/').$attr['diklat']['sertifikat']?>" name="sertifikat" type="file">
                     </div>
                 </div>
                 <div class="ln_solid"></div>
@@ -102,6 +114,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 function master() {
                     window.location.replace('<?php echo site_url('master/page/diklat')?>')
                 }
+
+                $(document).ready(function(){
+                    $('.dropify').dropify({
+                        messages: {
+                            default : 'Drag atau drop untuk memilih sertifikat',
+                            replace : 'Ganti',
+                            remove  : 'Hapus',
+                            error   : 'error'
+                        }
+                    });
+                });
 
                 $('#tgl_diklat').daterangepicker({
                     "showDropdowns": true,

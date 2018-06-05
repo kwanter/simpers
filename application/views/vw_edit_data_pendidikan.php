@@ -27,14 +27,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="jurusan">Nama Jurusan <span class="required">
                     </label>
                     <div class="col-md-3 col-sm-4 col-xs-8">
-                        <input id="jurusan" value="<?php echo $attr['pendidikan']['nama_jurusan'] ?>" name="jurusan" required="required" class="form-control col-md-5 col-xs-8" type="text">
+                        <input id="jurusan" value="<?php echo $attr['pendidikan']['nama_jurusan'] ?>" name="jurusan" class="form-control col-md-5 col-xs-8" type="text">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="peminatan">Peminatan <span class="required">
                     </label>
                     <div class="col-md-3 col-sm-4 col-xs-8">
-                        <input id="peminatan" value="<?php echo $attr['pendidikan']['peminatan'] ?>" name="peminatan" required="required" class="form-control col-md-5 col-xs-8" type="text">
+                        <input id="peminatan" value="<?php echo $attr['pendidikan']['peminatan'] ?>" name="peminatan" class="form-control col-md-5 col-xs-8" type="text">
                     </div>
                 </div>
                 <div class="form-group">

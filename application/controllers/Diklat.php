@@ -33,14 +33,24 @@ class Diklat extends MY_Controller{
             $interval = $d2->diff($d1);
             $row[] = '<center style="font-size: small">'.$interval->format('%a').' Hari';
             $row[] = '<center style="font-size: small">'.$diklat->tema_diklat;
+            $row[] = '<center style="font-size: small">'.$diklat->lokasi;
             $row[] = '<center style="font-size: small">'.$diklat->penyelenggara;
             $row[] = '<center style="font-size: small">'.$diklat->no_sertifikat;
             $row[] = '<center style="font-size: small">'.$diklat->nilai;
             $row[] = '<center style="font-size: small">'.$diklat->skala_nilai;
 
-            //add html for action
-            $row[] = '<center><a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit('."'".$diklat->id_diklatkaryawan."'".')"><i class="glyphicon glyphicon-pencil"></i></a>
-                              <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="del('."'".$diklat->id_diklatkaryawan."'".')"><i class="glyphicon glyphicon-trash"></i></a>';
+            if($diklat->sertifikat != NULL || $diklat->sertifikat != ''){
+                //add html for action
+                $row[] = '<center><a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit('."'".$diklat->id_diklatkaryawan."'".')"><i class="glyphicon glyphicon-pencil"></i></a>
+                              <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="del('."'".$diklat->id_diklatkaryawan."'".')"><i class="glyphicon glyphicon-trash"></i></a>
+                              <a class="btn btn-sm btn-info" href="javascript:void(0)" title="Cetak Sertifikat" onclick="print('."'".$diklat->sertifikat."'".')"><i class="glyphicon glyphicon-print"></i></a>';
+            }else{
+                //add html for action
+                $row[] = '<center><a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit('."'".$diklat->id_diklatkaryawan."'".')"><i class="glyphicon glyphicon-pencil"></i></a>
+                              <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="del('."'".$diklat->id_diklatkaryawan."'".')"><i class="glyphicon glyphicon-trash"></i></a>
+                              <a class="btn btn-sm btn-info" href="javascript:void(0)" title="Cetak Sertifikat" onclick="xprint()"><i class="glyphicon glyphicon-print"></i></a>';
+
+            }
 
             $data[] = $row;
         }
@@ -91,6 +101,7 @@ class Diklat extends MY_Controller{
     public function addData()
     {
         $result = $this->diklat->saveData($_POST);
+        $this->upload_sertifikat($result['insert_id']);
 
         if ($result)
             $this->session->set_flashdata('notif', '<div class="alert alert-success" role="alert"> 
@@ -113,6 +124,7 @@ class Diklat extends MY_Controller{
     public function updateData()
     {
         $id = $this->input->post('id_diklat');
+        $this->upload_sertifikat($id);
         $result = $this->diklat->updateData($_POST);
 
         if ($result)
@@ -131,6 +143,25 @@ class Diklat extends MY_Controller{
                        </div>');
 
         $this->edit($id);
+    }
+
+    function upload_sertifikat($id){
+        $config['upload_path'] = './sertifikat/'; //path folder
+        $config['allowed_types'] = 'pdf'; //type yang dapat diakses bisa anda sesuaikan
+        $this->upload->initialize($config);
+
+        if($this->upload->do_upload('sertifikat'))
+        {
+            $gbr     = $this->upload->data();
+            $gambar  = $gbr['file_name']; //Mengambil file name dari gambar yang diupload
+            $this->diklat->simpan_upload($id,$gambar);
+
+            return TRUE;
+        }else{
+            $this->diklat->simpan_upload($id,'');
+            echo $this->upload->display_errors('<p>', '</p>');
+            return FALSE;
+        }
     }
 
     public function add_data(){

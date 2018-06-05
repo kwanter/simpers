@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_nomenklatur extends MY_Model {
     var $table          = 'vw_jabatan';
+    var $table_nomen    = 'vw_nomenklatur';
     var $table_jabatan  = 'm_nomenklatur';
     var $table_uker     = 'm_uker';
     var $column_order   = array('id_nomenklatur'); //set column field database for datatable orderable
@@ -108,7 +109,7 @@ class M_nomenklatur extends MY_Model {
     }
 
     public function searchData($data){
-        $this->db->from($this->table_jabatan);
+        $this->db->from($this->table_nomen);
         $this->db->like('jabatan',$data,'both');
         $this->db->order_by('jabatan','ASC');
         $this->db->limit(10);

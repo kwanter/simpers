@@ -154,5 +154,14 @@ class M_pendidikan extends MY_Model {
         if($query->num_rows() > 0)
             return $query->row()->level;
     }
+
+    public function get_pendidikan_cv($id){
+        $this->db->from($this->table);
+        $this->db->where('id_karyawan',$id);
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+            return $query->result();
+    }
 }
 ?>

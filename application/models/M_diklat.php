@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_diklat extends MY_Model{
     var $table            = 'm_diklatkaryawan';
     var $table_jnsdiklat  = 'm_jenisdiklat';
+    var $table_cv         = 'vw_diklatkaryawan';
 
     var $column_order     = array('id_diklatkaryawan'); //set column field database for datatable orderable
     var $column_search    = array('jenis_diklat,tema_diklat,penyelenggara,no_sertfikat'); //set column field database for datatable searchable
@@ -133,6 +134,7 @@ class M_diklat extends MY_Model{
         $tgl_mulai      = substr($tgl_diklat,0,15);
         $tgl_akhir      = substr($tgl_diklat,-10);
         $tema_diklat    = $this->db->escape_str($post['tema_diklat']);
+        $lokasi         = $this->db->escape_str($post['lokasi']);
         $penyelenggara  = $this->db->escape_str($post['penyelenggara']);
         $no_sertifikat  = $this->db->escape_str($post['no_sertifikat']);
         $nilai          = $this->db->escape_str($post['nilai']);
@@ -144,6 +146,7 @@ class M_diklat extends MY_Model{
             'tgl_mulaidiklat'           => $tgl_mulai,
             'tgl_akhirdiklat'           => $tgl_akhir,
             'tema_diklat'               => $tema_diklat,
+            'lokasi'                    => $lokasi,
             'penyelenggara'             => $penyelenggara,
             'no_sertifikat'             => $no_sertifikat,
             'nilai'                     => $nilai,
@@ -165,6 +168,7 @@ class M_diklat extends MY_Model{
         $tgl_mulai      = substr($tgl_diklat,0,15);
         $tgl_akhir      = substr($tgl_diklat,-10);
         $tema_diklat    = $this->db->escape_str($post['tema_diklat']);
+        $lokasi         = $this->db->escape_str($post['lokasi']);
         $penyelenggara  = $this->db->escape_str($post['penyelenggara']);
         $no_sertifikat  = $this->db->escape_str($post['no_sertifikat']);
         $nilai          = $this->db->escape_str($post['nilai']);
@@ -179,6 +183,7 @@ class M_diklat extends MY_Model{
             'tgl_mulaidiklat'           => $tgl_mulai,
             'tgl_akhirdiklat'           => $tgl_akhir,
             'tema_diklat'               => $tema_diklat,
+            'lokasi'                    => $lokasi,
             'penyelenggara'             => $penyelenggara,
             'no_sertifikat'             => $no_sertifikat,
             'nilai'                     => $nilai,
@@ -190,6 +195,16 @@ class M_diklat extends MY_Model{
             return TRUE;
         else
             return FALSE;
+    }
+
+    function simpan_upload($id,$gambar){
+        $where = array('id_diklatkaryawan' => $id);
+        $data = array(
+            'sertifikat' => $gambar,
+        );
+        $this->db->update($this->table,$data,$where);
+
+        return $this->db->affected_rows();
     }
 
     public function deleteData($id){
@@ -252,6 +267,15 @@ class M_diklat extends MY_Model{
 
         if($query->num_rows() > 0)
             return $query->row();
+    }
+
+    public function get_diklat_cv($id){
+        $this->db->from($this->table_cv);
+        $this->db->where('id_karyawan',$id);
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0 )
+            return $query->result();
     }
 }
 ?>
