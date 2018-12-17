@@ -1,25 +1,71 @@
-// Mixins
-// --------------------------
-
-@mixin fa-icon() {
-  display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome; // shortening font declaration
-  font-size: inherit; // can't have font-size inherit on line above, so need to override
-  text-rendering: auto; // optimizelegibility throws things off #1094
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
 }
 
-@mixin fa-icon-rotate($degrees, $rotation) {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=#{$rotation});
-  -webkit-transform: rotate($degrees);
-      -ms-transform: rotate($degrees);
-          transform: rotate($degrees);
+@mixin box-shadow($shadowinfo) {
+    -webkit-box-shadow: $shadowinfo;
+    -moz-box-shadow: $shadowinfo;
+    -ms-box-shadow: $shadowinfo;
+    box-shadow: $shadowinfo;
 }
 
-@mixin fa-icon-flip($horiz, $vert, $rotation) {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=#{$rotation});
-  -webkit-transform: scale($horiz, $vert);
-      -ms-transform: scale($horiz, $vert);
-          transform: scale($horiz, $vert);
+@mixin transform($transform) {
+    -moz-transform: $transform;
+    -ms-transform: $transform;
+    -o-transform: $transform;
+    -webkit-transform: $transform;
+    transform: $transform;
+}
+
+@mixin transition($transition) {
+    -moz-transition: $transition;
+    -o-transition: $transition;
+    -webkit-transition: $transition;
+    transition: $transition;
+}
+
+@mixin three-dots-overflow() {
+    white-space: nowrap;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+@mixin navbar-link-color($textcolor, $navbarcolor, $opacity) {
+    .navbar-brand,
+    .navbar-brand:hover,
+    .navbar-brand:active,
+    .navbar-brand:focus {
+        color: $textcolor;
+    }
+
+    .nav > li > a:hover,
+    .nav > li > a:focus,
+    .nav .open > a,
+    .nav .open > a:hover,
+    .nav .open > a:focus {
+        background-color: transparentize($navbarcolor, $opacity);
+    }
+
+    .nav > li > a {
+        color: $textcolor;
+    }
+
+    .bars {
+        float: left;
+        padding: 10px 20px;
+        font-size: 22px;
+        color: $textcolor;
+        margin-right: 10px;
+        margin-left: -10px;
+        margin-top: 4px;
+    }
+
+    .bars:hover {
+        background-color: rgba(0,0,0,0.08);
+    }
 }

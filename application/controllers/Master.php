@@ -11,10 +11,31 @@ class Master extends MY_Controller{
 
     public function page($page){
         $data['karyawan'] = $this->pegawai->getKaryawanData();
-        if($page == 'pegawai')
-            $this->navmenu('Data Karyawan','vw_data_'.$page,'','',$data);
-        else
-            $this->navmenu('Data '.ucwords($page).' Karyawan','vw_data_'.$page,'','',$data);
+        if($page == 'pegawai') {
+            $this->navmenu('Data Karyawan', 'vw_data_' . $page, '', '', $data);
+        }
+        elseif($page=='nomenklatur') {
+            $uker[] = Array();
+            $result = $this->nomenklatur->getUker();
+            $no = 0;
+            foreach ($result as $row){
+                $uker[$no] = array(
+                    'uker' => $row->nama_uker,
+                );
+                $no++;
+            }
+            $data['jumlah'] = $this->nomenklatur->countUker();
+            $data['uker'] = $uker;
+            $this->navmenu('Data ' . ucwords($page) . ' Karyawan', 'vw_data_' . $page, '', '', $data);
+        }
+        else {
+            $this->navmenu('Data ' . ucwords($page) . ' Karyawan', 'vw_data_' . $page, '', '', $data);
+        }
+    }
+
+    public function data($page){
+        $data['karyawan'] = $this->pegawai->getKaryawanData();
+        $this->navmenu('Data '.ucwords($page).' Karyawan','vw_data_'.$page,'','',$data);
     }
 
     public function login(){

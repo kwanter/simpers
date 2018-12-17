@@ -1,5 +1,9 @@
 <?php
+//error_reporting(0);
+//ini_set('display_errors', 0);
+date_default_timezone_set("Asia/Makassar");
 defined('BASEPATH') OR exit('No direct script access allowed');
+
 class MY_Controller extends CI_Controller
 {
     var $md5_key = '#PTKKT#';
@@ -18,86 +22,6 @@ class MY_Controller extends CI_Controller
         $this->load->model('M_jabatan','jabatan');
         $this->load->model('M_diklat','diklat');
 
-    }
-
-    public function get_ip_address() {
-        // check for shared internet/ISP IP
-        if (!empty($_SERVER['HTTP_CLIENT_IP']) ) {
-            return $_SERVER['HTTP_CLIENT_IP'];
-        }
-
-        // check for IPs passing through proxies
-        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            // check if multiple ips exist in var
-            if (strpos($_SERVER['HTTP_X_FORWARDED_FOR'], ',') !== false) {
-                $iplist = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
-                foreach ($iplist as $ip) {
-                    //if (validate_ip($ip))
-                    return $ip;
-                }
-            } else {
-                //if (validate_ip($_SERVER['HTTP_X_FORWARDED_FOR']))
-                return $_SERVER['HTTP_X_FORWARDED_FOR'];
-            }
-        }
-        if (!empty($_SERVER['HTTP_X_FORWARDED']) )
-            return $_SERVER['HTTP_X_FORWARDED'];
-        if (!empty($_SERVER['HTTP_X_CLUSTER_CLIENT_IP']) )
-            return $_SERVER['HTTP_X_CLUSTER_CLIENT_IP'];
-        if (!empty($_SERVER['HTTP_FORWARDED_FOR']) )
-            return $_SERVER['HTTP_FORWARDED_FOR'];
-        if (!empty($_SERVER['HTTP_FORWARDED']) )
-            return $_SERVER['HTTP_FORWARDED'];
-
-        // return unreliable ip since all else failed
-        return $_SERVER['REMOTE_ADDR'];
-    }
-
-    public function validate_ip($ip) {
-        if (strtolower($ip) === 'unknown')
-            return false;
-
-        // generate ipv4 network address
-        $ip = ip2long($ip);
-
-        // if the ip is set and not equivalent to 255.255.255.255
-        if ($ip !== false && $ip !== -1) {
-            // make sure to get unsigned long representation of ip
-            // due to discrepancies between 32 and 64 bit OSes and
-            // signed numbers (ints default to signed in PHP)
-            $ip = sprintf('%u', $ip);
-            // do private network range checking
-            if ($ip >= 0 && $ip <= 50331647) return false;
-            if ($ip >= 167772160 && $ip <= 184549375) return false;
-            if ($ip >= 2130706432 && $ip <= 2147483647) return false;
-            if ($ip >= 2851995648 && $ip <= 2852061183) return false;
-            if ($ip >= 2886729728 && $ip <= 2887778303) return false;
-            if ($ip >= 3221225984 && $ip <= 3221226239) return false;
-            if ($ip >= 3232235520 && $ip <= 3232301055) return false;
-            if ($ip >= 4294967040) return false;
-        }
-        return true;
-    }
-
-    function getUserIP() {
-        $ipaddress = '';
-        if (isset($_SERVER['HTTP_CLIENT_IP']))
-            $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
-        else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
-            $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        else if(isset($_SERVER['HTTP_X_FORWARDED']))
-            $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
-        else if(isset($_SERVER['HTTP_X_CLUSTER_CLIENT_IP']))
-            $ipaddress = $_SERVER['HTTP_X_CLUSTER_CLIENT_IP'];
-        else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
-            $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
-        else if(isset($_SERVER['HTTP_FORWARDED']))
-            $ipaddress = $_SERVER['HTTP_FORWARDED'];
-        else if(isset($_SERVER['REMOTE_ADDR']))
-            $ipaddress = $_SERVER['REMOTE_ADDR'];
-        else
-            $ipaddress = 'UNKNOWN';
-        return $ipaddress;
     }
 
     function indonesian_date ($date_format = 'D, j-M-Y',$timestamp = '', $suffix = '') {
@@ -166,6 +90,86 @@ class MY_Controller extends CI_Controller
     public function cekUser($uid,$sesi,$role,$level){
         $result = $this->admin->cekUID($uid,$sesi,$role,$level);
         return $result;
+    }
+
+    public function Romawi($angka)
+    {
+        $hsl = "";
+        if ($angka < 1 || $angka > 5000) {
+            // Statement di atas buat nentuin angka ngga boleh dibawah 1 atau di atas 5000
+            $hsl = "Batas Angka 1 s/d 5000";
+        } else {
+            while ($angka >= 1000) {
+                // While itu termasuk kedalam statement perulangan
+                // Jadi misal variable angka lebih dari sama dengan 1000
+                // Kondisi ini akan di jalankan
+                $hsl .= "M";
+                // jadi pas di jalanin , kondisi ini akan menambahkan M ke dalam
+                // Varible hsl
+                $angka -= 1000;
+                // Lalu setelah itu varible angka di kurangi 1000 ,
+                // Kenapa di kurangi
+                // Karena statment ini mengambil 1000 untuk di konversi menjadi M
+            }
+        }
+        if ($angka >= 500) {
+            // statement di atas akan bernilai true / benar
+            // Jika var angka lebih dari sama dengan 500
+            if ($angka > 500) {
+                if ($angka >= 900) {
+                    $hsl .= "CM";
+                    $angka -= 900;
+                } else {
+                    $hsl .= "D";
+                    $angka-=500;
+                }
+            }
+        }
+        while ($angka>=100) {
+            if ($angka>=400) {
+                $hsl .= "CD";
+                $angka -= 400;
+            } else {
+                $angka -= 100;
+            }
+        }
+        if ($angka>=50) {
+            if ($angka>=90) {
+                $hsl .= "XC";
+                $angka -= 90;
+            } else {
+                $hsl .= "L";
+                $angka-=50;
+            }
+        }
+        while ($angka >= 10) {
+            if ($angka >= 40) {
+                $hsl .= "XL";
+                $angka -= 40;
+            } else {
+                $hsl .= "X";
+                $angka -= 10;
+            }
+        }
+        if ($angka >= 5) {
+            if ($angka == 9) {
+                $hsl .= "IX";
+                $angka-=9;
+            } else {
+                $hsl .= "V";
+                $angka -= 5;
+            }
+        }
+        while ($angka >= 1) {
+            if ($angka == 4) {
+                $hsl .= "IV";
+                $angka -= 4;
+            } else {
+                $hsl .= "I";
+                $angka -= 1;
+            }
+        }
+        return ($hsl);
     }
 }
 ?>

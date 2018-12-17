@@ -1,117 +1,153 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<div class="right_col" role="main">
-    <div class="x_panel">
-        <div class="x_title">
-            <h2><center>Data Nomenklatur</h2>
-            <ul class="nav navbar-right panel_toolbox">
-                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-            </ul>
-            <div class="clearfix"></div>
+<section class="content">
+    <div class="container-fluid">
+        <!--
+        <div class="block-header">
+            <h2>DATA KARYAWAN</h2>
         </div>
-        <div class="x_content">
-            <div class="container">
-                <button class="btn btn-info" onclick="reload_table();"><i class="glyphicon glyphicon-repeat"></i> Reload Tabel </button>
-                <button class="btn btn-success" onclick="add()"><i class="glyphicon glyphicon-plus"></i> Tambah Data</button>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="container">
+        --->
+        <!-- Horizontal Layout -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            Data Nomenklatur
+                        </h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a onclick="reload_table();"><i class="material-icons">refresh</i> <span>Reload Tabel</span> </a></li>
+                                    <li><a onclick="add()"><i class="material-icons">add</i> <span>Tambah Data</span></a></li>
+                                    <!---<li><a onclick="edit()"><i class="material-icons">mode_edit</i><span>Ubah Data</span> </a></li>--->
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <button class="btn-primary" onclick="excel();">Excel</button>
+                        <button class="btn-info" onclick="pdf();">PDF</button>
                         <div class="table-responsive">
-                            <table id="tabel" class="table table-striped jambo_table table-bordered" cellspacing="0" width="100%" >
-                                <thead>
-                                <tr>
-                                    <th><center>Jabatan</th>
-                                    <th><center>Job Title</th>
-                                    <th><center>Unit Kerja</th>
-                                    <th><center>Grup</th>
-                                    <th><center>Jumlah</th>
-                                    <th><center>Terisi</th>
-                                    <th><center>Selisih</th>
-                                    <th><center>Aksi</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th><center>Jabatan</th>
-                                    <th><center>Job Title</th>
-                                    <th><center>Unit Kerja</th>
-                                    <th><center>Grup</th>
-                                    <th><center>Jumlah</th>
-                                    <th><center>Terisi</th>
-                                    <th><center>Selisih</th>
-                                    <th><center>Aksi</th>
-                                </tr>
-                                </tfoot>
-                            </table>
+                            <?php
+                                for ($i=0;$i<$attr['jumlah'];$i++) {
+                                    ?>
+                                    <table id="tabel<?php echo $i?>"
+                                           class="table table-bordered table-striped table-hover js-basic-example dataTable"
+                                           cellspacing="0" width="100%" role="grid">
+                                        <caption id="caption<?php echo $i?>"></caption>
+                                        <thead>
+                                        <tr>
+                                            <th>
+                                                <center>Jabatan
+                                            </th>
+                                            <th>
+                                                <center>Kelas Jabatan
+                                            </th>
+                                            <th>
+                                                <center>Jumlah
+                                            </th>
+                                            <th>
+                                                <center>Terisi
+                                            </th>
+                                            <th>
+                                                <center>Selisih
+                                            </th>
+                                            <th>
+                                                <center>Aksi
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th>
+                                                <center>Jabatan
+                                            </th>
+                                            <th>
+                                                <center>Kelas Jabatan
+                                            </th>
+                                            <th>
+                                                <center>Jumlah
+                                            </th>
+                                            <th>
+                                                <center>Terisi
+                                            </th>
+                                            <th>
+                                                <center>Selisih
+                                            </th>
+                                            <th>
+                                                <center>Aksi
+                                            </th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                    <?php
+                                }
+                            ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- #END# Horizontal Layout -->
     </div>
-</div>
-
+</section>
 <script type="text/javascript">
-    var table;
+    var table = [];
+    var jumlah = <?php echo $attr['jumlah']?>;
+    var uker = <?php echo json_encode($attr['uker']) ?>;
 
     $(document).ready(function() {
-        table = $('#tabel').DataTable({
-            processing: true, //Feature control the processing indicator.
-            serverSide: true, //Feature control DataTables' server-side processing mode.
-            order: [], //Initial no order.
-            autowidth : true,
-            dom: "Blfrtip",
-            buttons: [
-                {
-                    extend: "excel",
-                    className: "btn-sm",
-                    exportOptions: {
-                        columns: [0,1,2,3,4,5,6]
+        for (var i=0;i<jumlah;i++){
+            table[i] = $('#tabel'+i).DataTable({
+                processing: true, //Feature control the processing indicator.
+                serverSide: true, //Feature control DataTables' server-side processing mode.
+                order: [], //Initial no order.
+                autowidth : true,
+
+                // Load data for the table's content from an Ajax source
+                ajax: {
+                    "url": "<?php echo base_url('nomenklatur/ajax_list/')?>" ,
+                    "type": "POST",
+                    "data":{uker : uker[i]['uker'] }
+                },
+                //Set column definition initialisation properties.
+                columnDefs: [
+                    {
+                        "targets": [ -1,-2,-3,-4,-5,-6], //first column / numbering column
+                        "orderable" : false
                     }
-                },
-                {
-                    extend: "pdfHtml5",
-                    orientation: 'landscape',
-                    pageSize: 'A4',
-                    className: "btn-sm",
-                    title : "Nomenklatur",
-                    exportOptions: {
-                        columns: [0,1,2,3,4,5,6]
-                    }
-                },
-            ],
+                ]
+            });
+        }
 
-            // Load data for the table's content from an Ajax source
-            ajax: {
-                "url": "<?php echo base_url('nomenklatur/ajax_list')?>",
-                "type": "POST",
-            },
-
-            //Set column definition initialisation properties.
-            columnDefs: [
-                {
-                    "targets": [ -1,-2,-3,-4,-5,-6,-7,-8], //first column / numbering column
-                    "orderable" : false
-                },
-                {
-                    "targets": [-2,-3,-4,-5], //first column / numbering column
-                    "width" : "5%"
-                },
-                {
-                    "targets": [-1], //first column / numbering column
-                    "width" : "9%"
-                }
-            ],
-
-        });
+        caption(uker);
     });
 
+    function caption(caption) {
+        for(var i=0;i<jumlah;i++){
+            $('#caption'+i).append('<p style="font-style: oblique;font-weight: bolder">'+caption[i]['uker']+'</p>');
+        }
+    }
+
+    function excel() {
+        window.open('<?php echo site_url('nomenklatur/excel')?>');
+    }
+
+    function pdf() {
+        window.open('<?php echo site_url('nomenklatur/pdf')?>');
+    }
+
     function reload_table() {
-        table.ajax.reload(null,false);
+        for (var i=0;i<jumlah;i++){
+            table[i].ajax.reload(null,false);
+        }
     }
 
     function add() {
@@ -123,33 +159,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
 
     function del(id) {
-        if(confirm('Anda Yakin Ingin Menghapus Data Ini ?')) {
-            // ajax delete data to database
-            $.ajax({
-                url : "<?php echo site_url('nomenklatur/delete')?>/"+id,
-                type: "POST",
-                dataType: "JSON",
-                success: function(data)
-                {
-                    new PNotify({
-                        title: 'Success',
-                        text: 'Data Berhasil Di Hapus',
-                        type: 'success',
-                        styling: 'bootstrap3'
-                    });
-                    reload_table();
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    new PNotify({
-                        title: 'Oh No!',
-                        text: 'Data Gagal Di Hapus',
-                        type: 'error',
-                        styling: 'bootstrap3'
-                    });
-                }
-            });
-
-        }
+        swal({
+            title: "Apakah Anda Yakin ?",
+            text: "Anda Tidak Akan Bisa Merecover Kembali Data Yang Sudah Anda Hapus !",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url : "<?php echo site_url('nomenklatur/delete')?>/"+id,
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function(data)
+                    {
+                        swal("Terhapus !", "Data Anda Sudah Dihapus", "success");
+                        reload_table();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        swal("Dibatalkan", "Data Anda Tidak Jadi Dihapus", "error");
+                    }
+                });
+            } else {
+                swal("Dibatalkan", "Data Anda Tidak Jadi Dihapus", "error");
+            }
+        });
     }
 </script>

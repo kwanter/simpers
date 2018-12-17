@@ -38,8 +38,7 @@ class Pegawai extends MY_Controller
         foreach ($list as $pegawai) {
             $no++;
             $row = array();
-            $row[] = '<center style="font-size: small">'.$pegawai->id_karyawan;
-            $row[] = '<center><a style="font-size: small" class="btn btn-outline-info" href="javascript:void(0)" title="NIPP : '.$pegawai->nipp.'" >'.$pegawai->nik.'</a>';
+            $row[] = '<center><a style="font-size: small" href="javascript:void(0)" title="NIPP : '.$pegawai->nipp.'" >'.$pegawai->nik.'</a>';
             $row[] = '<center style="font-size: small">'.$pegawai->nama_karyawan;
             $row[] = '<center style="font-size: small">'.$pegawai->tmpt_lahir;
             $row[] = '<center style="font-size: small">'.$this->indonesian_date('d M Y',$pegawai->tgl_lahir,'');
@@ -51,14 +50,12 @@ class Pegawai extends MY_Controller
 
             $row[] = '<center style="font-size: small">'.$pegawai->jenis_kelamin;
             $row[] = '<center style="font-size: small">'.$this->main->getAgama($pegawai->agama);
-            $row[] = '<center style="font-size: small">'.$pegawai->no_telp;
-            $row[] = '<center style="font-size: small">'.$pegawai->no_hp;
-            $row[] = '<center style="font-size: small">'.$pegawai->email;
             $row[] = '<center style="font-size: small">'.$this->main->getStatusNikah($pegawai->status_nikah);
+
             //add html for action
-            $row[] = '<center><a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit('."'".$pegawai->id_karyawan."'".')"><i class="glyphicon glyphicon-pencil"></i></a>
-                              <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="del('."'".$pegawai->id_karyawan."'".')"><i class="glyphicon glyphicon-trash"></i></a>
-                              <a class="btn btn-sm btn-info" href="javascript:void(0)" title="Cetak CV" onclick="cetak_cv('."'".$pegawai->id_karyawan."'".')"><i class="glyphicon glyphicon-list-alt"></i></a>
+            $row[] = '<center><a href="javascript:void(0)" title="Edit" onclick="edit('."'".$pegawai->id_karyawan."'".')"><i class="material-icons">launch</i></a>
+                              <a class="js-sweetalert waves-effect" data-type="confirm" href="javascript:void(0)" title="Hapus" onclick="del('."'".$pegawai->id_karyawan."'".')"><i class="material-icons">delete_forever</i></a>
+                              <a href="javascript:void(0)" title="Cetak CV" onclick="cetak_cv('."'".$pegawai->id_karyawan."'".')"><i class="material-icons">print</i></a>
                               ';
 
             $data[] = $row;
@@ -80,16 +77,16 @@ class Pegawai extends MY_Controller
         $this->upload_image($result['insert_id']);
 
         if ($result['status'])
-            $this->session->set_flashdata('notif', '<div class="alert alert-success" role="alert"> 
+            $this->session->set_flashdata('notif', '<div class="alert bg-green alert-dismissible" role="alert"> 
                                                                     Data Berhasil Ditambahkan , <a href="javascript:void(0)" title="Kembali Ke Halaman Depan" onclick="master();"> Kembali...</a>
-                                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                    <button type="button" class="close alert-link" data-dismiss="alert" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
                                                                 </div>');
         else
             $this->session->set_flashdata('notif',
-                '<div class="alert alert-danger" role="alert"> Data Gagal Ditambahkan..Silahkan Periksa Kembali Inputan Anda 
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                '<div class="alert bg-red alert-dismissible" role="alert"> Data Gagal Ditambahkan..Silahkan Periksa Kembali Inputan Anda 
+                            <button type="button" class="close alert-link" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                        </div>');
@@ -100,20 +97,22 @@ class Pegawai extends MY_Controller
     public function updateData()
     {
         $id = $this->input->post('id_karyawan');
+
         $this->upload_image($id);
+
         $result = $this->pegawai->updateData($_POST);
 
         if ($result)
-            $this->session->set_flashdata('notif', '<div class="alert alert-success" role="alert"> 
+            $this->session->set_flashdata('notif', '<div class="alert bg-green alert-dismissible" role="alert"> 
                                                                     Data Berhasil Di Update, <a href="javascript:void(0)" title="Kembali Ke Halaman Depan" onclick="master();"> Kembali...</a>
-                                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                    <button type="button" class="close alert-link" data-dismiss="alert" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
                                                                 </div>');
         else
             $this->session->set_flashdata('notif',
-                '<div class="alert alert-danger" role="alert"> Data Gagal Di Update..Silahkan Periksa Kembali Inputan Anda 
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                '<div class="alert bg-red alert-dismissible" role="alert"> Data Gagal Di Update..Silahkan Periksa Kembali Inputan Anda 
+                            <button type="button" class="close alert-link" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                        </div>');
@@ -131,9 +130,36 @@ class Pegawai extends MY_Controller
     }
 
     function upload_image($id){
-        $config['upload_path'] = './pictures/'; //path folder
+        $check = $this->pegawai->cekFoto($id);
+        $tahun = (new DateTime())->format('Y');
+        $bulan = (new DateTime())->format('M');
+        $type  = 'foto';
+        $path  = $_FILES['foto']['name'];
+        $ext   = pathinfo($path, PATHINFO_EXTENSION);
+
+        if($check != NULL){
+            if($check->foto != NULL){
+                //$temp = rtrim($check->foto,'_foto_'.$old_bulan.'_'.$old_tahun.'_'.$id);
+                $temp = substr($check->foto,0,3);
+                $num  = (int)$temp;
+                $num += 1;
+            }
+        }else{
+            $num = 1;
+        }
+
+        $new_name   = $num."_foto_".$bulan."_".$tahun."_".$id;
+        $folderName = $id;
+        $config['file_name']   = $new_name;
+        $config['upload_path'] = './edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan;
         $config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; //type yang dapat diakses bisa anda sesuaikan
         $config['quality'] = '75';
+
+        if(!is_dir('./edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan))
+        {
+            mkdir('./edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan, 0777,true);
+        }
+
         $this->upload->initialize($config);
 
         if($this->upload->do_upload('foto'))
@@ -151,11 +177,14 @@ class Pegawai extends MY_Controller
             $this->image_lib->resize();
             $gambar  = $gbr['file_name']; //Mengambil file name dari gambar yang diupload
             $type    = $gbr['image_type'];
+            $now = (new DateTime())->format('Y-m-d');
             $this->pegawai->simpan_upload($id,$gambar,$type);
+            $this->pegawai->upload_time($id,$now);
 
             return TRUE;
-        }else{
-            $this->pegawai->simpan_upload($id,'','');
+        }
+        else{
+            //$this->pegawai->simpan_upload($id,'','');
             echo $this->upload->display_errors('<p>', '</p>');
             return FALSE;
         }
@@ -173,10 +202,12 @@ class Pegawai extends MY_Controller
         $this->load->view('vw_cv_karyawan',$data);
     }
 
-    public function contoh()
-    {
-        $data['tanggal'] = $this->indonesian_date('d M Y','','');
-        $this->load->view('vw_cv_karyawan',$data);
+    public function pdf(){
+
+    }
+
+    public function excel(){
+
     }
 }
 ?>

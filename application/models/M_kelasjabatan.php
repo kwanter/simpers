@@ -113,7 +113,6 @@ class M_kelasjabatan extends MY_Model{
     }
 
     public function getNamaKJ(){
-        $this->db->select('nama_kelasjabatan');
         $this->db->from($this->table_kj);
         $this->db->group_by('nama_kelasjabatan');
         $this->db->order_by('id_kelasjabatan');

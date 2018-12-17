@@ -10,55 +10,59 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         width: 20% !important;
     }
 </style>
-<div class="right_col" role="main">
-    <div class="x_panel">
-        <div class="x_title">
-            <h2><center>Data Karyawan</h2>
-            <ul class="nav navbar-right panel_toolbox">
-                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-            </ul>
-            <div class="clearfix"></div>
+
+<section class="content">
+    <div class="container-fluid">
+        <!--
+        <div class="block-header">
+            <h2>DATA KARYAWAN</h2>
         </div>
-        <div class="x_content">
-            <div class="container">
-                <button class="btn btn-info" onclick="reload_table();"><i class="glyphicon glyphicon-repeat"></i> Reload Tabel </button>
-                <button class="btn btn-success" onclick="add()"><i class="glyphicon glyphicon-plus"></i> Tambah Data</button>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="container">
+        --->
+        <!-- Horizontal Layout -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            DATA KARYAWAN
+                        </h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a onclick="reload_table();"><i class="material-icons">refresh</i> <span>Reload Tabel</span> </a></li>
+                                    <li><a onclick="add()"><i class="material-icons">add</i> <span>Tambah Data</span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
                         <div class="table-responsive">
-                            <table id="tabel" class="table table-striped jambo_table table-bordered" cellspacing="0" width="100%" >
+                            <table id="tabel" class="table table-bordered table-striped table-hover js-basic-example dataTable" cellspacing="0" width="100%" role="grid" >
                                 <thead>
                                 <tr>
-                                    <th width="2%"><center>ID</th>
-                                    <th width="3%"><center>NIK</th>
-                                    <th width="12%"><center>Nama Karyawan</th>
-                                    <th width="15%"><center>Tmpt Lahir</th>
-                                    <th width="13%"><center>Tgl Lahir</th>
-                                    <th width="5%"><center>J.K.</th>
-                                    <th width="5%"><center>Agama</th>
-                                    <th width="10%"><center>No Telp</th>
-                                    <th width="10%"><center>No HP</th>
-                                    <th width="10%"><center>Email</th>
-                                    <th width="5%"><center>Status Nikah</th>
-                                    <th width="10%"><center>Aksi</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th><center>ID</th>
                                     <th><center>NIK</th>
                                     <th><center>Nama Karyawan</th>
                                     <th><center>Tmpt Lahir</th>
                                     <th><center>Tgl Lahir</th>
                                     <th><center>J.K.</th>
                                     <th><center>Agama</th>
-                                    <th><center>No Telp</th>
-                                    <th><center>No HP</th>
-                                    <th><center>Email</th>
+                                    <th><center>Status Nikah</th>
+                                    <th><center>Aksi</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th><center>NIK</th>
+                                    <th><center>Nama Karyawan</th>
+                                    <th><center>Tmpt Lahir</th>
+                                    <th><center>Tgl Lahir</th>
+                                    <th><center>J.K.</th>
+                                    <th><center>Agama</th>
                                     <th><center>Status Nikah</th>
                                     <th><center>Aksi</th>
                                 </tr>
@@ -69,65 +73,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
             </div>
         </div>
+        <!-- #END# Horizontal Layout -->
     </div>
-</div>
-
-<div class="modal fade" id="modal_alamat" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h3 class="modal-title">Alamat Lengkap</h3>
-            </div>
-            <div class="modal-body form">
-                <form action="#" id="form_alamat" class="form-horizontal">
-                    <div class="form-body">
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Alamat</label>
-                            <div class="col-md-9">
-                                <input disabled name="alamat" id="alamat" class="form-control" type="text">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Kelurahan</label>
-                            <div class="col-md-9">
-                                <input disabled name="kelurahan" class="form-control" type="text">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Kecamatan</label>
-                            <div class="col-md-9">
-                                <input disabled name="kecamatan" class="form-control" type="text">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Kota</label>
-                            <div class="col-md-9">
-                                <input disabled name="kota" class="form-control" type="text">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Provinsi</label>
-                            <div class="col-md-9">
-                                <input disabled name="provinsi" class="form-control" type="text">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Kode Pos</label>
-                            <div class="col-md-9">
-                                <input disabled name="kode_pos" class="form-control" type="text">
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
+</section>
 <script type="text/javascript">
     var table;
 
@@ -137,13 +85,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             serverSide: true, //Feature control DataTables' server-side processing mode.
             order: [], //Initial no order.
             autowidth : true,
+            responsive: true,
             dom: "Blfrtip",
             buttons: [
                 {
                     extend: "excel",
                     className: "btn-sm",
                     exportOptions: {
-                        columns: [1,2,3,4,5,6,7,8,9,10,11]
+                        columns: [1,2,3,4,5,6,7,8]
                     }
                 },
                 {
@@ -155,7 +104,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     },
                     className: "btn-sm",
                     exportOptions: {
-                        columns: [1,2,3,4,5,6,7,8,9,10,11]
+                        columns: [1,2,3,4,5,6,7,8]
                     }
                 },
             ],
@@ -163,25 +112,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             // Load data for the table's content from an Ajax source
             ajax: {
                 "url": "<?php echo base_url('pegawai/ajax_list')?>",
-                "type": "POST",
+                "type": "POST"
             },
 
             //Set column definition initialisation properties.
             columnDefs: [
                 {
-                    "targets"   : [ 0 ], //first column / numbering column
-                    "orderable" : false
-                },
-                {
-                    "targets"   : [ -10 ], //first column / numbering column
-                    "orderable" : false
-                },
-                {
-                    "targets"   : [ -1 ], //first column / numbering column
-                    "orderable" : false
-                },
-                {
-                    "targets"   : [ -2,-3,-4,-5,-6,-7,-8,-9,-11], //first column / numbering column
+                    "targets"   : [ 0,-1,-2,-3,-4,-5,-6,-7], //first column / numbering column
                     "orderable" : false,
                 }
             ]
@@ -261,33 +198,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
 
     function del(id) {
-        if(confirm('Anda Yakin Ingin Menghapus Data Ini ?')) {
-            // ajax delete data to database
-            $.ajax({
-                url : "<?php echo site_url('pegawai/delete')?>/"+id,
-                type: "POST",
-                dataType: "JSON",
-                success: function(data)
-                {
-                    new PNotify({
-                        title: 'Success',
-                        text: 'Data Berhasil Di Hapus',
-                        type: 'success',
-                        styling: 'bootstrap3'
-                    });
-                    reload_table();
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    new PNotify({
-                        title: 'Oh No!',
-                        text: 'Data Gagal Di Hapus',
-                        type: 'error',
-                        styling: 'bootstrap3'
-                    });
-                }
-            });
-
-        }
+        swal({
+            title: "Apakah Anda Yakin ?",
+            text: "Anda Tidak Akan Bisa Merecover Kembali Data Yang Sudah Anda Hapus !",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url : "<?php echo site_url('pegawai/delete')?>/"+id,
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function(data)
+                    {
+                        swal("Terhapus !", "Data Anda Sudah Dihapus", "success");
+                        reload_table();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        swal("Dibatalkan", "Data Anda Tidak Jadi Dihapus", "error");
+                    }
+                });
+            } else {
+                swal("Dibatalkan", "Data Anda Tidak Jadi Dihapus", "error");
+            }
+        });
     }
 </script>

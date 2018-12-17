@@ -54,27 +54,21 @@ class M_pegawai extends MY_Model{
         $suku = $this->db->escape_str($post['suku']);
         $status_nikah = $this->db->escape_str($post['status_nikah']);
 
-        //informasi data pegawai untuk alamat
-        $alamat_domisili = $this->db->escape_str($post['alamat_domisili']);
-        $kelurahan_domisili = $this->db->escape_str($post['kelurahan_domisili']);
-        $kecamatan_domisili = $this->db->escape_str($post['kecamatan_domisili']);
-        $kota_domisili = $this->db->escape_str($post['kota_domisili']);
-        $provinsi_domisili = $this->db->escape_str($post['provinsi_domisili']);
-        $kode_pos_domisili = str_replace("_","",$this->db->escape_str($post['kode_pos_domisili']));
-        $alamat_ktp = $this->db->escape_str($post['alamat_ktp']);
-        $kelurahan_ktp = $this->db->escape_str($post['kelurahan_ktp']);
-        $kecamatan_ktp = $this->db->escape_str($post['kecamatan_ktp']);
-        $kota_ktp = $this->db->escape_str($post['kota_ktp']);
-        $provinsi_ktp = $this->db->escape_str($post['provinsi_ktp']);
-        $kode_pos_ktp = str_replace("_","",$this->db->escape_str($post['kode_pos_ktp']));
-
         //informasi data pegawai untuk komunikasi
         $no_telp = str_replace("_","",$this->db->escape_str($post['no_telp']));
         $no_hp = str_replace("_","",$this->db->escape_str($post['no_hp']));
-        $no_hp_2 = str_replace("_","",$this->db->escape_str($post['no_hp_2']));
+        $no_hp_2 = str_replace("_","",$this->db->escape_str($post['no_hp2']));
         $email = $this->db->escape_str($post['email']);
 
         if($pilihan == '1'){
+            //informasi data pegawai untuk alamat
+            $alamat_ktp = $this->db->escape_str($post['alamat_ktp']);
+            $kelurahan_ktp = $this->db->escape_str($post['kelurahan_ktp']);
+            $kecamatan_ktp = $this->db->escape_str($post['kecamatan_ktp']);
+            $kota_ktp = $this->db->escape_str($post['kota_ktp']);
+            $provinsi_ktp = $this->db->escape_str($post['provinsi_ktp']);
+            $kode_pos_ktp = str_replace("_","",$this->db->escape_str($post['kode_pos_ktp']));
+
             $data = array(
                 'nik'                   => $nik,
                 'nipp'                  => $nipp,
@@ -103,6 +97,20 @@ class M_pegawai extends MY_Model{
                 'email'                 => $email,
             );
         }else{
+            //informasi data pegawai untuk alamat
+            $alamat_domisili = $this->db->escape_str($post['alamat_domisili']);
+            $kelurahan_domisili = $this->db->escape_str($post['kelurahan_domisili']);
+            $kecamatan_domisili = $this->db->escape_str($post['kecamatan_domisili']);
+            $kota_domisili = $this->db->escape_str($post['kota_domisili']);
+            $provinsi_domisili = $this->db->escape_str($post['provinsi_domisili']);
+            $kode_pos_domisili = str_replace("_","",$this->db->escape_str($post['kode_pos_domisili']));
+            $alamat_ktp = $this->db->escape_str($post['alamat_ktp']);
+            $kelurahan_ktp = $this->db->escape_str($post['kelurahan_ktp']);
+            $kecamatan_ktp = $this->db->escape_str($post['kecamatan_ktp']);
+            $kota_ktp = $this->db->escape_str($post['kota_ktp']);
+            $provinsi_ktp = $this->db->escape_str($post['provinsi_ktp']);
+            $kode_pos_ktp = str_replace("_","",$this->db->escape_str($post['kode_pos_ktp']));
+
             $data = array(
                 'nik'                   => $nik,
                 'nama_karyawan'         => $nama,
@@ -170,7 +178,12 @@ class M_pegawai extends MY_Model{
         //informasi data pegawai untuk komunikasi
         $no_telp = str_replace("_","",$this->db->escape_str($post['no_telp']));
         $no_hp = str_replace("_","",$this->db->escape_str($post['no_hp']));
-        $no_hp_2 = str_replace("_","",$this->db->escape_str($post['no_hp_2']));
+
+        if($post['no_hp2'] == NULL)
+            $no_hp_2 = '';
+        else
+            $no_hp_2 = str_replace("_","",$this->db->escape_str($post['no_hp2']));
+
         $email = $this->db->escape_str($post['email']);
 
         $where = array(
@@ -332,6 +345,27 @@ class M_pegawai extends MY_Model{
 
         if($query->num_rows() > 0)
             return $query->row_array();
+    }
+
+    public function cekFoto($nik){
+        $this->db->from($this->table);
+        $this->db->where('id_karyawan',$nik);
+        $this->db->like('foto',$nik);
+        $this->db->order_by('foto','DESC');
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+            return $query->row();
+    }
+
+    public function upload_time($id,$now){
+        $where = array('id_karyawan' => $id);
+        $data = array(
+            'last_upload'      => $now
+        );
+        $this->db->update($this->table,$data,$where);
+
+        return $this->db->affected_rows();
     }
 }
 ?>

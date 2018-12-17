@@ -2,62 +2,64 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 ?>
-<div class="right_col" role="main">
-    <div class="x_panel">
-        <div class="x_title">
-            <h2><center>Data Jenis Diklat</h2>
-            <ul class="nav navbar-right panel_toolbox">
-                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-            </ul>
-            <div class="clearfix"></div>
+<section class="content">
+    <div class="container-fluid">
+        <!--
+        <div class="block-header">
+            <h2>DATA KARYAWAN</h2>
         </div>
-        <div class="x_content">
-            <h3 class="judul">Penambahan Data</h3>
-            <div class="ln_solid"></div>
-            <form id="form-input" data-parsley-validate="" action="<?php echo base_url('diklat/add_data')?>" method="POST" class="form-horizontal form-label-left" novalidate="">
-                <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="jenis_diklat">Jenis Diklat <span class="required">
-                        <input type="hidden" value="" id="id_jenisdiklat" name="id_jenisdiklat"/>
-                    </label>
-                    <input type="text" class="col-md-3 col-sm-4 col-xs-8" name="jenis_diklat" id="jenis_diklat">
-                </div>
-                <div class="ln_solid"></div>
-                <div class="form-group">
-                    <div class="col-md-4 col-sm-4 col-xs-6 col-md-offset-3">
-                        <button class="btn btn-primary" type="reset">Reset</button>
-                        <button type="submit" id="submit" name="submit" class="btn btn-success">Submit</button>
+        --->
+        <!-- Horizontal Layout -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2 class="judul">
+                            Data Jenis Diklat
+                        </h2>
                     </div>
-                </div>
-            </form>
-        </div>
-        <div class="x_content">
-            <div class="row">
-                <div class="container">
-                    <div class="table-responsive">
-                        <table id="tabel" class="table table-striped jambo_table table-bordered" cellspacing="0" width="100%" >
-                            <thead>
-                            <tr>
-                                <th><center>No</th>
-                                <th><center>Jenis Diklat</th>
-                                <th><center>Aksi</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th><center>No</th>
-                                <th><center>Jenis Diklat</th>
-                                <th><center>Aksi</th>
-                            </tr>
-                            </tfoot>
-                        </table>
+                    <div class="body">
+                        <form id="form-input" action="<?php echo base_url('diklat/add_data')?>" method="POST" class="form-horizontal form-label-left">
+                            <div class="col-md-12">
+                                <label for="jenis_diklat">Jenis Diklat</label>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="hidden" value="" id="id_jenisdiklat" name="id_jenisdiklat"/>
+                                        <input type="text" class="form-control" name="jenis_diklat" id="jenis_diklat">
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <button class="btn bg-blue waves-effect" type="reset"><i class="material-icons">clear</i><span>Reset</span></button>
+                            <button type="submit" class="btn bg-orange waves-effect"><i class="material-icons">save</i><span>Simpan</span></button>
+                        </form>
+                        <div class="table-responsive">
+                            <table id="tabel" class="table table-bordered table-striped table-hover js-basic-example dataTable" cellspacing="0" width="100%" role="grid" >
+                                <thead>
+                                <tr>
+                                    <th><center>No</th>
+                                    <th><center>Jenis Diklat</th>
+                                    <th><center>Aksi</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th><center>No</th>
+                                    <th><center>Jenis Diklat</th>
+                                    <th><center>Aksi</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- #END# Horizontal Layout -->
     </div>
-</div>
+</section>
 
 <script type="text/javascript">
     var table;
@@ -125,25 +127,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 'success': function(response){
                     // proses saat data berhasil di kirim
                     if(response.error == false){
-                        new PNotify({
-                            title: 'Success',
-                            text: 'Data Berhasil Di Disimpan',
-                            type: 'success',
-                            styling: 'bootstrap3'
-                        });
+                        swal("Sukses !", "Data Berhasil Disimpan", "success");
                         $('#id_jenisdiklat').val('');
                         $('#jenis_diklat').val('');
-                        $( "h3.judul" ).replaceWith( "<h3 class='judul'>Penambahan Data</h3>" );
+                        $( "h2.judul" ).replaceWith( "<h2 class='judul'>Penambahan Data</h2>" );
                         $('#form-input').attr({"action" : "<?php echo site_url('diklat/add_data')?>" });
                         reload_table();
                     }
                     else{
-                        new PNotify({
-                            title: 'Oh No!',
-                            text: 'Data Gagal Di Hapus',
-                            type: 'error',
-                            styling: 'bootstrap3'
-                        });
+                        swal("Gagal !", "Data Gagal Disimpan", "error");
                     }
                 }
             });
@@ -156,7 +148,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $('#form-input').on('reset', function(e){
             $('#id_jenisdiklat').val('');
             $('#jenis_diklat').val('');
-            $( "h3.judul" ).replaceWith( "<h3 class='judul'>Penambahan Data</h3>" );
+            $( "h2.judul" ).replaceWith( "<h2 class='judul'>Penambahan Data</h2>" );
             $('#form-input').attr({"action" : "<?php echo site_url('diklat/add_data')?>" });
             e.preventDefault();
         });
@@ -170,47 +162,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             success  : function (data) {
                 $('#id_jenisdiklat').val(data.id_jenisdiklat);
                 $('#jenis_diklat').val(data.jenis_diklat);
-                $( "h3.judul" ).replaceWith( "<h3 class='judul'>Pengeditan Data</h3>" );
+                $( "h2.judul" ).replaceWith( "<h2 class='judul'>Pengeditan Data</h2>" );
                 $('#form-input').attr({"action" : "<?php echo site_url('diklat/update_data')?>" });
             },
             error    : function (jqXHR, textStatus, errorThrown) {
-                new PNotify({
-                    title: 'Oh No!',
-                    text: 'Gagal Mengambil Data',
-                    type: 'error',
-                    styling: 'bootstrap3'
-                });
+                swal("Gagal !", "Data Gagal Diambil", "error");
             }
         });
     }
 
     function del(id) {
-        if(confirm('Anda Yakin Ingin Menghapus Data Ini ?')) {
-            // ajax delete data to database
-            $.ajax({
-                url : "<?php echo site_url('diklat/delete_data')?>/"+id,
-                type: "POST",
-                dataType: "JSON",
-                success: function(data)
-                {
-                    new PNotify({
-                        title: 'Success',
-                        text: 'Data Berhasil Di Hapus',
-                        type: 'success',
-                        styling: 'bootstrap3'
-                    });
-                    reload_table();
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    new PNotify({
-                        title: 'Oh No!',
-                        text: 'Data Gagal Di Hapus',
-                        type: 'error',
-                        styling: 'bootstrap3'
-                    });
-                }
-            });
-        }
+        swal({
+            title: "Apakah Anda Yakin ?",
+            text: "Anda Tidak Akan Bisa Merecover Kembali Data Yang Sudah Anda Hapus !",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url : "<?php echo site_url('diklat/delete_data')?>/"+id,
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function(data)
+                    {
+                        swal("Sukses !", "Data Sukses Di Hapus", "success");
+                        reload_table();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        swal("Gagal !", "Data Gagal Di Hapus", "error");
+                    }
+                });
+            } else {
+                swal("Dibatalkan", "Data Anda Tidak Jadi Dihapus", "error");
+            }
+        });
     }
 </script>

@@ -2,26 +2,37 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 ?>
-<div class="right_col" role="main">
-    <div class="x_panel">
-        <div class="x_title">
-            <h2><center>Data Tunjangan</h2>
-            <ul class="nav navbar-right panel_toolbox">
-                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-            </ul>
-            <div class="clearfix"></div>
+<section class="content">
+    <div class="container-fluid">
+        <!--
+        <div class="block-header">
+            <h2>DATA KARYAWAN</h2>
         </div>
-        <div class="x_content">
-            <div class="container">
-                <button class="btn btn-info" onclick="reload_table();"><i class="glyphicon glyphicon-repeat"></i> Reload Tabel </button>
-                <!---<button class="btn btn-success" onclick="add()"><i class="glyphicon glyphicon-plus"></i> Tambah Data</button>--->
-                <button class="btn btn-warning" onclick="edit()"><i class="glyphicon glyphicon-pencil"></i> Ubah Data</button>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="container">
+        --->
+        <!-- Horizontal Layout -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            Data Tunjangan
+                        </h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a onclick="reload_table();"><i class="material-icons">refresh</i> <span>Reload Tabel</span> </a></li>
+                                    <!---<li><a onclick="add()"><i class="material-icons">add</i> <span>Tambah Data</span></a></li>--->
+                                    <li><a onclick="edit()"><i class="material-icons">mode_edit</i><span>Ubah Data</span> </a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
                         <div class="table-responsive">
-                            <table id="tabel" class="table table-striped jambo_table table-bordered" cellspacing="0" width="100%" >
+                            <table id="tabel" class="table table-bordered table-striped table-hover js-basic-example dataTable" cellspacing="0" width="100%" role="grid" >
                                 <thead>
                                 <tr>
                                     <th><center>Nama Tunjangan</th>
@@ -64,9 +75,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
             </div>
         </div>
+        <!-- #END# Horizontal Layout -->
     </div>
-</div>
-
+</section>
 <script type="text/javascript">
     var table;
 

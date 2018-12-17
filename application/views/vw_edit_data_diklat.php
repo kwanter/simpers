@@ -2,170 +2,232 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 ?>
-<div class="right_col" role="main">
-    <div class="x_panel">
-        <div class="x_title">
-            <h2>Edit Riwayat Diklat Karyawan</h2>
-            <ul class="nav navbar-right panel_toolbox">
-                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-            </ul>
-            <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-            <?php echo $this->session->flashdata('notif');?>
-            <form id="form-input" data-parsley-validate="" action="<?php echo base_url('diklat/updateData')?>" method="POST" enctype="multipart/form-data" class="form-horizontal form-label-left" novalidate="">
-                <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nik">NIK / Nama Karyawan<span class="required"></span>
-                    <input type="hidden" value="<?php echo $attr['diklat']['id_diklatkaryawan']?>" id="id_diklat" name="id_diklat">
-                    </label>
-                    <div class="col-md-3 col-sm-4 col-xs-8">
-                        <input readonly id="nik" name="nik" value="<?php echo $attr['karyawan']['nama_karyawan']?>" required="required" class="form-control col-md-5 col-xs-8"/>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>Edit Riwayat Diklat Karyawan</h2>
+                    </div>
+                    <div class="body">
+                        <?php echo $this->session->flashdata('notif');?>
+                        <form id="form_input_pendidikan" action="<?php echo base_url('diklat/updateData')?>" method="POST" enctype="multipart/form-data">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="nik" class="form-label">NIK / Nama Karyawan</label>
+                                    <input type="hidden" value="<?php echo $attr['diklat']['id_diklatkaryawan']?>" id="id_diklat" name="id_diklat">
+                                    <input type="hidden" value="<?php echo $attr['diklat']['id_karyawan']?>" id="id_karyawan" name="id_karyawan">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">perm_identity</i>
+                                        </span>
+                                        <input readonly id="nik" name="nik" value="<?php echo $attr['karyawan']['nama_karyawan']?>" required="required" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="jenis_diklat" class="form-label">Jenis Diklat</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">keyboard</i>
+                                        </span>
+                                        <select id="jenis_diklat" name="jenis_diklat" required="required" class="form-control">
+                                            <option value="">---</option>
+                                            <?php
+                                            foreach ($attr['jenis_diklat'] as $jenis_diklat){
+                                                if($jenis_diklat->id_jenisdiklat == $attr['diklat']['jenis_diklat']) {
+                                                    ?>
+                                                    <option selected
+                                                            value="<?php echo $jenis_diklat->id_jenisdiklat ?>"><?php echo $jenis_diklat->jenis_diklat ?></option>
+                                                    <?php
+                                                }
+                                                else {
+                                                    ?>
+                                                    <option value="<?php echo $jenis_diklat->id_jenisdiklat ?>"><?php echo $jenis_diklat->jenis_diklat ?></option>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="tgl_diklat" class="form-label">Tanggal Diklat</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">date_range</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input id="tgl_diklat" value="<?php echo $attr['diklat']['tgl_mulaidiklat']?> s/d <?php echo $attr['diklat']['tgl_akhirdiklat']?>" name="tgl_diklat" required="required" class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="tema_diklat" class="form-label">Tema Diklat</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">school</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input id="tema_diklat" value="<?php echo $attr['diklat']['tema_diklat'] ?>" name="tema_diklat" required="required" class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="lokasi" class="form-label">Lokasi Diklat</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">place</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input id="lokasi" value="<?php echo $attr['diklat']['lokasi'] ?>" name="lokasi" required="required" class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="penyelenggara" class="form-label">Penyelenggara</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">person</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input id="penyelenggara" value="<?php echo $attr['diklat']['penyelenggara'] ?>" name="penyelenggara" required="required" class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="no_sertifikat" class="form-label">No Sertifikat</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">format_list_numbered</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input id="no_sertifikat" value="<?php echo $attr['diklat']['no_sertifikat'] ?>" name="no_sertifikat" class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="nilai" class="form-label">Nilai</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">format_list_numbered</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input id="nilai" value="<?php echo $attr['diklat']['nilai'] ?>" name="nilai" class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="skala_nilai" class="form-label">Skala Nilai</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">format_list_numbered</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input id="skala_nilai" value="<?php echo $attr['diklat']['skala_nilai'] ?>" name="skala_nilai" class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="sertifikat" class="form-label">Sertifikat</label>
+                                    <div class="input-group">
+                                        <div class="form-line">
+                                            <?php
+                                            $bulan = (new DateTime($attr['diklat']['tgl_akhirdiklat']))->format('M');
+                                            $tahun = (new DateTime($attr['diklat']['tgl_akhirdiklat']))->format('Y');
+                                            ?>
+                                            <input id="sertifikat" data-show-errors="true" class="dropify form-control" data-default-file="<?php echo base_url('edok/').$attr['diklat']['id_karyawan']."/cert/".$tahun.'/'.$bulan.'/'.$attr['diklat']['sertifikat']?>" name="sertifikat" type="file">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <button class="btn bg-red waves-effect" onclick="cancel();" type="button"><i class="material-icons">undo</i><span>Cancel</span></button>
+                            <button class="btn bg-blue waves-effect" type="reset"><i class="material-icons">clear</i><span>Reset</span></button>
+                            <button type="submit" class="btn bg-orange waves-effect"><i class="material-icons">save</i><span>Simpan</span></button>
+                        </form>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="jenis_diklat">Jenis Diklat <span class="required">
-                    </label>
-                    <div class="col-md-3 col-sm-4 col-xs-8">
-                        <select id="jenis_diklat" name="jenis_diklat" required="required" class="form-control col-md-5 col-xs-8">
-                            <option value="">---</option>
-                            <?php
-                            foreach ($attr['jenis_diklat'] as $jenis_diklat){
-                                if($jenis_diklat->id_jenisdiklat == $attr['diklat']['jenis_diklat']) {
-                                    ?>
-                                    <option selected
-                                            value="<?php echo $jenis_diklat->id_jenisdiklat ?>"><?php echo $jenis_diklat->jenis_diklat ?></option>
-                                    <?php
-                                }
-                                else {
-                                    ?>
-                                    <option value="<?php echo $jenis_diklat->id_jenisdiklat ?>"><?php echo $jenis_diklat->jenis_diklat ?></option>
-                                    <?php
-                                }
-                            }
-                            ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tgl_diklat">Tanggal Diklat <span class="required">
-                    </label>
-                    <div class="col-md-3 col-sm-4 col-xs-8">
-                        <input id="tgl_diklat" name="tgl_diklat" value="<?php echo $attr['diklat']['tgl_mulaidiklat']?> s/d <?php echo $attr['diklat']['tgl_akhirdiklat']?>" required="required" class="form-control col-md-5 col-xs-8" type="text">
-                        <span class="fa fa-calendar-o form-control-feedback right" aria-hidden="true"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="tema_diklat" class="control-label col-md-3 col-sm-3 col-xs-12">Tema Diklat</label>
-                    <div class="col-md-4 col-sm-2 col-xs-12">
-                        <input id="tema_diklat" name="tema_diklat" value="<?php echo $attr['diklat']['tema_diklat'] ?>" required="required" class="form-control col-md-4 col-xs-12" type="text">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="lokasi" class="control-label col-md-3 col-sm-3 col-xs-12">Lokasi</label>
-                    <div class="col-md-4 col-sm-4 col-xs-12">
-                        <input id="lokasi" name="lokasi" value="<?php echo $attr['diklat']['lokasi'] ?>" required="required" class="form-control col-md-7 col-xs-12" type="text">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="penyelenggara" class="control-label col-md-3 col-sm-3 col-xs-12">Penyelenggara</label>
-                    <div class="col-md-4 col-sm-4 col-xs-12">
-                        <input id="penyelenggara" name="penyelenggara" value="<?php echo $attr['diklat']['penyelenggara'] ?>" required="required" class="form-control col-md-7 col-xs-12" type="text">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="tgl_lulus" class="control-label col-md-3 col-sm-3 col-xs-12">No Sertifikat</label>
-                    <div class="col-md-2 col-sm-2 col-xs-12">
-                        <input id="no_sertifikat" name="no_sertifikat" value="<?php echo $attr['diklat']['no_sertifikat'] ?>" required="required" class="form-control col-md-4 col-xs-12" type="text">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="nilai" class="control-label col-md-3 col-sm-3 col-xs-12">Nilai</label>
-                    <div class="col-md-1 col-sm-4 col-xs-12">
-                        <input id="nilai" name="nilai" value="<?php echo $attr['diklat']['nilai'] ?>" class="form-control col-md-7 col-xs-12" type="text">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="skala_nilai" class="control-label col-md-3 col-sm-3 col-xs-12">Skala Nilai</label>
-                    <div class="col-md-1 col-sm-4 col-xs-12">
-                        <input id="skala_nilai" name="skala_nilai" value="<?php echo $attr['diklat']['skala_nilai'] ?>" class="form-control col-md-7 col-xs-12" type="text">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="sertifikat" class="control-label col-md-3 col-sm-3 col-xs-12">Sertifikat</label>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <input id="sertifikat" data-show-errors="true" class="dropify form-control col-md-7 col-xs-12" data-default-file="<?php echo base_url('sertifikat/').$attr['diklat']['sertifikat']?>" name="sertifikat" type="file">
-                    </div>
-                </div>
-                <div class="ln_solid"></div>
-                <div class="form-group">
-                    <div class="col-md-4 col-sm-4 col-xs-6 col-md-offset-3">
-                        <button class="btn btn-primary" onclick="cancel();" type="button">Cancel</button>
-                        <button class="btn btn-primary" type="reset">Reset</button>
-                        <button type="submit" class="btn btn-success">Submit</button>
-                    </div>
-                </div>
-            </form>
-
-            <script type="text/javascript">
-                function cancel() {
-                    window.location.replace('<?php echo site_url('master/page/diklat')?>')
-                }
-
-                function master() {
-                    window.location.replace('<?php echo site_url('master/page/diklat')?>')
-                }
-
-                $(document).ready(function(){
-                    $('.dropify').dropify({
-                        messages: {
-                            default : 'Drag atau drop untuk memilih sertifikat',
-                            replace : 'Ganti',
-                            remove  : 'Hapus',
-                            error   : 'error'
-                        }
-                    });
-                });
-
-                $('#tgl_diklat').daterangepicker({
-                    "showDropdowns": true,
-                    "locale": {
-                        "format": "YYYY-MM-DD",
-                        "separator": " s/d ",
-                        "applyLabel": "Ok",
-                        "cancelLabel": "Batal",
-                        "fromLabel": "Dari",
-                        "toLabel": "Ke",
-                        "customRangeLabel": "Custom",
-                        "weekLabel": "W",
-                        "daysOfWeek": [
-                            "Min",
-                            "Sen",
-                            "Sel",
-                            "Rab",
-                            "Kam",
-                            "Jum",
-                            "Sab"
-                        ],
-                        "monthNames": [
-                            "Januari",
-                            "Februari",
-                            "Maret",
-                            "April",
-                            "Mei",
-                            "Juni",
-                            "Juli",
-                            "Agustus",
-                            "September",
-                            "Oktober",
-                            "November",
-                            "Desember"
-                        ],
-                        "firstDay": 1
-                    }
-                },function(start, end, label) {
-                    console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-                });
-            </script>
+            </div>
         </div>
     </div>
-</div>
+</section>
+
+<script type="text/javascript">
+    function cancel() {
+        window.location.replace('<?php echo site_url('master/data/diklat')?>')
+    }
+
+    function master() {
+        window.location.replace('<?php echo site_url('master/data/diklat')?>')
+    }
+
+    $(document).ready(function(){
+        $('.dropify').dropify({
+            messages: {
+                default : 'Drag atau drop untuk memilih sertifikat',
+                replace : 'Ganti',
+                remove  : 'Hapus',
+                error   : 'error'
+            }
+        });
+    });
+
+    $('#tgl_diklat').daterangepicker({
+        "showDropdowns": true,
+        "locale": {
+            "format": "YYYY-MM-DD",
+            "separator": " s/d ",
+            "applyLabel": "Ok",
+            "cancelLabel": "Batal",
+            "fromLabel": "Dari",
+            "toLabel": "Ke",
+            "customRangeLabel": "Custom",
+            "weekLabel": "W",
+            "daysOfWeek": [
+                "Min",
+                "Sen",
+                "Sel",
+                "Rab",
+                "Kam",
+                "Jum",
+                "Sab"
+            ],
+            "monthNames": [
+                "Januari",
+                "Februari",
+                "Maret",
+                "April",
+                "Mei",
+                "Juni",
+                "Juli",
+                "Agustus",
+                "September",
+                "Oktober",
+                "November",
+                "Desember"
+            ],
+            "firstDay": 1
+        }
+    },function(start, end, label) {
+        console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+    });
+</script>

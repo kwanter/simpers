@@ -36,8 +36,8 @@ class Pendidikan extends MY_Controller {
             $row[] = '<center style="font-size: small">'.$pendidikan->skala_nilai;
 
             //add html for action
-            $row[] = '<center><a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit('."'".$pendidikan->id_riwayatpendidikan."'".')"><i class="glyphicon glyphicon-pencil"></i></a>
-                              <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="del('."'".$pendidikan->id_riwayatpendidikan."'".')"><i class="glyphicon glyphicon-trash"></i></a>';
+            $row[] = '<center><a href="javascript:void(0)" title="Edit" onclick="edit('."'".$pendidikan->id_riwayatpendidikan."'".')"><i class="material-icons">launch</i></a>
+                              <a href="javascript:void(0)" title="Hapus" onclick="del('."'".$pendidikan->id_riwayatpendidikan."'".')"><i class="material-icons">delete_forever</i></a>';
 
             $data[] = $row;
         }

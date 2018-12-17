@@ -1,72 +1,113 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-
-<div class="right_col" role="main">
-    <div class="x_panel">
-        <div class="x_title">
-            <h2>Input Data Merit</h2>
-            <ul class="nav navbar-right panel_toolbox">
-                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-            </ul>
-            <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-            <?php echo $this->session->flashdata('notif');?>
-            <form id="form-input" data-parsley-validate="" action="<?php echo base_url('kelasjabatan/addData')?>" method="POST" class="form-horizontal form-label-left" novalidate="">
-                <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="id_kelasjabatan">ID Kelas Jabatan <span class="required">
-                    </label>
-                    <div class="col-md-2 col-sm-4 col-xs-8">
-                        <input id="id_kelasjabatan" name="id_kelasjabatan" required="required" data-inputmask="'mask': 'KJ99-99'" class="form-control col-md-5 col-xs-8" type="text">
+<section class="content">
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>Input Data Merit</h2>
+                    </div>
+                    <div class="body">
+                        <?php echo $this->session->flashdata('notif');?>
+                        <form id="form_input_kj" action="<?php echo base_url('kelasjabatan/addData')?>" method="POST" enctype="multipart/form-data">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <b>ID Tunjangan</b><br><br>
+                                    <div class="input-group">
+                                        <select name="id_kj" id="id_kj" class="form-control">
+                                            <option value="">----</option>
+                                            <?php
+                                            foreach ($attr['data'] as $data){
+                                                ?>
+                                                <option value="<?php echo $data->id_kelasjabatan?>"><?php echo $data->kode_kelasjabatan?></option>
+                                                <?php
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <b>Nama Kelas Jabatan</b>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="material-icons">keyboard</i>
+                                    </span>
+                                    <div class="form-line">
+                                        <input id="nama_kj" name="nama_kj" class="form-control" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <b>Periode</b>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="material-icons">work</i>
+                                    </span>
+                                    <select id="periode" name="periode" required="required" class="form-control" >
+                                        <?php
+                                        for($i=0;$i<=15;$i++){
+                                            ?>
+                                            <option value="<?php echo $i?>"><?php echo $i?></option>
+                                            <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <b>Besaran Merit</b>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="material-icons">attach_money</i>
+                                    </span>
+                                    <div class="form-line">
+                                        <input id="merit" name="merit" class="form-control" type="number">
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <button class="btn bg-red waves-effect" onclick="cancel();" type="button"><i class="material-icons">undo</i><span>Cancel</span></button>
+                            <button class="btn bg-blue waves-effect" type="reset"><i class="material-icons">clear</i><span>Reset</span></button>
+                            <button type="submit" class="btn bg-orange waves-effect"><i class="material-icons">save</i><span>Simpan</span></button>
+                        </form>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kelas_jabatan">Kelas Jabatan <span class="required"></span>
-                    </label>
-                    <div class="col-md-2 col-sm-4 col-xs-8">
-                        <input id="kelas_jabatan" name="kelas_jabatan" required="required" class="form-control col-md-5 col-xs-8" type="text">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="periodik" class="control-label col-md-3 col-sm-3 col-xs-12">Periodik</label>
-                    <div class="col-md-2 col-sm-4 col-xs-8">
-                        <select id="periodik" name="periodik" required="required" class="form-control col-md-5 col-xs-8" >
-                            <?php
-                            for($i=0;$i<=15;$i++){
-                                ?>
-                                <option value="<?php echo $i?>"><?php echo $i?></option>
-                                <?php
-                            }
-                            ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="merit" class="control-label col-md-3 col-sm-3 col-xs-12">Merit</label>
-                    <div class="col-md-2 col-sm-4 col-xs-8">
-                        <input id="merit" name="merit" required="required" class="form-control col-md-5 col-xs-8" type="number">
-                    </div>
-                </div>
-                <div class="ln_solid"></div>
-                <div class="form-group">
-                    <div class="col-md-4 col-sm-4 col-xs-6 col-md-offset-3">
-                        <button class="btn btn-primary" onclick="cancel();" type="button">Cancel</button>
-                        <button class="btn btn-primary" type="reset">Reset</button>
-                        <button type="submit" class="btn btn-success">Submit</button>
-                    </div>
-                </div>
-            </form>
-
-            <script type="text/javascript">
-                function cancel() {
-                    window.location.replace('<?php echo site_url('master/page/kj')?>')
-                }
-
-                function master() {
-                    window.location.replace('<?php echo site_url('master/page/kj')?>')
-                }
-            </script>
+            </div>
         </div>
     </div>
-</div>
+</section>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#id_kj').on('change',function(){
+            var IDkj = $(this).val();
+            if(IDkj != ""){
+                $.ajax({
+                    type:'POST',
+                    url:'<?php echo base_url('kelasjabatan/getData')?>',
+                    data:'id_kj='+IDkj,
+                    success:function(html){
+                        var data = JSON.parse(html);
+                        $('#nama_kj').val(data.nama_kj);
+                        $('#periode').val(data.periode);
+                        $('#merit').val(data.besaran_merit);
+                    }
+                });
+            }else{
+                $('#nama_kj').val('');
+                $('#periode').val('');
+                $('#merit').val('');
+            }
+        });
+    });
+
+    function cancel() {
+        window.location.replace('<?php echo site_url('master/page/kj')?>')
+    }
+
+    function master() {
+        window.location.replace('<?php echo site_url('master/page/kj')?>')
+    }
+</script>

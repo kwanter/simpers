@@ -272,10 +272,22 @@ class M_diklat extends MY_Model{
     public function get_diklat_cv($id){
         $this->db->from($this->table_cv);
         $this->db->where('id_karyawan',$id);
+        $this->db->order_by('tgl_mulaidiklat','ASC');
         $query = $this->db->get();
 
         if($query->num_rows() > 0 )
             return $query->result();
+    }
+
+    public function cekSertifikat($nik,$waktu){
+        $this->db->from($this->table);
+        $this->db->where('id_karyawan',$nik);
+        $this->db->like('sertifikat','_cert_'.$waktu.$nik);
+        $this->db->order_by('sertifikat','DESC');
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+            return $query->row()->sertifikat;
     }
 }
 ?>

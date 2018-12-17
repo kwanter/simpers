@@ -158,6 +158,7 @@ class M_pendidikan extends MY_Model {
     public function get_pendidikan_cv($id){
         $this->db->from($this->table);
         $this->db->where('id_karyawan',$id);
+        $this->db->order_by('level','ASC');
         $query = $this->db->get();
 
         if($query->num_rows() > 0)

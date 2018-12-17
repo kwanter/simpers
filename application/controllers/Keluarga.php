@@ -43,8 +43,8 @@ class Keluarga extends MY_Controller {
             $row[] = '<center style="font-size: small">'.$keluarga->pekerjaan;
 
             //add html for action
-            $row[] = '<center><a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit('."'".$keluarga->id_keluarga."'".')"><i class="glyphicon glyphicon-pencil"></i></a>
-                              <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="del('."'".$keluarga->id_keluarga."'".')"><i class="glyphicon glyphicon-trash"></i></a>';
+            $row[] = '<center><a href="javascript:void(0)" title="Edit" onclick="edit('."'".$keluarga->id_keluarga."'".')"><i class="material-icons">launch</i></a>
+                              <a href="javascript:void(0)" title="Hapus" onclick="del('."'".$keluarga->id_keluarga."'".')"><i class="material-icons">delete_forever</i></a>';
 
             $data[] = $row;
         }

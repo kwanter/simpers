@@ -51,9 +51,21 @@ class Jabatan extends MY_Controller{
 
             $row[] = '<center style="font-size: small">'.$jabatan->status;
 
+            $waktu = (new DateTime($jabatan->tgl_berlaku));
+            $tahun = $waktu->format('Y');
+            $bulan = $waktu->format('M');
+            $link = $jabatan->id_karyawan."/sk/".$tahun."/".$bulan."/".$jabatan->sk;
+
+            if($jabatan->sk != NULL || $jabatan->sk != ''){
+                $row[] = '<center><a href="javascript:void(0)" title="Edit" onclick="edit('."'".$jabatan->id_riwayatjabatan."'".')"><i class="material-icons">launch</i></a>
+                              <a href="javascript:void(0)" title="Hapus" onclick="del('."'".$jabatan->id_riwayatjabatan."'".')"><i class="material-icons">delete_forever</i></a>
+                              <a href="javascript:void(0)" title="Lihat SK" onclick="print('."'".$link."'".')"><i class="material-icons">print</i></a>';
+            }
+            else{
+                $row[] = '<center><a href="javascript:void(0)" title="Edit" onclick="edit('."'".$jabatan->id_riwayatjabatan."'".')"><i class="material-icons">launch</i></a>
+                              <a href="javascript:void(0)" title="Hapus" onclick="del('."'".$jabatan->id_riwayatjabatan."'".')"><i class="material-icons">delete_forever</i></a>';
+            }
             //add html for action
-            $row[] = '<center><a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit('."'".$jabatan->id_riwayatjabatan."'".')"><i class="glyphicon glyphicon-pencil"></i></a>
-                              <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="del('."'".$jabatan->id_riwayatjabatan."'".')"><i class="glyphicon glyphicon-trash"></i></a>';
 
             $data[] = $row;
         }
@@ -76,6 +88,7 @@ class Jabatan extends MY_Controller{
     public function addData()
     {
         $result = $this->jabatan->saveData($_POST);
+        $this->upload_sk($result['insert_id'],$_POST['nik'],$_POST['tanggal']);
 
         if ($result)
             $this->session->set_flashdata('notif', '<div class="alert alert-success" role="alert"> 
@@ -99,6 +112,7 @@ class Jabatan extends MY_Controller{
     {
         $id = $this->input->post('id_riwayat');
         $result = $this->jabatan->updateData($_POST);
+        $this->upload_sk($id,$_POST['id_karyawan'],$_POST['tanggal']);
 
         if ($result)
             $this->session->set_flashdata('notif', '<div class="alert alert-success" role="alert"> 
@@ -124,15 +138,63 @@ class Jabatan extends MY_Controller{
             if(count($result) > 0){
                 foreach ($result as $row) {
                     $arr_result[] = array(
-                        'label'     => $row->jabatan,
-                        'job_title' => $row->job_title,
-                        'id'        => $row->id_nomenklatur,
-                        'uker'      => $row->nama_uker
+                        'label'         => $row->jabatan,
+                        'job_title'     => $row->job_title,
+                        'id'            => $row->id_nomenklatur,
+                        'uker'          => $row->nama_uker,
+                        'kelas_jabatan' => $row->kelas_jabatan
                     );
                 }
                 echo json_encode($arr_result);
             }
         }
     }
+
+    function upload_sk($id,$nik,$tgl){
+        $tahun      = (new DateTime($tgl))->format('Y');
+        $bulan      = (new DateTime($tgl))->format('M');
+
+        $check = $this->jabatan->cekSK($nik,$bulan.'_'.$tahun.'_');
+        $type       = 'sk';
+
+        if($check != NULL){
+            $temp = substr($check,0,3);
+            //$temp = ltrim($check,$nik.'_sk_'.$bulan.'_'.$tahun.'_');
+            $num  = (int)$temp;
+            $num += 1;
+        }else{
+            $num = 1;
+        }
+
+        $path = $_FILES['sk']['name'];
+        $ext = pathinfo($path, PATHINFO_EXTENSION);
+        $new_name   = $num."_sk_".$bulan."_".$tahun."_".$nik;
+        $folderName = $nik;
+
+        if(!is_dir('./edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan))
+        {
+            mkdir('./edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan,0777,true);
+        }
+
+        $config['allowed_types'] = 'pdf|jpg|jpeg|png|doc|docx'; //type yang dapat diakses bisa anda sesuaikan
+        $config['file_name']   = $new_name;
+        $config['upload_path'] = './edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan;
+        $this->upload->initialize($config);
+
+        if($this->upload->do_upload('sk'))
+        {
+            $gbr     = $this->upload->data();
+            $gambar  = $gbr['file_name']; //Mengambil file name dari gambar yang diupload
+            $this->jabatan->simpan_upload($id,$gambar);
+
+            return TRUE;
+        }
+        else{
+            //$this->jabatan->simpan_upload($id,'');
+            echo $this->upload->display_errors('<p>', '</p>');
+            return FALSE;
+        }
+    }
+
 }
 ?>

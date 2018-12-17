@@ -2,88 +2,98 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 ?>
-<div class="right_col" role="main">
-    <div class="x_panel">
-        <div class="x_title">
-            <h2><center>Data Keluarga</h2>
-            <ul class="nav navbar-right panel_toolbox">
-                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-            </ul>
-            <div class="clearfix"></div>
+<section class="content">
+    <div class="container-fluid">
+        <!--
+        <div class="block-header">
+            <h2>DATA KARYAWAN</h2>
         </div>
-        <div class="x_content">
-            <div class="container">
-                <button class="btn btn-success" onclick="add()"><i class="glyphicon glyphicon-plus"></i> Tambah Data</button>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="container">
-                        <div class="container">
-                            <form id="form-input" action="#" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+        --->
+        <!-- Horizontal Layout -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            Data Keluarga
+                        </h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <!---<li><a onclick="reload_table();"><i class="material-icons">refresh</i> <span>Reload Tabel</span> </a></li>--->
+                                    <li><a onclick="add()"><i class="material-icons">add</i> <span>Tambah Data</span></a></li>
+                                    <!---<li><a onclick="edit()"><i class="material-icons">mode_edit</i><span>Ubah Data</span> </a></li>--->
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <form id="form-input" action="#">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <br>
-                                    <label class="control-label col-md-1 col-sm-3 col-xs-12" for="nik">NIK <span class="required"></span>
-                                    </label>
-                                    <div class="col-md-3 col-sm-4 col-xs-8">
-                                        <select id="nik" name="nik" required="required" class="form-control col-md-5 col-xs-8">
-                                            <?php
-                                            foreach ($attr['karyawan'] as $karyawan){
-                                                ?>
-                                                <option value="<?php echo $karyawan->id_karyawan ?>"><?php echo $karyawan->nik ?> => <?php echo $karyawan->nama_karyawan ?></option>
-                                                <?php
-                                            }
+                                    <label class="form-label" for="nik"><span>NIK </span></label>
+                                    <select id="nik" name="nik" required="required" class="form-control">
+                                        <?php
+                                        foreach ($attr['karyawan'] as $karyawan){
                                             ?>
-                                        </select>
-                                    </div>
-                                    <button id="generate" class="btn btn-info" href="javascript:void(0)" onclick="tampil();return false;"><i class="glyphicon glyphicon-folder-open"></i> Tampilkan</button>
+                                            <option value="<?php echo $karyawan->id_karyawan ?>"><?php echo $karyawan->nik ?> => <?php echo $karyawan->nama_karyawan ?></option>
+                                            <?php
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
-                            </form>
-                        </div>
-                        <div class="table-responsive">
-                            <div id="tabel-hidden" hidden="hidden">
-                                <table id="tabel" class="table table-striped jambo_table table-bordered" cellspacing="0" width="100%" >
-                                    <thead>
-                                    <tr>
-                                        <th><center>Nama Keluarga</th>
-                                        <th><center>Hubungan Keluarga</th>
-                                        <th><center>Tempat Lahir</th>
-                                        <th><center>Tanggal Lahir</th>
-                                        <th><center>Jenis Kelamin</th>
-                                        <th><center>Suku</th>
-                                        <th><center>Agama</th>
-                                        <th><center>Alamat</th>
-                                        <th><center>No Handphone</th>
-                                        <th><center>Pekerjaan</th>
-                                        <th><center>Aksi</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <th><center>Nama Keluarga</th>
-                                        <th><center>Hubungan Keluarga</th>
-                                        <th><center>Tempat Lahir</th>
-                                        <th><center>Tanggal Lahir</th>
-                                        <th><center>Jenis Kelamin</th>
-                                        <th><center>Suku</th>
-                                        <th><center>Agama</th>
-                                        <th><center>Alamat</th>
-                                        <th><center>No Handphone</th>
-                                        <th><center>Pekerjaan</th>
-                                        <th><center>Aksi</th>
-                                    </tr>
-                                    </tfoot>
-                                </table>
                             </div>
+                            <br>
+                            <button class="btn bg-cyan" id="generate" href="javascript:void(0)" onclick="tampil();return false;"><i class="material-icons">view_list</i><span>Tampilkan</span></button>
+                        </form>
+                        <div id="tabel-hidden" hidden="hidden">
+                        <div class="table-responsive">
+                            <table id="tabel" class="table table-bordered table-striped table-hover js-basic-example dataTable" cellspacing="0" width="100%" role="grid" >
+                                <thead>
+                                <tr>
+                                    <th><center>Nama Keluarga</th>
+                                    <th><center>Hubungan Keluarga</th>
+                                    <th><center>Tempat Lahir</th>
+                                    <th><center>Tanggal Lahir</th>
+                                    <th><center>Jenis Kelamin</th>
+                                    <th><center>Suku</th>
+                                    <th><center>Agama</th>
+                                    <th><center>Alamat</th>
+                                    <th><center>No Handphone</th>
+                                    <th><center>Pekerjaan</th>
+                                    <th><center>Aksi</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th><center>Nama Keluarga</th>
+                                    <th><center>Hubungan Keluarga</th>
+                                    <th><center>Tempat Lahir</th>
+                                    <th><center>Tanggal Lahir</th>
+                                    <th><center>Jenis Kelamin</th>
+                                    <th><center>Suku</th>
+                                    <th><center>Agama</th>
+                                    <th><center>Alamat</th>
+                                    <th><center>No Handphone</th>
+                                    <th><center>Pekerjaan</th>
+                                    <th><center>Aksi</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- #END# Horizontal Layout -->
     </div>
-</div>
-
+</section>
 <div class="modal fade" id="modal_alamat" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -139,14 +149,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 <script type="text/javascript">
     var table;
-    
+
     function reload_table() {
         table.ajax.reload(null,false);
     }
-    
+
     function add() {
         window.location.replace('<?php echo site_url('keluarga')?>');
     }
@@ -200,34 +209,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
 
     function del(id) {
-        if(confirm('Anda Yakin Ingin Menghapus Data Ini ?')) {
-            // ajax delete data to database
-            $.ajax({
-                url : "<?php echo site_url('keluarga/delete')?>/"+id,
-                type: "POST",
-                dataType: "JSON",
-                success: function(data)
-                {
-                    new PNotify({
-                        title: 'Success',
-                        text: 'Data Berhasil Di Hapus',
-                        type: 'success',
-                        styling: 'bootstrap3'
-                    });
-                    reload_table();
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    new PNotify({
-                        title: 'Oh No!',
-                        text: 'Data Gagal Di Hapus',
-                        type: 'error',
-                        styling: 'bootstrap3'
-                    });
-                }
-            });
-
-        }
+        swal({
+            title: "Apakah Anda Yakin ?",
+            text: "Anda Tidak Akan Bisa Merecover Kembali Data Yang Sudah Anda Hapus !",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url : "<?php echo site_url('keluarga/delete')?>/"+id,
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function(data)
+                    {
+                        swal("Terhapus !", "Data Anda Sudah Dihapus", "success");
+                        reload_table();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        swal("Dibatalkan", "Data Anda Tidak Jadi Dihapus", "error");
+                    }
+                });
+            } else {
+                swal("Dibatalkan", "Data Anda Tidak Jadi Dihapus", "error");
+            }
+        });
     }
 
     function alamat(id) {
