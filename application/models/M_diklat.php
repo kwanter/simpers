@@ -289,5 +289,14 @@ class M_diklat extends MY_Model{
         if($query->num_rows() > 0)
             return $query->row()->sertifikat;
     }
+
+    public function getRiwayatDiklatAll(){
+        $this->db->from($this->table_cv);
+        $this->db->order_by('nama_karyawan','ASC');
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0 )
+            return $query->result();
+    }
 }
 ?>

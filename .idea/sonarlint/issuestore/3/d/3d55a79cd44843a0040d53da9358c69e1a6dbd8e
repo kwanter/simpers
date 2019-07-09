@@ -1,0 +1,39 @@
+
+b	php:S1117u"HRename "$data" which has the same name as the field declared at line 15.(È‰Ğæüÿÿÿÿ
+jphp:S101"QRename class "M_nomenklatur" to match the regular expression ^[A-Z][a-zA-Z0-9]*$.(“Àûÿÿÿÿ
+u	php:S1488ñ"_Immediately return this expression instead of assigning it to the temporary variable "$result".(×—ø§
+`	php:S11923"KDefine a constant instead of duplicating this literal "unit_kerja" 5 times.(”üßã
+Iphp:S121f"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+^	php:S1192X"JDefine a constant instead of duplicating this literal "id_parent" 3 times.(Æó¬X
+9php:S125Ò"Remove this commented out code.(¼ÿë¼ıÿÿÿÿ
+Jphp:S121¶"0Add curly braces around the nested statement(s).(Éô–úøÿÿÿÿ
+Dphp:S121"0Add curly braces around the nested statement(s).( Ÿé¼
+b	php:S1192^"HDefine a constant instead of duplicating this literal "id_uker" 4 times.(œÇôƒıÿÿÿÿ
+`	php:S1126†"EReplace this "if-then-else" statement by a single "return" statement.(ÿÎ¦ıúÿÿÿÿ
+Z	php:S1126d"EReplace this "if-then-else" statement by a single "return" statement.(†…÷
+b	php:S1192"HDefine a constant instead of duplicating this literal "jabatan" 7 times.(°ıôØÿÿÿÿÿ
+Jphp:S121†"0Add curly braces around the nested statement(s).(ÿÎ¦ıúÿÿÿÿ
+Jphp:S121š"0Add curly braces around the nested statement(s).(Éô–úøÿÿÿÿ
+Jphp:S121Å"0Add curly braces around the nested statement(s).(Éô–úøÿÿÿÿ
+Jphp:S121Í"0Add curly braces around the nested statement(s).(Éô–úøÿÿÿÿ
+r	php:S4144‰"\Update this method so that its implementation is not identical to "countParent" on line 239.(öß¾ù
+Jphp:S121¡"0Add curly braces around the nested statement(s).(Éô–úøÿÿÿÿ
+b	php:S1117W"HRename "$data" which has the same name as the field declared at line 15.(È‰Ğæüÿÿÿÿ
+c	php:S1117Ş"HRename "$data" which has the same name as the field declared at line 15.(¿¸âŞıÿÿÿÿ
+Dphp:S1211"0Add curly braces around the nested statement(s).( Ÿé¼
+u	php:S1488‹"_Immediately return this expression instead of assigning it to the temporary variable "$result".(×—ø§
+^	php:S1117€"IRename "$where" which has the same name as the field declared at line 16.(ùŒâ
+g	php:S1192N"MDefine a constant instead of duplicating this literal "kode_jabatan" 4 times.(¹ìüîùÿÿÿÿ
+ƒ	php:S1448"iClass "M_nomenklatur" has 27 methods, which is greater than 20 authorized. Split it into smaller classes.(“Àûÿÿÿÿ
+Jphp:S121ˆ"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+\	php:S1192"GDefine a constant instead of duplicating this literal "length" 4 times.( Ÿé¼
+Jphp:S121‘"0Add curly braces around the nested statement(s).(Éô–úøÿÿÿÿ
+i	php:S1192"ODefine a constant instead of duplicating this literal "id_nomenklatur" 9 times.(‡º…Ûşÿÿÿÿ
+Jphp:S121«"0Add curly braces around the nested statement(s).(Éô–úøÿÿÿÿ
+a	php:S1192R"GDefine a constant instead of duplicating this literal "jumlah" 4 times.(Ş‡ïÿÿÿÿÿ
+d	php:S1192"JDefine a constant instead of duplicating this literal "job_title" 5 times.(°ıôØÿÿÿÿÿ
+Jphp:S121ë"0Add curly braces around the nested statement(s).(Éô–úøÿÿÿÿ
++	php:S2010"Replace "OR" with "||".(¥ÑÕz
+Jphp:S121ã"0Add curly braces around the nested statement(s).(Éô–úøÿÿÿÿ
+`	php:S1192"FDefine a constant instead of duplicating this literal "level" 8 times.(µÚö®üÿÿÿÿ
+Dphp:S121d"0Add curly braces around the nested statement(s).(†…÷

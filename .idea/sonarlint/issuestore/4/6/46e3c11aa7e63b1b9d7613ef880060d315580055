@@ -1,0 +1,10 @@
+
+8php:S125>"Remove this commented out code.(û“Ùüşÿÿÿÿ
++	php:S2010"Replace "OR" with "||".(¥ÑÕz
+P	php:S1185"6Remove this method "__construct" to simply inherit it.(éúÜÅûÿÿÿÿ
+]	php:S1192"IDefine a constant instead of duplicating this literal "vw_data_" 6 times.(©¯$
+[	php:S1192"FDefine a constant instead of duplicating this literal "Data " 5 times.(¬Ó…´
+o	php:S41442"TUpdate this method so that its implementation is not identical to "data" on line 38.( Ôƒ68¯ÕË—­-
+_	php:S1192"JDefine a constant instead of duplicating this literal " Karyawan" 5 times.(¬Ó…´
+u	php:S4144,"TUpdate this method so that its implementation is not identical to "data" on line 38.(¤èœâıÿÿÿÿ8åìË—­-
+c	php:S1192"IDefine a constant instead of duplicating this literal "karyawan" 4 times.(âñå€şÿÿÿÿ

@@ -236,5 +236,11 @@ class Diklat extends MY_Controller{
         $result = $this->diklat->get_data($id);
         echo json_encode($result);
     }
+
+    public function riwayat_diklat(){
+        $data['tanggal'] = $this->indonesian_date('d F Y','','');
+        $data['diklat'] = $this->diklat->getRiwayatDiklatAll();
+        $this->load->view('vw_pdf_riwayat_diklat',$data);
+    }
 }
 ?>

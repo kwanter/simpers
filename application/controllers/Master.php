@@ -26,16 +26,31 @@ class Master extends MY_Controller{
             }
             $data['jumlah'] = $this->nomenklatur->countUker();
             $data['uker'] = $uker;
-            $this->navmenu('Data ' . ucwords($page) . ' Karyawan', 'vw_data_' . $page, '', '', $data);
+            $title = str_replace('_',' ',$page);
+            $this->navmenu('Data ' . ucwords($title) . ' Karyawan', 'vw_data_' . $page, '', '', $data);
         }
         else {
-            $this->navmenu('Data ' . ucwords($page) . ' Karyawan', 'vw_data_' . $page, '', '', $data);
+            $title = str_replace('_',' ',$page);
+            $this->navmenu('Data ' . ucwords($title) . ' Karyawan', 'vw_data_' . $page, '', '', $data);
         }
     }
 
     public function data($page){
         $data['karyawan'] = $this->pegawai->getKaryawanData();
-        $this->navmenu('Data '.ucwords($page).' Karyawan','vw_data_'.$page,'','',$data);
+        $title = str_replace('_',' ',$page);
+        $this->navmenu('Data '.ucwords($title).' Karyawan','vw_data_'.$page,'','',$data);
+    }
+
+    public function manage($page){
+        $data['karyawan'] = $this->pegawai->getKaryawanData();
+        $title = str_replace('_',' ',$page);
+        $this->navmenu('Data '.ucwords($title).' Karyawan','vw_data_'.$page,'','',$data);
+    }
+
+    public function cuti($page){
+        $data['karyawan'] = $this->pegawai->getKaryawanData();
+        $title = str_replace('_',' ',$page);
+        $this->navmenu('Data '.ucwords($title).' Karyawan','vw_data_'.$page,'','',$data);
     }
 
     public function login(){

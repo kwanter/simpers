@@ -1,0 +1,9 @@
+
+^php:S101"JRename class "M_main" to match the regular expression ^[A-Z][a-zA-Z0-9]*$.(î‰â™
+_	php:S1192
+"JDefine a constant instead of duplicating this literal "nama_grup" 3 times.(¡²ìÄ
+a	php:S1192"LDefine a constant instead of duplicating this literal "subID,value" 3 times.(ÉáÈ
+Iphp:S121"0Add curly braces around the nested statement(s).(Éô–úøÿÿÿÿ
+Iphp:S121"0Add curly braces around the nested statement(s).(Éô–úøÿÿÿÿ
+Iphp:S121#"0Add curly braces around the nested statement(s).(Éô–úøÿÿÿÿ
++	php:S2010"Replace "OR" with "||".(¥ÑÕz

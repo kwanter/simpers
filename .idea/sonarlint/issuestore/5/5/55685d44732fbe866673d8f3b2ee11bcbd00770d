@@ -1,0 +1,34 @@
+
+k	php:S1192"QDefine a constant instead of duplicating this literal "tgl_selesai_cuti" 4 times.(¹åŞ§ıÿÿÿÿ
++	php:S2010"Replace "OR" with "||".(¥ÑÕz
+g	php:S1192È"LDefine a constant instead of duplicating this literal "jumlah_cuti" 3 times.(ï“ğ»ùÿÿÿÿ
+e	php:S1192Ü"JDefine a constant instead of duplicating this literal "disetujui" 5 times.(ÂÉµ˜ùÿÿÿÿ
+^php:S101"JRename class "M_cuti" to match the regular expression ^[A-Z][a-zA-Z0-9]*$.(­«ñ½
+t	php:S1192à"RDefine a constant instead of duplicating this literal "tgl_dokumen_surat" 4 times.(×¿¬™ûÿÿÿÿ8¿şô«-
+`	php:S1192"FDefine a constant instead of duplicating this literal "start" 4 times.(óğ¶úÿÿÿÿ
+Dphp:S121e"0Add curly braces around the nested statement(s).( Ÿé¼
+i	php:S1192"ODefine a constant instead of duplicating this literal "tgl_mulai_cuti" 4 times.(¹åŞ§ıÿÿÿÿ
+\	php:S1192"GDefine a constant instead of duplicating this literal "length" 8 times.( Ÿé¼
+[	php:S11921"FDefine a constant instead of duplicating this literal "value" 6 times.(¢š’Ğ
+\	php:S11921"GDefine a constant instead of duplicating this literal "search" 6 times.(¢š’Ğ
+Jphp:S121Ñ"0Add curly braces around the nested statement(s).(ÿÎ¦ıúÿÿÿÿ
+h	php:S1192"NDefine a constant instead of duplicating this literal "nama_karyawan" 3 times.(¹åŞ§ıÿÿÿÿ
+`	php:S1126Ñ"EReplace this "if-then-else" statement by a single "return" statement.(ÿÎ¦ıúÿÿÿÿ
+Dphp:S121"0Add curly braces around the nested statement(s).( Ÿé¼
+g	php:S1192
+"MDefine a constant instead of duplicating this literal "id_datacuti" 14 times.(Ş¨Çıÿÿÿÿ
+w	php:S1448"bClass "M_cuti" has 25 methods, which is greater than 20 authorized. Split it into smaller classes.(­«ñ½
+d	php:S1117›"IRename "$order" which has the same name as the field declared at line 12.(€ô·ªûÿÿÿÿ
+^	php:S1117I"IRename "$order" which has the same name as the field declared at line 12.(Œá¥õ
+[	php:S1126†"EReplace this "if-then-else" statement by a single "return" statement.(´ƒıÈ
+Jphp:S121"0Add curly braces around the nested statement(s).(ñ¢ûõúÿÿÿÿ
+`	php:S1192C"FDefine a constant instead of duplicating this literal "order" 6 times.(º±Âáıÿÿÿÿ
+a	php:S1192Ë"LDefine a constant instead of duplicating this literal "pejabat_ttd" 7 times.(‡ø	
+Ephp:S121·"0Add curly braces around the nested statement(s).(†…÷
+Jphp:S121¹"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Dphp:S121P"0Add curly braces around the nested statement(s).( Ÿé¼
+Ephp:S121¢"0Add curly braces around the nested statement(s).( Ÿé¼
+u	php:S1488ë"_Immediately return this expression instead of assigning it to the temporary variable "$result".(üæ„¦
+Jphp:S121Ó"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Dphp:S121="0Add curly braces around the nested statement(s).(²ùñÇ
+Jphp:S121ü"0Add curly braces around the nested statement(s).(Éô–úøÿÿÿÿ

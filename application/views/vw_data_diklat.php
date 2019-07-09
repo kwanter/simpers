@@ -17,6 +17,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <h2>
                             Riwayat Diklat Karyawan
                         </h2>
+                        <br>
+                        <button class="btn bg-blue" id="generate" href="javascript:void(0)" onclick="riwayat_diklat();return false;"><i class="material-icons">work</i><span>Rekap Riwayat Diklat Karyawan</span></button>
                         <ul class="header-dropdown m-r--5">
                             <li class="dropdown">
                                 <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -113,6 +115,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     function print(sertifikat) {
         window.open('<?php echo base_url('edok/')?>'+sertifikat,'_blank');
+        window.focus();
+    }
+
+    function riwayat_diklat() {
+        window.open('<?php echo base_url('diklat/riwayat_diklat')?>','_blank');
         window.focus();
     }
 

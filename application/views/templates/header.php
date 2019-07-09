@@ -64,10 +64,10 @@
     <link href="<?php echo base_url('assets/css/materialize.css') ?>" rel="stylesheet">
 
     <!-- Custom Css -->
-    <link href="<?php echo base_url('assets/css/style.css');?>" rel="stylesheet">
+    <link href="<?php echo base_url('assets/css/style.min.css');?>" rel="stylesheet">
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-    <link href="<?php echo base_url('assets/css/themes/all-themes.css');?>" rel="stylesheet" />
+    <link href="<?php echo base_url('assets/css/themes/all-themes.min.css');?>" rel="stylesheet" />
 
     <style>
         a {
@@ -237,36 +237,59 @@
             <div class="menu">
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
-                    <li<?php if($this->uri->segment(1)=="") echo ' class="active"'; ?>>
+                    <li <?php if($this->uri->segment(1)=="") echo ' class="active"'; ?>>
                         <a href="<?php echo base_url();?>">
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>
                     </li>
-                    <li<?php if($this->uri->segment(2)=="page") echo ' class="active"'; ?>>
+                    <li <?php if($this->uri->segment(2)=="page") echo ' class="active"'; ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">face</i>
                             <span>Master Data</span>
                         </a>
                         <ul class="ml-menu">
-                            <li<?php if($this->uri->segment(3)=="pegawai"){echo ' class="active"';}?>><a href="<?php echo base_url("master/page/pegawai");?>">Data Karyawan</a></li>
-                            <li<?php if($this->uri->segment(3)=="tunjangan"){echo ' class="active"';}?>><a href="<?php echo base_url("master/page/tunjangan");?>">Data Tunjangan</a></li>
-                            <li<?php if($this->uri->segment(3)=="kj"){echo ' class="active"';}?>><a href="<?php echo base_url("master/page/kj");?>">Data Merit</a></li>
-                            <li<?php if($this->uri->segment(3)=="nomenklatur"){echo ' class="active"';}?>><a href="<?php echo base_url("master/page/nomenklatur");?>">Data Nomenklatur</a></li>
-                            <li<?php if($this->uri->segment(3)=="jenisdiklat"){echo ' class="active"';}?>><a href="<?php echo base_url("master/page/jenisdiklat");?>">Data Jenis Diklat</a></li>
+                            <li <?php if($this->uri->segment(3)=="pegawai"){echo ' class="active"';}?>><a href="<?php echo base_url("master/page/pegawai");?>">Data Karyawan</a></li>
+                            <li <?php if($this->uri->segment(3)=="tunjangan"){echo ' class="active"';}?>><a href="<?php echo base_url("master/page/tunjangan");?>">Data Tunjangan</a></li>
+                            <li <?php if($this->uri->segment(3)=="kj"){echo ' class="active"';}?>><a href="<?php echo base_url("master/page/kj");?>">Data Merit</a></li>
+                            <li <?php if($this->uri->segment(3)=="nomenklatur"){echo ' class="active"';}?>><a href="<?php echo base_url("master/page/nomenklatur");?>">Data Nomenklatur</a></li>
+                            <li <?php if($this->uri->segment(3)=="jenis_diklat"){echo ' class="active"';}?>><a href="<?php echo base_url("master/page/jenis_diklat");?>">Data Jenis Diklat</a></li>
+                            <li <?php if($this->uri->segment(3)=="libur"){echo ' class="active"';}?>><a href="<?php echo base_url("master/page/libur");?>">Data Hari Libur</a></li>
                         </ul>
                     </li>
-                    <li<?php if($this->uri->segment(2)=="data") echo ' class="active"'; ?>>
+                    <li <?php if($this->uri->segment(2)=="data") echo ' class="active"'; ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">assignment</i>
                             <span>Data Kepegawaian</span>
                         </a>
                         <ul class="ml-menu">
-                            <li<?php if($this->uri->segment(3)=="keluarga"){echo ' class="active"';}?>><a href="<?php echo base_url("master/data/keluarga");?>">Hubungan Keluarga Karyawan</a></li>
-                            <li<?php if($this->uri->segment(3)=="pendidikan"){echo ' class="active"';}?>><a href="<?php echo base_url("master/data/pendidikan");?>">Riwayat Pendidikan Formal Karyawan</a></li>
-                            <li<?php if($this->uri->segment(3)=="jabatan"){echo ' class="active"';}?>><a href="<?php echo base_url("master/data/jabatan");?>">Riwayat Jabatan Karyawan</a></li>
-                            <li<?php if($this->uri->segment(3)=="diklat"){echo ' class="active"';}?>><a href="<?php echo base_url("master/data/diklat");?>">Riwayat Diklat Karyawan</a></li>
+                            <li <?php if($this->uri->segment(3)=="keluarga"){echo ' class="active"';}?>><a href="<?php echo base_url("master/data/keluarga");?>">Hubungan Keluarga Karyawan</a></li>
+                            <li <?php if($this->uri->segment(3)=="pendidikan"){echo ' class="active"';}?>><a href="<?php echo base_url("master/data/pendidikan");?>">Riwayat Pendidikan Formal Karyawan</a></li>
+                            <li <?php if($this->uri->segment(3)=="jabatan"){echo ' class="active"';}?>><a href="<?php echo base_url("master/data/jabatan");?>">Riwayat Jabatan Karyawan</a></li>
+                            <li <?php if($this->uri->segment(3)=="diklat"){echo ' class="active"';}?>><a href="<?php echo base_url("master/data/diklat");?>">Riwayat Diklat Karyawan</a></li>
                         </ul>
+                    </li>
+                    <li <?php if($this->uri->segment(2)=="manage") echo ' class="active"'; ?>>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">book</i>
+                            <span>Manajemen Kepegawaian</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li <?php if($this->uri->segment(3)=="dokumen"){echo ' class="active"';}?>><a href="<?php echo base_url("master/manage/dokumen");?>">Dokumen Kepegawaian</a></li>
+                            <li <?php if($this->uri->segment(3)=="formasi_dokumen"){echo ' class="active"';}?>><a href="<?php echo base_url("master/manage/formasi_dokumen");?>">Formasi Dokumen Kepegawaian</a></li>
+                        </ul>
+                    </li>
+                    <li <?php if($this->uri->segment(2)=="cuti") echo ' class="active"'; ?>>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">dns</i>
+                            <span>Cuti Pegawai</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li <?php if($this->uri->segment(3)=="cuti"){echo ' class="active"';}?>><a href="<?php echo base_url("master/cuti/cuti");?>">Daftar Pengajuan Cuti Pegawai</a></li>
+                            <li <?php if($this->uri->segment(3)=="persetujuan_cuti"){echo ' class="active"';}?>><a href="<?php echo base_url("master/cuti/persetujuan_cuti");?>">Persetujuan Cuti Pegawai</a></li>
+                            <li <?php if($this->uri->segment(3)=="dokumen_cuti"){echo ' class="active"';}?>><a href="<?php echo base_url("master/cuti/dokumen_cuti");?>">Dokumen Cuti Pegawai</a></li>
+                            <li <?php if($this->uri->segment(3)=="rekap_cuti"){echo ' class="active"';}?>><a href="<?php echo base_url("master/cuti/rekap_cuti");?>">Rekap Cuti Pegawai</a></li>
+                        </ul>                           
                     </li>
                 </ul>
             </div>
@@ -275,7 +298,7 @@
         <!-- Footer -->
         <div class="legal">
             <div class="copyright">
-                Sub Divisi Sistem Informasi <br> PT KALTIM KARIANGAU TERMINAL - &copy; 2018 <?php //echo date('Y');?>
+                Sub Divisi Sistem Informasi <br> PT KALTIM KARIANGAU TERMINAL - &copy; <?php echo date('Y');?>
             </div>
             <div class="version">
                 <b>Version: </b> 1.0.1.beta

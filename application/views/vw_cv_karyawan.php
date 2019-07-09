@@ -17,6 +17,7 @@ $pdf->Image('edok/logo_kkt.jpg', 10, 15, 32, 16, 'jpg', '', '', false, 300, '', 
 $table='
        <h4 style="text-align: center">DAFTAR RIWAYAT HIDUP (CURRICULUM VITAE)</h4>
        <h5 style="text-align: center">Posisi Per '.$tanggal.'</h5>
+       <br><br>
        <h5>A. BIODATA</h5>
        <table border="1" cellpadding="2" cellspacing="1">
             <tr style="border: 0">';
@@ -70,13 +71,12 @@ $table.=    '</tr>
                 <td>'.$biodata['unit_kerja'].'</td>
             </tr>
        </table>';
-$pdf->SetFont('helvetica', '', 11, '', 'false');
+$pdf->SetFont('helvetica', '', 9, '', 'false');
 $pdf->writeHTML($table, true, true, true, false, '');
-
 $style = array('width' => 0.7, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0));
-$pdf->Line(220, 40.6, 285, 40.6, $style);
-$pdf->Line(220, 106.8, 285, 106.8, $style);
-$pdf->Line(285, 40.6, 285, 106.8, $style);
+$pdf->Line(220, 42.2, 285, 42.2, $style);
+$pdf->Line(220, 99.56, 285, 99.56, $style);
+$pdf->Line(285, 42.2, 285, 99.56, $style);
 $pdf->setJPEGQuality(75);
 $waktu = (new DateTime($pegawai['last_upload']));
 $tahun = $waktu->format('Y');
@@ -86,6 +86,7 @@ $pas_foto = 'edok/'.$link;
 $jenis_foto = $pegawai['type_foto'];
 $awal_kelas  = date_create($mk['tgl_berlaku_kj']);
 $akhir = date_create();
+date_add($akhir,date_interval_create_from_date_string("1 day"));
 $diff_kelas  = date_diff($awal_kelas, $akhir);
 $awal_jabatan  = date_create($mk['tgl_berlaku']);
 $diff_jabatan  = date_diff($awal_jabatan, $akhir);
@@ -100,7 +101,7 @@ $awal_mk  = date_create($biodata['tmt_calpeg']);
 $diff_mk  = date_diff($awal_mk, $akhir);
 $awal_sk  = date_create($pensiun->format('Y/m/d'));
 $diff_sk  = date_diff($awal_sk, $akhir);
-$pdf->Image($pas_foto, $pdf->GetX()+226, $pdf->GetY()-67, 40, 55, $jenis_foto, '', '', true, 300, '', false, false, 0, false, false, true);
+$pdf->Image($pas_foto, $pdf->GetX()+226, $pdf->GetY()-61.5, 40, 55, $jenis_foto, '', '', true, 300, '', false, false, 0, false, false, true);
 
 $html =  '<h5>B. PERHITUNGAN MASA KERJA</h5>
           <table border="1" cellpadding="1" cellspacing="1">
@@ -120,15 +121,15 @@ $html =  '<h5>B. PERHITUNGAN MASA KERJA</h5>
             <tr>
                 <td style="text-align: center;">'.substr($biodata['kelas_jabatan'],2).'</td>
                 <td style="text-align: center;">'.date('d/m/Y',strtotime($mk['tgl_berlaku'])).'</td>
-                <td style="text-align: center;">'.$diff_jabatan->y.' / '.$diff_jabatan->m.'</td>
+                <td style="text-align: center;">'.$diff_jabatan->format('%y').' / '.$diff_jabatan->format('%m').'</td>
                 <td style="text-align: center;">'.date('d/m/Y',strtotime($biodata['tgl_lahir'])).'</td>
                 <td style="text-align: center;">'.$biodata['umur_tahun'].' / '.$biodata['umur_bulan'].'</td>
                 <td style="text-align: center;">'.$pensiun->format('d/m/Y').'</td>
                 <td style="text-align: center;">'.date('d/m/Y',strtotime($biodata['tmt_calpeg'])).'</td>
-                <td style="text-align: center;">'.$diff_mk->y.' / '.$diff_mk->m.'</td>
-                <td style="text-align: center;">'.$diff_sk->y.' / '.$diff_sk->m.'</td>
+                <td style="text-align: center;">'.$diff_mk->format('%y').' / '.$diff_mk->format('%y').'</td>
+                <td style="text-align: center;">'.$diff_sk->format('%y').' / '.$diff_sk->format('%m').'</td>
                 <td style="text-align: center;">'.date('d/m/Y',strtotime($mk['tgl_berlaku_kj'])).'</td>
-                <td style="text-align: center;">'.$diff_kelas->y.' - '.$diff_kelas->m.'</td>
+                <td style="text-align: center;">'.$diff_kelas->format('%y').' - '.$diff_kelas->format('%m').'</td>
             </tr>
            </table>
            <h6>Catatan : Masa Kerja sudah termasuk masa kerja bawaan sebelum diangkat menjadi Calon Pegawai (jika ada).</h6>
@@ -179,11 +180,8 @@ foreach ($diklat as $row){
     $html5 .= '
                     <tr nobr="true">
                         <td style="text-align: center;">'.$no.'</td>
-                        <td style="text-align: left;">'.$row->jenis_diklat.'</td>
-                        <td style="text-align: left;"><b><i>'
-        .$row->tema_diklat.'</i></b><br>Lokasi : <b>'.$row->lokasi.'</b>, Penyelenggara : <b>'.$row->penyelenggara.'</b><br>'.
-        'Tgl Mulai : <b>'.$awal->format('d/m/Y').'</b>, Tgl Akhir : <b>'.$akhir->format('d/m/Y').'</b>, Day : <b>'.$selisih.' Hari</b>'.
-        '</td>
+                        <td style="text-align: justify;">'.$row->jenis_diklat.'</td>
+                        <td style="text-align: justify;"><b><i>'.$row->tema_diklat.'</i></b><br>Lokasi : <b>'.$row->lokasi.'</b>, Penyelenggara : <b>'.$row->penyelenggara.'</b><br>'.'Tgl Mulai : <b>'.$awal->format('d/m/Y').'</b>, Tgl Akhir : <b>'.$akhir->format('d/m/Y').'</b>, Day : <b>'.$selisih.' Hari</b>'.'</td>
                         <td style="text-align: center;">'.$row->no_sertifikat.'</td>
                     </tr>
                 ';
@@ -215,12 +213,16 @@ for($i=0;$i<$max;$i++){
     if($next != NULL){
         $awal  = date_create($jabatan[$i]['tgl_berlaku']);
         $akhir = date_create($jabatan[$i]['tgl_selesai']);
-        $lama_jabatan = date_diff($awal,$akhir);
+        $akhir_i = date_create($jabatan[$i]['tgl_selesai']);
+        date_add($akhir_i,date_interval_create_from_date_string("1 day"));
+        $lama_jabatan = date_diff($awal,$akhir_i);
     }
     else{
         $awal  = date_create($jabatan[$i]['tgl_berlaku']);
         $akhir = date_create();
-        $lama_jabatan = date_diff($awal,$akhir);
+        $akhir_i = date_create();
+        date_add($akhir_i,date_interval_create_from_date_string("1 day"));
+        $lama_jabatan = date_diff($awal,$akhir_i);
     }
 
     $tgl_selesai = date('d/m/Y',strtotime($jabatan[$i]['tgl_selesai']));
@@ -232,26 +234,26 @@ for($i=0;$i<$max;$i++){
         $html7 .='
                 <tr>
                     <td style="text-align: center">'.$no.'</td>
-                    <td style="text-align: center">'.$jabatan[$i]['tugas_jabatan'].'</td>
+                    <td style="text-align: justify">'.$jabatan[$i]['tugas_jabatan'].'</td>
                     <td style="text-align: center">'.substr($jabatan[$i]['kelas_jabatan'],2).'</td>
                     <td style="text-align: center">'.date('d/m/Y',strtotime($jabatan[$i]['tgl_berlaku'])).'</td>
                     <td style="text-align: center">'.$tgl_selesai.'</td>
                     <td style="text-align: center">'.$jabatan[$i]['no_surat'].'</td>
                     <td style="text-align: center">'.$jabatan[$i]['unit_kerja'].'</td>
-                    <td style="text-align: center">'.$lama_jabatan->m.' Bulan</td>
+                    <td style="text-align: center">'.$lama_jabatan->format('%m').' Bulan</td>
                 </tr>
             ';
     } else if($lama_jabatan->m == 0){
         $html7 .='
                 <tr>
                     <td style="text-align: center">'.$no.'</td>
-                    <td style="text-align: center">'.$jabatan[$i]['tugas_jabatan'].'</td>
+                    <td style="text-align: justify">'.$jabatan[$i]['tugas_jabatan'].'</td>
                     <td style="text-align: center">'.substr($jabatan[$i]['kelas_jabatan'],2).'</td>
                     <td style="text-align: center">'.date('d/m/Y',strtotime($jabatan[$i]['tgl_berlaku'])).'</td>
                     <td style="text-align: center">'.$tgl_selesai.'</td>
                     <td style="text-align: center">'.$jabatan[$i]['no_surat'].'</td>
                     <td style="text-align: center">'.$jabatan[$i]['unit_kerja'].'</td>
-                    <td style="text-align: center">'.$lama_jabatan->y.' Tahun</td>
+                    <td style="text-align: center">'.$lama_jabatan->format('%y').' Tahun</td>
                 </tr>
             ';
     }
@@ -259,13 +261,13 @@ for($i=0;$i<$max;$i++){
         $html7 .='
                 <tr>
                     <td style="text-align: center">'.$no.'</td>
-                    <td style="text-align: center">'.$jabatan[$i]['tugas_jabatan'].'</td>
+                    <td style="text-align: justify">'.$jabatan[$i]['tugas_jabatan'].'</td>
                     <td style="text-align: center">'.substr($jabatan[$i]['kelas_jabatan'],2).'</td>
                     <td style="text-align: center">'.date('d/m/Y',strtotime($jabatan[$i]['tgl_berlaku'])).'</td>
                     <td style="text-align: center">'.$tgl_selesai.'</td>
                     <td style="text-align: center">'.$jabatan[$i]['no_surat'].'</td>
                     <td style="text-align: center">'.$jabatan[$i]['unit_kerja'].'</td>
-                    <td style="text-align: center">'.$lama_jabatan->y.' Tahun '.$lama_jabatan->m.' Bulan</td>
+                    <td style="text-align: center">'.$lama_jabatan->format('%y').' Tahun '.$lama_jabatan->format('%m').' Bulan</td>
                 </tr>
             ';
     }
@@ -294,7 +296,7 @@ foreach ($keluarga as $row){
     $html9 .='
                     <tr nobr="true">
                         <td style="text-align: center;">'.$no.'</td>
-                        <td style="text-align: center;">'.$row->nama_keluarga.'</td>
+                        <td style="text-align: justify;">'.$row->nama_keluarga.'</td>
                         <td style="text-align: center;">'.$row->tmpt_lahir.'</td>
                         <td style="text-align: center;">'.date('d/m/Y',strtotime($row->tgl_lahir)).'</td>
                         <td style="text-align: center;">'.$jk.'</td>
@@ -305,25 +307,25 @@ foreach ($keluarga as $row){
     $no++;
 }
 $html9 .=' </table>';
-$pdf->SetFont('helvetica', '', 11, '', 'false');
+$pdf->SetFont('helvetica', '', 9, '', 'false');
 $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->AddPage('L','A4');
 $pdf->writeHTML($html2,true,false,true,false,'');
-$pdf->SetFont('helvetica', '', 10, '', 'false');
+$pdf->SetFont('helvetica', '', 8, '', 'false');
 $pdf->writeHTML($html3,true,false,true,false,'');
-$pdf->SetFont('helvetica', '', 11, '', 'false');
+$pdf->SetFont('helvetica', '', 9, '', 'false');
 $pdf->writeHTML($html4,true,false,true,false,'');
-$pdf->SetFont('helvetica', '', 10, '', 'false');
+$pdf->SetFont('helvetica', '', 8, '', 'false');
 $pdf->writeHTML($html5,true,false,true,false,'');
 $pdf->AddPage('L','A4');
-$pdf->SetFont('helvetica', '', 11, '', 'false');
+$pdf->SetFont('helvetica', '', 9, '', 'false');
 $pdf->writeHTML($html6,true,false,true,false,'');
-$pdf->SetFont('helvetica', '', 10, '', 'false');
+$pdf->SetFont('helvetica', '', 8, '', 'false');
 $pdf->writeHTML($html7,true,false,true,false,'');
 $pdf->AddPage('L','A4');
-$pdf->SetFont('helvetica', '', 11, '', 'false');
+$pdf->SetFont('helvetica', '', 9, '', 'false');
 $pdf->writeHTML($html8,true,false,true,false,'');
-$pdf->SetFont('helvetica', '', 10, '', 'false');
+$pdf->SetFont('helvetica', '', 8, '', 'false');
 $pdf->writeHTML($html9,true,false,true,false,'');
 
 ob_end_clean();

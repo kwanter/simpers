@@ -88,6 +88,10 @@ class M_keluarga extends MY_Model {
         $no_hp = str_replace("_","",$this->db->escape_str($post['no_hp']));
         $pekerjaan = $this->db->escape_str($post['pekerjaan']);
 
+        if($tgl_lahir == '' || $tgl_lahir == '0000-00-00' || $tgl_lahir == NULL){
+            $tgl_lahir = '1970-01-01';
+        }
+
         $data = array(
             'id_karyawan'           => $id_karyawan,
             'nama_keluarga'         => $nama,
@@ -136,6 +140,10 @@ class M_keluarga extends MY_Model {
         //informasi data keluarga untuk komunikasi
         $no_hp = str_replace("_","",$this->db->escape_str($post['no_hp']));
         $pekerjaan = $this->db->escape_str($post['pekerjaan']);
+
+        if($tgl_lahir == '' || $tgl_lahir == '0000-00-00' || $tgl_lahir == NULL){
+            $tgl_lahir = '1970-01-01';
+        }
 
         $where = array(
             'id_keluarga' => $this->db->escape_str($post['id_keluarga'])
@@ -190,5 +198,38 @@ class M_keluarga extends MY_Model {
         if($query->num_rows() > 0)
             return $query->result();
     }
+
+    public function getNama($id){
+        $this->db->from($this->table);
+        $this->db->where('id_keluarga',$id);
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+            return $query->row()->nama_keluarga;
+    }
+
+    public function getDesc($id){
+        $this->db->from($this->table_hubkeluarga);
+        $this->db->where('id_hubungankeluarga',$id);
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+            return $query->row()->desc_hubungan;
+    }
+
+    public function getKeterangan($id){
+        $this->db->from($this->table);
+        $this->db->where('id_keluarga',$id);
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0){
+            $query_hub = $this->db->from($this->table_hubkeluarga)
+                     ->where('id_hubungankeluarga',$query->row()->id_hubungankeluarga)
+                     ->get();
+            if($query_hub->num_rows() > 0)
+                return $query_hub->row()->desc_hubungan;
+        }
+    }
+    
 }
 ?>

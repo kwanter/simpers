@@ -7,6 +7,8 @@ class M_nomenklatur extends MY_Model {
     var $table_jabatan  = 'm_nomenklatur';
     var $table_formasi  = 'vw_formasi_nomenklatur';
     var $table_uker     = 'm_uker';
+    var $table_pejabat_cuti = 'vw_pejabat_cuti';
+
     var $column_order   = array('id_nomenklatur'); //set column field database for datatable orderable
     var $column_search  = array('jabatan','job_title'); //set column field database for datatable searchable
     var $order          = array(null); // default order
@@ -144,10 +146,28 @@ class M_nomenklatur extends MY_Model {
             return $query->row();
     }
 
+    public function getPejabatData(){
+        $this->db->from($this->table_pejabat_cuti);
+        $this->db->order_by('nama_karyawan','ASC');
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+            return $query->result();
+    }
+
     public function searchData($data){
         $this->db->from($this->table_nomen);
         $this->db->like('jabatan',$data,'both');
         $this->db->order_by('jabatan','ASC');
+        $this->db->limit(10);
+
+        return $this->db->get()->result();
+    }
+
+    public function searchDataCuti($data){
+        $this->db->from($this->table_pejabat_cuti);
+        $this->db->like('nama_karyawan',$data,'both');
+        $this->db->order_by('kelas_jabatan','ASC');
         $this->db->limit(10);
 
         return $this->db->get()->result();
@@ -278,6 +298,17 @@ class M_nomenklatur extends MY_Model {
 
         if($query->num_rows() > 0)
             return $query->result();
+    }
+
+    function getPejabatTTD($id){
+        $this->db->select('jabatan,job_title,nama_karyawan,nik,tugas_jabatan,level');
+        $this->db->from($this->table_pejabat_cuti);
+        //$this->db->where('id_nomenklatur','6'); //id nomenklatur manajer sdm di database
+        $this->db->where('id_karyawan',$id);
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+            return $query->row();
     }
 }
 ?>

@@ -269,6 +269,7 @@ class Nomenklatur extends MY_Controller{
             $total   = 0;
             $terisi  = 0;
             $selisih = 0;
+            $temp_jabatan = '';
 
             foreach($result as $row){
                 if($row->unit_kerja == $count->unit_kerja){
@@ -283,7 +284,6 @@ class Nomenklatur extends MY_Controller{
                 $ex->setCellValue("B".$counter,"$row->jabatan");
                 $kj = trim($row->kelas_jabatan,'KJ');
                 $ex->setCellValue("G".$counter,"$kj");
-                $total += $row->jumlah_tersedia;
                 $ex->setCellValue("H".$counter,"");
                 $object->getActiveSheet()->mergeCells('I'.$counter.':K'.$counter);
                 $ex->setCellValue("I".$counter,"$row->nama_karyawan");
@@ -307,11 +307,20 @@ class Nomenklatur extends MY_Controller{
 
                 $ex->setCellValue("Q".$counter,"$tmt_kj");
                 $ex->setCellValue("R".$counter,"$row->periode");
-                $ex->setCellValue("S".$counter,"$row->jumlah_tersedia");
-                $ex->setCellValue("T".$counter,"$row->jumlah_terisi");
-                $terisi += $row->jumlah_terisi;
-                $ex->setCellValue("U".$counter,"$row->selisih");
-                $selisih += $row->selisih;
+                
+                if($row->tugas_jabatan == $temp_jabatan){
+                    $ex->setCellValue("S".$counter,"0");
+                    $ex->setCellValue("T".$counter,"0");
+                    $ex->setCellValue("U".$counter,"0");
+                }else{
+                    $ex->setCellValue("S".$counter,"$row->jumlah_tersedia");
+                    $ex->setCellValue("T".$counter,"$row->jumlah_terisi");
+                    $ex->setCellValue("U".$counter,"$row->selisih");
+                    $terisi += $row->jumlah_terisi;
+                    $selisih += $row->selisih;
+                    $total += $row->jumlah_tersedia;
+                }
+                
                 $ex->setCellValue("V".$counter,"$row->jenjang_pendidikan $row->jurusan");
                 $ex->setCellValue("W".$counter,"$row->tmpt_lahir");
                 $tanggal_lahir = (new DateTime($row->tgl_lahir))->format('d-m-Y');
@@ -339,6 +348,7 @@ class Nomenklatur extends MY_Controller{
                 $ex->setCellValue("AA".$counter,"$pensiun");
                 $ex->setCellValue("AB".$counter,"$row->no_surat");
                 $counter=$counter+1;
+                $temp_jabatan = $row->jabatan;
                 }
             }
 

@@ -1,6 +1,27 @@
 <?php
 //error_reporting(0);
 //ini_set('display_errors', 0);
+if (isset($_SERVER["HTTP_ORIGIN"]) === true) {
+	$origin = $_SERVER["HTTP_ORIGIN"];
+	$allowed_origins = array(
+		"http://localhost/simpers",
+        "https://localhost/simpers",
+        "http://192.168.19.21/simpers",
+        "https://192.168.19.21/simpers",
+        "http://dev.kkt/simpers",
+        "https://dev.kkt/simpers"
+	);
+	if (in_array($origin, $allowed_origins, true) === true) {
+		header('Access-Control-Allow-Origin: ' . $origin);
+		header('Access-Control-Allow-Credentials: true');
+		header('Access-Control-Allow-Methods: POST');
+		header('Access-Control-Allow-Headers: Content-Type');
+	}
+	if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
+		exit; // OPTIONS request wants only the policy, we can stop here
+	}
+}
+
 date_default_timezone_set("Asia/Makassar");
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -21,7 +42,8 @@ class MY_Controller extends CI_Controller
         $this->load->model('M_pendidikan','pendidikan');
         $this->load->model('M_jabatan','jabatan');
         $this->load->model('M_diklat','diklat');
-
+        $this->load->model('M_dokumen','dokumen');
+        $this->load->model('M_cuti','cuti');
     }
 
     function indonesian_date ($date_format = 'D, j-M-Y',$timestamp = '', $suffix = '') {
@@ -90,6 +112,14 @@ class MY_Controller extends CI_Controller
     public function cekUser($uid,$sesi,$role,$level){
         $result = $this->admin->cekUID($uid,$sesi,$role,$level);
         return $result;
+    }
+
+    function debug_to_console( $data ) {
+        $output = $data;
+        if ( is_array( $output ) )
+            $output = implode( ',', $output);
+
+        echo "<script>console.log( 'Debug Objects: " . $output . "' );</script>";
     }
 
     public function Romawi($angka)

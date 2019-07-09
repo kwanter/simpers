@@ -179,6 +179,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             paging : false,
             searching : false,
             lengthChange : false,
+            ordering : false,
             drawCallback : function( settings ) {
                 $('#generate').prop('disabled', false);
             },
@@ -197,14 +198,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     $('#generate').prop('disabled', true);
                 },
             },
-
-            //Set column definition initialisation properties.
-            columnDefs: [
-                {
-                    "targets": [ 0 ,1,2,3,4,5,6,7,8,9,10], //first column / numbering column
-                    "orderable" : false
-                },
-            ],
         });
     }
 

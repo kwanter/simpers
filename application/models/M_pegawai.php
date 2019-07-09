@@ -6,13 +6,13 @@ class M_pegawai extends MY_Model{
     var $table_sosial  = 'm_karyawan_kartu';
     var $table_cv      = 'vw_biodata_cv_karyawan';
     var $table_mk      = 'vw_masa_kerja_cv';
+    var $table_cuti    = 'vw_data_karyawan_cuti';
 
     var $column_order  = array('id_karyawan', 'nik'); //set column field database for datatable orderable
     var $column_search = array('nik','nama_karyawan'); //set column field database for datatable searchable
-    var $order         = array('id_karyawan' => 'asc'); // default order
+    var $order         = array('nama_karyawan' => 'asc'); // default order
 
-    public function get_datatables()
-    {
+    public function get_datatables() {
         $this->_get_datatables_query();
         if($_POST['length'] != -1)
             $this->db->limit($_POST['length'], $_POST['start']);
@@ -22,18 +22,73 @@ class M_pegawai extends MY_Model{
         return $query->result();
     }
 
-    function countFiltered()
-    {
+    function countFiltered() {
         $this->_get_datatables_query();
         $this->db->where('soft_delete','not-deleted');
         $query = $this->db->get();
         return $query->num_rows();
     }
 
-    public function countAll()
-    {
+    public function countAll() {
         $this->db->from($this->table);
         $this->db->where('soft_delete','not-deleted');
+        return $this->db->count_all_results();
+    }
+
+    function _get_datatables_query_cv() {
+        $this->db->from($this->table_cv);
+        $i = 0;
+        foreach ($this->column_search as $item) // loop column
+        {
+            if($_POST['search']['value']) // if datatable send POST for search
+            {
+                if($i===0) // first loop
+                {
+                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->like($item, $_POST['search']['value']);
+                }
+                else
+                {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
+
+                if(count($this->column_search) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
+            }
+            $i++;
+        }
+
+        if(isset($_POST['order'])) // here order processing
+        {
+            $this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        }
+        else if(isset($this->order))
+        {
+            $order = $this->order;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+
+    public function get_datatables_cv() {
+        $this->_get_datatables_query_cv();
+        if($_POST['length'] != -1)
+            $this->db->limit($_POST['length'], $_POST['start']);
+        //$this->db->where('id_karyawan',$id);
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+
+    function countFilteredCV() {
+        $this->_get_datatables_query();
+        //$this->db->where('id_karyawan',$id);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function countAllCV() {
+        $this->db->from($this->table_cv);
+        //$this->db->where('id_karyawan',$id);
         return $this->db->count_all_results();
     }
 
@@ -59,6 +114,10 @@ class M_pegawai extends MY_Model{
         $no_hp = str_replace("_","",$this->db->escape_str($post['no_hp']));
         $no_hp_2 = str_replace("_","",$this->db->escape_str($post['no_hp2']));
         $email = $this->db->escape_str($post['email']);
+
+        if($tgl_lahir == '0000-00-00' || $tgl_lahir == '' || $tgl_lahir == NULL){
+            $tgl_lahir = '1970-01-01';
+        }
 
         if($pilihan == '1'){
             //informasi data pegawai untuk alamat
@@ -178,6 +237,10 @@ class M_pegawai extends MY_Model{
         //informasi data pegawai untuk komunikasi
         $no_telp = str_replace("_","",$this->db->escape_str($post['no_telp']));
         $no_hp = str_replace("_","",$this->db->escape_str($post['no_hp']));
+
+        if($tgl_lahir == '0000-00-00' || $tgl_lahir == '' || $tgl_lahir == NULL){
+            $tgl_lahir = '1970-01-01';
+        }
 
         if($post['no_hp2'] == NULL)
             $no_hp_2 = '';
@@ -367,5 +430,55 @@ class M_pegawai extends MY_Model{
 
         return $this->db->affected_rows();
     }
+
+    public function getDataKaryawanCuti($id){
+        $this->db->select('jabatan_terakhir,unit_kerja,sisa_cuti_tahunan');
+        $this->db->from($this->table_cuti);
+        $this->db->where('id_karyawan',$id);
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+            return $query->row_array();
+    }
+
+    public function getSisaCuti($id){
+        $this->db->select('sisa_cuti_tahunan');
+        $this->db->from($this->table_cuti);
+        $this->db->where('id_karyawan',$id);
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+            return $query->row()->sisa_cuti_tahunan;
+    }
+
+    public function updateSisaCuti($post){
+        $where = array(
+                  'id_karyawan' =>  $post['id_karyawan']
+                );
+        $data  = array(
+                   'cuti_tahunan' => $post['cuti_tahunan']
+                );
+        $this->update_where($this->table,$where,$data);
+    }
+
+    public function getKaryawanDataCuti($id){
+        $this->db->from($this->table_cv);
+        $this->db->where('id_karyawan',$id);
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+            return $query->row();
+    }
+
+    public function getAlamatKaryawan($id){
+        $this->db->select('alamat_domisili,alamat_ktp,no_hp');
+        $this->db->from($this->table);
+        $this->db->where('id_karyawan',$id);
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+            return $query->row();
+    }
+
 }
 ?>

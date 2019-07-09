@@ -58,6 +58,10 @@ class M_jabatan extends MY_Model {
         $kj = $this->db->escape_str($post['kj']);
         $periode = $this->db->escape_str($post['periode']);
 
+        if($tgl_selesai == '0000-00-00' || $tgl_selesai == '' || $tgl_selesai == NULL){
+            $tgl_selesai = '1970-01-01';
+        }
+            
         $data = array(
             'id_karyawan'       => $id_karyawan,
             'no_surat'          => $no_surat,
@@ -84,7 +88,7 @@ class M_jabatan extends MY_Model {
 
 
         if($result['status'])
-            return TRUE;
+            return $result;
         else
             return FALSE;
     }
@@ -104,6 +108,10 @@ class M_jabatan extends MY_Model {
         $kj = $this->db->escape_str($post['kj']);
         $periode = $this->db->escape_str($post['periode']);
         $status = $this->db->escape_str($post['status']);
+
+        if($tgl_selesai == '0000-00-00' || $tgl_selesai == '' || $tgl_selesai == NULL){
+            $tgl_selesai = '1970-01-01';
+        }
 
         $where = array(
             'id_riwayatjabatan' => $this->db->escape_str($post['id_riwayat'])
@@ -133,8 +141,11 @@ class M_jabatan extends MY_Model {
     }
 
     public function deleteData($id){
+        $this->db->set('status','non-aktif');
         $this->db->where('id_riwayatjabatan', $id);
-        $this->db->delete($this->table);
+        $this->db->update($this->table);
+
+        return $this->db->affected_rows();
     }
 
     public function getIdKaryawan($id){

@@ -209,5 +209,15 @@ class Pegawai extends MY_Controller
     public function excel(){
 
     }
+
+    public function getDataKaryawanCuti(){
+        $id = $this->input->post('data');
+        $result = $this->pegawai->getDataKaryawanCuti($id);
+        $data['status'] = 'ok';
+        $data['result'] = $result;
+
+        if($data != NULL)
+            echo json_encode($data);
+    }
 }
 ?>
