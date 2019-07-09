@@ -6,5 +6,4 @@
 	ignorecase = true
 	precomposeunicode = true
 [remote "origin"]
-	url = https://gitlab.com/kwanter/simpers.git
-	fetch = +refs/heads/*:refs/remotes/origin/*
+	url = https://github.com/kwanter/simpers.git
