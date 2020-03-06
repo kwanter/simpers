@@ -12,8 +12,7 @@ class MY_Model extends CI_Model {
         $this->load->database();
     }
 
-    function _get_datatables_query()
-    {
+    function _get_datatables_query() {
         $this->db->from($this->table);
 
         $i = 0;

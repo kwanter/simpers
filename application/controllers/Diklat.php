@@ -242,5 +242,11 @@ class Diklat extends MY_Controller{
         $data['diklat'] = $this->diklat->getRiwayatDiklatAll();
         $this->load->view('vw_pdf_riwayat_diklat',$data);
     }
+
+    public function riwayat_diklat_total($id = 'null', $tahun = ''){
+        $data['tanggal'] = $this->indonesian_date('d F Y','','');
+        $data['diklat'] = $this->diklat->getRiwayatDiklatTotal($id,$tahun);
+        $this->load->view('vw_pdf_riwayat_diklat',$data);
+    }
 }
 ?>

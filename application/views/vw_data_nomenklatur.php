@@ -98,6 +98,49 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- #END# Horizontal Layout -->
     </div>
 </section>
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Nomenklatur Yang Terisi</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+      </div>
+      <div class="modal-body">
+            <table id="tabel_detail" class="table table-bordered table-striped table-hover js-basic-example dataTable" cellspacing="0" width="100%" role="grid">
+                <thead>
+                <tr>
+                    <th>
+                        <center>NIK/NIPP
+                    </th>
+                    <th>
+                        <center>Nama Karyawan
+                    </th>
+                    <th>
+                        <center>Tmpt Lahir
+                    </th>
+                    <th>
+                        <center>Tgl Lahir
+                    </th>
+                    <th>
+                        <center>Umur
+                    </th>
+                    <th>
+                        <center>Jenis Kelamin
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script type="text/javascript">
     var table = [];
     var jumlah = <?php echo $attr['jumlah']?>;
@@ -152,6 +195,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     function add() {
         window.location.replace('<?php echo site_url('nomenklatur')?>');
+    }
+
+    function detail(id){
+        $("#modal").modal('show');
     }
 
     function edit(id) {

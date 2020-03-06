@@ -298,5 +298,23 @@ class M_diklat extends MY_Model{
         if($query->num_rows() > 0 )
             return $query->result();
     }
+
+    public function getRiwayatDiklatTotal($id,$tahun){
+        $this->db->from($this->table_cv);
+        
+        if($id != 'null')
+            $this->db->where('id_karyawan',$id);
+
+        if($tahun != ''){
+            $this->db->where('year(tgl_mulaidiklat)',$tahun);
+        }
+        
+        $this->db->order_by('nama_karyawan','ASC');
+        $this->db->order_by('tgl_mulaidiklat','DESC');
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0 )
+            return $query->result();
+    }
 }
 ?>

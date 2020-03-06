@@ -339,16 +339,28 @@ class Dokumen extends MY_Controller{
             mkdir('./edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan,0777,true);
         }
 
+        if(!is_dir('./edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan.'/thumbnail'))
+        {
+            mkdir('./edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan.'/thumbnail',0777,true);
+        }
+
         $config['allowed_types'] = 'pdf|jpg|jpeg|png|doc|docx'; //type yang dapat diakses bisa anda sesuaikan
         $config['file_name']   = $new_name;
         $config['upload_path'] = './edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan;
         $this->upload->initialize($config);
-
+        
         if($this->upload->do_upload('dokumen'))
         {
             $gbr     = $this->upload->data();
             $gambar  = $gbr['file_name']; //Mengambil file name dari gambar yang diupload
             $this->dokumen->simpan_upload($id,$gambar);
+            /*
+            if($_FILES['dokumen']['type'] == 'image/jpg' || $_FILES['dokumen']['type'] == 'image/jpeg'){
+                $source_path = site_url() . '/edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan.'/'.$new_name;
+                $target_path = site_url() . '/edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan.'/thumbnail/';
+                $this->imageThumbnail($source_path,$target_path);
+            }
+            */
 
             return TRUE;
         }

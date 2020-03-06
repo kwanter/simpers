@@ -46,6 +46,28 @@ class MY_Controller extends CI_Controller
         $this->load->model('M_cuti','cuti');
     }
 
+    public function imageThumbnail($source_path,$target_path) {
+       $config_manip = array(
+           'image_library' => 'gd2',
+           'source_image' => $source_path,
+           'new_image' => $target_path,
+           'maintain_ratio' => TRUE,
+           'create_thumb' => TRUE,
+           'thumb_marker' => '_thumb',
+           'width' => 150,
+           'height' => 150
+       );
+ 
+ 
+       $this->load->library('image_lib', $config_manip);
+       if (!$this->image_lib->resize()) {
+           echo $this->image_lib->display_errors();
+       }
+ 
+ 
+       $this->image_lib->clear();
+    }
+
     function indonesian_date ($date_format = 'D, j-M-Y',$timestamp = '', $suffix = '') {
         if (trim ($timestamp) == '')
         {

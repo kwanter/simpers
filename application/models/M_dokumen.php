@@ -186,7 +186,7 @@ class M_dokumen extends MY_Model {
         //informasi dasar riwayat jabatan
         $id_karyawan = $this->db->escape_str($post['nik']);
         $no_dokumen = $this->db->escape_str($post['no_dok']);
-        $keluarga   = $this->db->escape_str($post['keluarga']);
+        //$keluarga   = $this->db->escape_str($post['keluarga']);
         $masa_berlaku = $this->db->escape_str($post['tanggal']);
         $jenis_dok = $this->db->escape_str($post['jenis_dok']);
 
@@ -200,7 +200,6 @@ class M_dokumen extends MY_Model {
 
         $data = array(
             'kartu_singkat'    => $jenis_dok,
-            'id_keluarga'      => $keluarga,
             'kartu_no'         => $no_dokumen,
             'kartu_tgl_akhir'  => $masa_berlaku,
         );

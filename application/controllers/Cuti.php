@@ -208,7 +208,7 @@ class Cuti extends MY_Controller{
         $tgl_awal       = $this->input->post('tgl_cuti_awal');
         $tgl_akhir      = $this->input->post('tgl_cuti_akhir');
         $tgl_kembali    = $this->input->post('tgl_cuti_kembali');
-        $tgl_formulir   = $this->input->post('tgl_formulir_cuti');
+        $tgl_formulir   = $this->input->post('tgl_dokumen_formulir');
 
         if($tgl_awal == NULL || $tgl_awal == "")
             $tgl_awal = "1970-01-01";
@@ -274,7 +274,7 @@ class Cuti extends MY_Controller{
                     'id_karyawan'  => $karyawan,
                     'cuti_tahunan' => $sisa_cuti
                 );
-                $this->pegawai->updateSisaCuti($data_cuti);
+                //$this->pegawai->updateSisaCuti($data_cuti);
                 
             } else{
                 $result = FALSE;
@@ -321,7 +321,7 @@ class Cuti extends MY_Controller{
         $tgl_awal       = $this->input->post('tgl_cuti_awal');
         $tgl_akhir      = $this->input->post('tgl_cuti_akhir');
         $tgl_kembali    = $this->input->post('tgl_cuti_kembali');
-        $tgl_formulir   = $this->input->post('tgl_formulir_cuti');
+        $tgl_formulir   = $this->input->post('tgl_dokumen_formulir');
 
         if($tgl_awal == NULL || $tgl_awal == "")
             $tgl_awal = "1970-01-01";
@@ -389,7 +389,7 @@ class Cuti extends MY_Controller{
                     'id_karyawan'  => $karyawan,
                     'cuti_tahunan' => $sisa_cuti
                 );
-                $this->pegawai->updateSisaCuti($data_cuti);
+                //$this->pegawai->updateSisaCuti($data_cuti);
                 
             } else{
                 $result = FALSE;
@@ -451,7 +451,12 @@ class Cuti extends MY_Controller{
                 'pejabat_ttd'       => $pejabat_ttd
             );
         }
-
+        $dataCuti = $this->cuti->getDataCuti($id_cuti);
+        $data_cuti_karyawan = array(
+            'id_karyawan'  => $dataCuti->id_karyawan,
+            'cuti_tahunan' => $dataCuti->jumlah_cuti
+        );
+        $this->pegawai->updateSisaCuti($data_cuti_karyawan);
         $result = $this->cuti->updatePersetujuanCuti($data);
         print_r($data);
         echo $result;
@@ -525,6 +530,11 @@ class Cuti extends MY_Controller{
             mkdir('./edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan,0777,true);
         }
 
+        if(!is_dir('./edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan.'/thumbnail'))
+        {
+            mkdir('./edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan.'/thumbnail',0777,true);
+        }
+
         $config['allowed_types'] = 'pdf|jpg|jpeg|png|doc|docx'; //type yang dapat diakses bisa anda sesuaikan
         $config['file_name']   = $new_name;
         $config['upload_path'] = './edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan;
@@ -535,7 +545,13 @@ class Cuti extends MY_Controller{
             $gbr     = $this->upload->data();
             $gambar  = $gbr['file_name']; //Mengambil file name dari gambar yang diupload
             $this->dokumen->simpan_upload($id,$gambar);
-
+            /*
+            if($_FILES['dokumen']['type'] == 'image/jpg' || $_FILES['dokumen']['type'] == 'image/jpeg'){
+                $source_path = $_SERVER['DOCUMENT_ROOT'] . '/edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan.'/'.$new_name;
+                $target_path = $_SERVER['DOCUMENT_ROOT'] . '/edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan.'/thumbnail/';
+                $this->imageThumbnail($source_path,$target_path);
+            }
+            */
             return TRUE;
         }
         else{

@@ -200,7 +200,6 @@ class M_cuti extends MY_Model {
             'jumlah_cuti'           => $post['jumlah_cuti'],
             'pejabat_setuju'        => $post['pejabat_setuju'],
             'pejabat_wewenang'      => $post['pejabat_wewenang'],
-            'pejabat_ttd'           => $post['pejabat_ttd'],
             'kota_cuti'             => $post['kota_cuti']
             );
 

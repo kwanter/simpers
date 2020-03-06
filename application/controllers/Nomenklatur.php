@@ -46,7 +46,7 @@ class Nomenklatur extends MY_Controller{
             $row[] = '<p style="font-size: small" title="'.$jabatan->job_title.'">'.$jabatan->jabatan;
             $row[] = '<center style="font-size: small">'.trim($jabatan->kelas_jabatan,'KJ');
             $row[] = '<center style="font-size: small">'.$jabatan->jumlah_tersedia;
-            $row[] = '<center style="font-size: small">'.$jabatan->jumlah_nomenklatur_terisi;
+            $row[] = '<center style="font-size: small">'.'<a href="javascript:void(0)" title="Detail" id="detail" onclick="detail('."'".$jabatan->id_nomenklatur."'".')" >'.$jabatan->jumlah_nomenklatur_terisi.'</a>';
             $row[] = '<center style="font-size: small">'.$jabatan->selisih;
             //add html for action
             $row[] = '<center><a href="javascript:void(0)" title="Edit" onclick="edit('."'".$jabatan->id_nomenklatur."'".')"><i class="material-icons">launch</i></a>

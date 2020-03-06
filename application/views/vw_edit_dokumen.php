@@ -110,6 +110,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 error   : 'error'
             }
         });
+        $('#jenis_dok').trigger('change');
     });
 
     function cancel() {

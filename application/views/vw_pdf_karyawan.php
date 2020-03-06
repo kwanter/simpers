@@ -46,7 +46,7 @@ $table = '
             $jumlah_tersedia = 0;
             $jumlah_terisi   = 0;
             $jumlah_selisih  = 0;
-
+            $tmp_jabatan = "";
             foreach ($nomenklatur as $row){
                 if($row->unit_kerja == $column->unit_kerja){
                     $table .=  '
@@ -66,10 +66,13 @@ $table = '
                     <td style="text-align: center;width: 5%;">'.$row->selisih.'</td>
                 </tr>';
                     $no++;
-                    $jumlah_tersedia += $row->jumlah_tersedia;
-                    $jumlah_terisi   += $row->jumlah_terisi;
-                    $jumlah_selisih  += $row->selisih;
+                    if($row->jabatan != $tmp_jabatan){
+                        $jumlah_tersedia += $row->jumlah_tersedia;
+                        $jumlah_terisi   += $row->jumlah_terisi;
+                        $jumlah_selisih  += $row->selisih;
+                    }
                 }
+                $tmp_jabatan = $row->jabatan;
             }
             $table.='
                 <tr>

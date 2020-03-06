@@ -18,7 +18,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             Riwayat Diklat Karyawan
                         </h2>
                         <br>
-                        <button class="btn bg-blue" id="generate" href="javascript:void(0)" onclick="riwayat_diklat();return false;"><i class="material-icons">work</i><span>Rekap Riwayat Diklat Karyawan</span></button>
+                        <button class="btn bg-blue" id="generate" href="javascript:void(0)" onclick="riwayat_diklat_total();return false;"><i class="material-icons">book</i><span>Rekap Riwayat Diklat Karyawan</span></button>
+                        <br><br>
+                        <form>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="tahun" class="form-label">Tahun</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">date_range</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input id="tahun" class="form-control datepicker" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        
                         <ul class="header-dropdown m-r--5">
                             <li class="dropdown">
                                 <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -38,6 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label class="form-label" for="nik"><span>NIK </span></label>
                                     <select id="nik" name="nik" required="required" class="form-control">
+                                        <option value="null">---</option>
                                         <?php
                                         foreach ($attr['karyawan'] as $karyawan){
                                             ?>
@@ -123,52 +141,64 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         window.focus();
     }
 
+    function riwayat_diklat_total() {
+        var id = $('#nik').val();
+        var tahun = $('#tahun').val();
+        window.open('<?php echo base_url('diklat/riwayat_diklat_total/')?>'+id+'/'+tahun,'_blank');
+        window.focus();
+    }
+
     function xprint() {
         alert('Dokumen Belum Di Upload');
     }
 
     function tampil() {
         var id = $('#nik').val();
-        $('#tabel-hidden').removeAttr('hidden');
-        $.fn.dataTable.ext.errMode = 'none';
 
-        table = $('#tabel').on( 'error.dt', function ( e, settings, techNote, message ) {
-            console.log( 'An error has been reported by DataTables: ', message );
-        }).DataTable({
-            processing: true, //Feature control the processing indicator.
-            serverSide: true, //Feature control DataTables' server-side processing mode.
-            order: [], //Initial no order.
-            autowidth : true,
-            paging : false,
-            searching : false,
-            lengthChange : false,
-            drawCallback : function( settings ) {
-                $('#generate').prop('disabled', false);
-            },
-            destroy           : true,
-            iDisplayLength   : "all",
+        if(id != ''){
+            $('#tabel-hidden').removeAttr('hidden');
+            $.fn.dataTable.ext.errMode = 'none';
 
-            // Load data for the table's content from an Ajax source
-            ajax: {
-                "url"       : "<?php echo base_url('diklat/ajax_list')?>",
-                "type"      : "POST",
-                "dataType"  : "JSON",
-                "data"      : {
-                    id : id,
+            table = $('#tabel').on( 'error.dt', function ( e, settings, techNote, message ) {
+                console.log( 'An error has been reported by DataTables: ', message );
+            }).DataTable({
+                processing: true, //Feature control the processing indicator.
+                serverSide: true, //Feature control DataTables' server-side processing mode.
+                order: [], //Initial no order.
+                autowidth : true,
+                paging : false,
+                searching : false,
+                lengthChange : false,
+                drawCallback : function( settings ) {
+                    $('#generate').prop('disabled', false);
                 },
-                'beforeSend': function () {
-                    $('#generate').prop('disabled', true);
-                },
-            },
+                destroy           : true,
+                iDisplayLength   : "all",
 
-            //Set column definition initialisation properties.
-            columnDefs: [
-                {
-                    "targets": [ 0 ,-1,-2,-3,-4,-5,-6,-7,-8,-9,-10,-11], //first column / numbering column
-                    "orderable" : false
+                // Load data for the table's content from an Ajax source
+                ajax: {
+                    "url"       : "<?php echo base_url('diklat/ajax_list')?>",
+                    "type"      : "POST",
+                    "dataType"  : "JSON",
+                    "data"      : {
+                        id : id,
+                    },
+                    'beforeSend': function () {
+                        $('#generate').prop('disabled', true);
+                    },
                 },
-            ],
-        });
+
+                //Set column definition initialisation properties.
+                columnDefs: [
+                    {
+                        "targets": [ 0 ,-1,-2,-3,-4,-5,-6,-7,-8,-9,-10,-11], //first column / numbering column
+                        "orderable" : false
+                    },
+                ],
+            });
+        }else{
+            $('#tabel-hidden').Attr('hidden');
+        }
     }
 
     function del(id) {
@@ -203,4 +233,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             }
         });
     }
+
+    $('.datepicker').bootstrapMaterialDatePicker({
+        format: 'YYYY',
+        clearButton: true,
+        time: false,
+    });
 </script>

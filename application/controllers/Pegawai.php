@@ -160,23 +160,43 @@ class Pegawai extends MY_Controller
             mkdir('./edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan, 0777,true);
         }
 
+        if(!is_dir('./edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan.'/thumbnail'))
+        {
+            mkdir('./edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan.'/thumbnail',0777,true);
+        }
+
         $this->upload->initialize($config);
 
         if($this->upload->do_upload('foto'))
         {
+            $source_image = imagecreatefromjpeg($_FILES['foto']['tmp_name']);
+            $width = imagesx($source_image);
+            $height = imagesy($source_image);
+            $desired_width = 200;
+            $desired_height = floor($height * ($desired_width / $width));
+
             $gbr     = $this->upload->data();
             $configer =  array(
                 'image_library'   => 'gd2',
                 'source_image'    =>  $gbr['full_path'],
+                'new_image'       => './edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan.'/'.'thumbnail/',
                 'maintain_ratio'  =>  TRUE,
-                'width'           =>  1440,
-                'height'          =>  1920,
+                'create_thumb'    => TRUE,
+                'width'           =>  $desired_width,
+                'height'          =>  $desired_height,
             );
             $this->image_lib->clear();
             $this->image_lib->initialize($configer);
             $this->image_lib->resize();
             $gambar  = $gbr['file_name']; //Mengambil file name dari gambar yang diupload
             $type    = $gbr['image_type'];
+            /*
+            if($_FILES['foto']['type'] == 'image/jpg' || $_FILES['foto']['type'] == 'image/jpeg'){
+                $source_path = $_SERVER['DOCUMENT_ROOT'] . '/edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan.'/'.$new_name;
+                $target_path = $_SERVER['DOCUMENT_ROOT'] . '/edok/'.$folderName.'/'.$type.'/'.$tahun.'/'.$bulan.'/'.'thumbnail/'.$new_name;
+                $this->imageThumbnail($source_path,$target_path);
+            }
+            */
             $now = (new DateTime())->format('Y-m-d');
             $this->pegawai->simpan_upload($id,$gambar,$type);
             $this->pegawai->upload_time($id,$now);
