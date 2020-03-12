@@ -152,8 +152,14 @@ $html4 = '<br>
                 <tr>
                     <td></td>
                 </tr>
+                <table border="0">
                 <tr>
-                    <table border="0">';
+                    <td style="width:5% !important;"></td>
+                    <td style="width:60% !important;">Sisa Cuti Tahun Berjalan</td>
+                    <td style="width:10% !important; text-align : center !important;">: &nbsp;&nbsp;'.$karyawan->sisa_cuti.'</td>
+                    <td style="width:25% !important;"> hari</td>
+                </tr>
+                <tr>';
                     if($cuti->jenis_cuti == "Cuti Tahunan") {
                         $html4 .= '<tr>
                             <td style="width:5% !important;">1.</td>
@@ -235,10 +241,11 @@ $html4 = '<br>
                     }
 
                     if($cuti->jenis_cuti == "Cuti Tahunan") {
+                        $sisa_cuti = $karyawan->sisa_cuti - $cuti->jumlah_cuti;
                         $html4 .='<tr>
                             <td style="width:5% !important;"></td>
                             <td style="width:60% !important;">Sisa Cuti </td>
-                            <td style="width:10% !important; text-align : center !important;">: &nbsp;&nbsp;'.$karyawan->sisa_cuti.'</td>
+                            <td style="width:10% !important; text-align : center !important;">: &nbsp;&nbsp;'.$sisa_cuti.'</td>
                             <td style="width:25% !important;"> hari</td>
                         </tr>';
                     }else{
