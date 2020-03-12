@@ -9,8 +9,8 @@
 
     <!-------------------------------------CSS PART----------------------------------->
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <link href="<?php echo base_url('assets/css/font.css');?>" rel="stylesheet" type="text/css">
+    <link href="<?php echo base_url('assets/css/icon.css');?>" rel="stylesheet" type="text/css">
 
     <!-- Bootstrap Core Css -->
     <link href="<?php echo base_url('assets/plugins/bootstrap/css/bootstrap.css');?>" rel="stylesheet">
