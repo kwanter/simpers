@@ -41,7 +41,6 @@ class M_cuti extends MY_Model {
 
     function _get_datatables_query_cuti() {
         $this->db->from($this->table_cuti);
-
         $i = 0;
 
         foreach ($this->column_search_cuti as $item) // loop column
@@ -79,6 +78,7 @@ class M_cuti extends MY_Model {
         $this->_get_datatables_query_cuti();
         if($_POST['length'] != -1)
             $this->db->limit($_POST['length'], $_POST['start']);
+        $this->db->where('disetujui',NULL);
         $query = $this->db->get();
 
         return $query->result();
@@ -86,12 +86,14 @@ class M_cuti extends MY_Model {
 
     function countFilteredCuti() {
         $this->_get_datatables_query_cuti();
+        $this->db->where('disetujui',NULL);
         $query = $this->db->get();
         return $query->num_rows();
     }
 
     public function countAllCuti(){
         $this->db->from($this->table_cuti);
+        $this->db->where('disetujui',NULL);
         return $this->db->count_all_results();
     }
 
@@ -109,7 +111,7 @@ class M_cuti extends MY_Model {
     function countFilteredRiwayatCuti($id)
     {
         $this->_get_datatables_query();
-        $this->db->where('id_datacuti',$id);
+        $this->db->where('id_karyawan',$id);
         $query = $this->db->get();
         return $query->num_rows();
     }
@@ -117,7 +119,7 @@ class M_cuti extends MY_Model {
     public function countAllRiwayatCuti($id)
     {
         $this->db->from($this->table);
-        $this->db->where('id_datacuti',$id);
+        $this->db->where('id_karyawan',$id);
         return $this->db->count_all_results();
     }
 
