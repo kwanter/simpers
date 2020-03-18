@@ -75,9 +75,16 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
+	//'hostname' => '47.74.234.241',
 	'hostname' => 'localhost',
+	/*
 	'username' => 'fendy',
 	'password' => 'dbFend1#2019',
+	*/
+	//'username' => 'fendy',
+	//'password' => 'fendy123',
+	'username' => 'root',
+	'password' => '',
 	'database' => 'db_simpers',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

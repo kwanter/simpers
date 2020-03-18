@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="card">
                     <div class="header">
                         <h2>
-                            Rekap Sisa Cuti Karyawan
+                            Sisa Cuti Tahunan Karyawan
                         </h2>
                     </div>
                     <div class="body">

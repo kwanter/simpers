@@ -13,7 +13,7 @@ class M_cuti extends MY_Model {
 
     var $column_order_libur      = array('id_harilibur'); //set column field database for datatable orderable
     var $column_search_libur     = array('tgl_libur','deskripsi_libur'); //set column field database for datatable searchable
-    var $order_libur             = array('id_harilibur' => 'asc'); // default order
+    var $order_libur             = array('tgl_libur' => 'asc'); // default order
 
     var $column_order_cuti      = array('id_datacuti','nama_karyawan','nama_karyawan_pengganti','jenis_cuti','tgl_mulai_cuti','tgl_selesai_cuti'); //set column field database for datatable orderable
     var $column_search_cuti     = array('nama_karyawan','nama_karyawan_pengganti','jenis_cuti','tgl_mulai_cuti','tgl_selesai_cuti'); //set column field database for datatable searchable
@@ -211,6 +211,42 @@ class M_cuti extends MY_Model {
             return FALSE;
     }
 
+    public function saveDataLibur($post){
+        $result = $this->db->insert_batch($this->table_libur,$post);
+
+        if($result)
+            return TRUE;
+        else
+            return FALSE;
+    }
+
+    public function saveDataLiburSingle($post){
+        $result = $this->save_where($this->table_libur, $post);
+
+        if($result['status'])
+            return TRUE;
+        else
+            return FALSE;
+    }
+
+    public function updateDataLibur($post){
+        $where = array(
+            'id_harilibur' => $this->db->escape_str($post['id_harilibur'])
+        );
+
+        $data = array(
+            'tgl_libur' => $post['tgl_libur'],
+            'deskripsi_libur' => $post['deskripsi_libur'],
+        );
+
+        $result= $this->update_where($this->table_libur,$where,$data);
+
+        if($result)
+            return TRUE;
+        else
+            return FALSE;
+    }
+
     public function updatePersetujuanCuti($data){
         $where = array(
             'id_datacuti' => $data['id_cuti']
@@ -244,6 +280,13 @@ class M_cuti extends MY_Model {
         return $this->db->affected_rows();
     }
 
+    public function deleteDataLibur($id){
+        $this->db->where('id_harilibur', $id);
+        $this->db->delete($this->table_libur);
+
+        return $this->db->affected_rows();
+    }
+
     public function getJenisCuti(){
         $this->db->from($this->table_jenis);
         $query = $this->db->get();
@@ -253,12 +296,12 @@ class M_cuti extends MY_Model {
     }
 
     public function cekHariLibur($tgl){
-        $query = $this->db->select('*')
+        $query = $this->db->select('tgl_libur')
                  ->from($this->table_libur)
                  ->where('tgl_libur',$tgl)
                  ->get();
         
-        if($query->num_rows() > 0){
+        if($query->num_rows() === 1){
             return TRUE;
         } else{
             return FALSE;
@@ -295,6 +338,19 @@ class M_cuti extends MY_Model {
         $query = $this->db->select('*')
                  ->from($this->table_cuti)
                  ->where('id_datacuti',$id)
+                 ->get();
+        
+        if($query->num_rows() === 1){
+            $result = $query->row();
+        } 
+
+        return $result;
+    }
+
+    public function getDataLibur($id){
+        $query = $this->db->select('*')
+                 ->from($this->table_libur)
+                 ->where('id_harilibur',$id)
                  ->get();
         
         if($query->num_rows() === 1){

@@ -18,6 +18,15 @@ class Cuti extends MY_Controller{
         $this->navmenu('Ubah Data Pengajuan Cuti Karyawan','vw_edit_data_cuti','','',$data);
     }
 
+    public function libur_add(){
+        $this->navmenu('Tambah Data Hari Libur','vw_input_data_libur','','',"");
+    }
+
+    public function libur_edit($id){
+        $data['data'] = $this->cuti->getDataLibur($id);
+        $this->navmenu('Ubah Data Hari Libur','vw_edit_data_libur','','',$data);
+    }
+
     public function ajax_list(){
         $list = $this->cuti->get_datatable_cuti();
         $data = array();
@@ -268,14 +277,7 @@ class Cuti extends MY_Controller{
                     'pejabat_wewenang'      => $pejabat_wewenang,
                     'kota_cuti'             => $kota_cuti
                 );
-                $result = $this->cuti->saveData($data);
-
-                $data_cuti = array(
-                    'id_karyawan'  => $karyawan,
-                    'cuti_tahunan' => $sisa_cuti
-                );
-                //$this->pegawai->updateSisaCuti($data_cuti);
-                
+                $result = $this->cuti->saveData($data);                
             } else{
                 $result = FALSE;
             }
@@ -384,13 +386,6 @@ class Cuti extends MY_Controller{
                     'kota_cuti'             => $kota_cuti
                 );
                 $result = $this->cuti->updateData($data);
-
-                $data_cuti = array(
-                    'id_karyawan'  => $karyawan,
-                    'cuti_tahunan' => $sisa_cuti
-                );
-                //$this->pegawai->updateSisaCuti($data_cuti);
-                
             } else{
                 $result = FALSE;
             }
@@ -426,6 +421,120 @@ class Cuti extends MY_Controller{
                        </div>');
 
         $this->edit($id_datacuti);
+    }
+
+    public function addDataLibur() {
+        $tgl_awal       = $this->input->post('tgl_libur_awal');
+        $tgl_akhir      = $this->input->post('tgl_libur_akhir');
+        $deskripsi      = $this->input->post('deskripsi_libur');
+
+        if($tgl_awal == NULL || $tgl_awal == "")
+            $tgl_awal = "1970-01-01";
+
+        if($tgl_akhir == NULL || $tgl_akhir == "")
+            $tgl_akhir = "1970-01-01";
+
+        $tgl_libur_awal   = new DateTime($tgl_awal);
+        $tgl_libur_akhir  = new DateTime($tgl_akhir);
+
+        $date_awal  = date_create($tgl_libur_awal->format('Y-m-d'));
+        $date_akhir = date_create($tgl_libur_akhir->format('Y-m-d'));
+        $selisih_tgl = date_diff($date_awal,$date_akhir);
+        $beda_hari = (int)($selisih_tgl->format('%a'));
+        $data = array();
+
+        if($beda_hari === 0){
+            $tgl = $date_awal->format('Y-m-d');
+            $row = array(
+                'tgl_libur' => $tgl,
+                'deskripsi_libur' => $deskripsi
+            );
+            $cekHariLibur = $this->cuti->cekHariLibur($tgl);
+            if($cekHariLibur)
+                $result = FALSE;
+            else
+                $result = $this->cuti->saveDataLiburSingle($row); 
+        }else{
+            $tgl = $date_awal->format('Y-m-d');
+            for($i=0;$i<=$beda_hari;$i++){    
+                $cekHariLibur = $this->cuti->cekHariLibur($tgl);
+                if(!$cekHariLibur){
+                    $row = array(
+                        'tgl_libur' => $tgl,
+                        'deskripsi_libur' => $deskripsi
+                    );
+                    $data[] = $row;
+                }
+                
+                $new_date = new DateTime($tgl);
+                $new_date->modify('+1 day');
+                $tgl = $new_date->format('Y-m-d');
+            }
+            if(empty($data))
+                $result = FALSE;
+            else
+                $result = $this->cuti->saveDataLibur($data);
+        }
+
+        if ($result)
+            $this->session->set_flashdata('notif', 
+            '<div class="alert alert-success" role="alert"> 
+                    Data Berhasil Ditambahkan , <a href="javascript:void(0)" title="Kembali Ke Halaman Depan" onclick="master();"> Kembali...</a>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>');
+        else
+            $this->session->set_flashdata('notif',
+                '<div class="alert alert-danger" role="alert"> 
+                    Data Gagal Ditambahkan..Silahkan Periksa Kembali Inputan Anda 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>');
+
+        $this->libur_add();
+    }
+
+    public function updateDataLibur() {
+        $tgl = $this->input->post('tgl_libur');
+        $id_harilibur = $this->input->post('idm');
+        $deskripsi_libur = $this->input->post('deskripsi_libur');
+
+        if($tgl == NULL || $tgl == "")
+            $tgl = "1970-01-01";
+
+        $date = new DateTime($tgl);
+
+        $data = array(
+            'id_harilibur' => $id_harilibur,
+            'deskripsi_libur' => $deskripsi_libur,
+            'tgl_libur' => $date->format('Y-m-d'),
+        );
+
+        $result = $this->cuti->updateDataLibur($data);
+        
+        if ($result)
+            $this->session->set_flashdata('notif', '<div class="alert alert-success" role="alert"> 
+                                                                    Data Berhasil Di Update, <a href="javascript:void(0)" title="Kembali Ke Halaman Depan" onclick="master();"> Kembali...</a>
+                                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>');
+        else
+            $this->session->set_flashdata('notif',
+                '<div class="alert alert-danger" role="alert"> Data Gagal Di Update..Silahkan Periksa Kembali Inputan Anda 
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                       </div>');
+
+        $this->libur_edit($id_harilibur);
+    }
+
+    public function deleteLibur($id){
+        $this->cuti->deleteDataLibur($id);
+        echo json_encode(array("status" => TRUE));
     }
 
     function persetujuan(){

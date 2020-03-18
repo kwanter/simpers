@@ -288,6 +288,7 @@
                             <li <?php if($this->uri->segment(3)=="cuti"){echo ' class="active"';}?>><a href="<?php echo base_url("master/cuti/cuti");?>">Daftar Pengajuan Cuti Pegawai</a></li>
                             <li <?php if($this->uri->segment(3)=="persetujuan_cuti"){echo ' class="active"';}?>><a href="<?php echo base_url("master/cuti/persetujuan_cuti");?>">Persetujuan Cuti Pegawai</a></li>
                             <li <?php if($this->uri->segment(3)=="dokumen_cuti"){echo ' class="active"';}?>><a href="<?php echo base_url("master/cuti/dokumen_cuti");?>">Dokumen Cuti Pegawai</a></li>
+                            <li <?php if($this->uri->segment(3)=="sisa_cuti"){echo ' class="active"';}?>><a href="<?php echo base_url("master/cuti/sisa_cuti");?>">Sisa Cuti Pegawai</a></li>
                             <li <?php if($this->uri->segment(3)=="rekap_cuti"){echo ' class="active"';}?>><a href="<?php echo base_url("master/cuti/rekap_cuti");?>">Rekap Cuti Pegawai</a></li>
                         </ul>                           
                     </li>
