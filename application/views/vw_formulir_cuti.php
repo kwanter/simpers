@@ -265,7 +265,7 @@ $html4 = '<br>
             <table border="0">
                 <tr>
                     <td style="text-align:center !important;">
-                        Catatan/Pertimbangan Atasan Langsung : <br>
+                        Catatan/Pertimbangan Atasan Langsung : <br><br>
                         '.$cuti->jabatan_pejabat_menyetujui.'
                     </td>
                 </tr>
