@@ -140,7 +140,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="tgl_diklat" class="form-label">Alasan Pengajuan Cuti</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">title</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input id="alasan_pengajuan" name="alasan_pengajuan" class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="tgl_diklat" class="form-label">Tanggal Pengajuan Awal Cuti</label>
                                     <div class="input-group">
@@ -153,7 +166,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="tgl_diklat" class="form-label">Tanggal Pengajuan Akhir Cuti</label>
                                     <div class="input-group">

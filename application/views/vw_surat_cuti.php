@@ -80,8 +80,8 @@ $kop_surat = '
     </table>
 ';
 $pdf->writeHTML($kop_surat, true, true, true, false, '');
-
-$html = '<br><br>
+if($cuti->jenis_cuti == 'Cuti Tahunan'){
+    $html = '<br><br>
     <table border="0" cellpadding="1" cellspacing="1">
         <tr>
             <td>Diberikan Cuti Tahunan untuk Tahun '.$tahun.' kepada karyawan PT. Kaltim Kariangau Terminal : </td>
@@ -124,15 +124,61 @@ $html = '<br><br>
             <td class="td3">'.$karyawan->unit_kerja.'</td>
         </tr>
     </table>';
-    
+}else if($cuti->jenis_cuti == 'Cuti Karena Alasan Penting'){
+    $html = '<br><br>
+    <table border="0" cellpadding="1" cellspacing="1">
+        <tr>
+            <td>Diberikan Cuti Alasan Penting kepada karyawan PT. Kaltim Kariangau Terminal : </td>
+        </tr>
+    </table>
+    <br><br>
+    <style type="text/css">
+        .td1 {
+            width : 25% !important;
+            text-align  : left !important;
+        }  
+        .td2 {
+            width : 5% !important;
+            text-align  : center !important;
+        }  
+        .td3 {
+            width : 70% !important;
+            text-align  : left !important;
+        }
+    </style>
+    <table border="0" cellpadding="1" cellspacing="1">
+        <tr>
+            <td class="td1">Nama </td>
+            <td class="td2"> : </td>
+            <td class="td3"><strong>'.$cuti->nama_karyawan.'</strong></td>
+        </tr>
+        <tr>
+            <td class="td1">NIK </td>
+            <td class="td2"> : </td>
+            <td class="td3">'.$cuti->nik.'</td>
+        </tr>
+        <tr>
+            <td class="td1">Jabatan/Posisi </td>
+            <td class="td2"> : </td>
+            <td class="td3">'.$karyawan->jabatan_terakhir.'</td>
+        </tr>
+        <tr>
+            <td class="td1">Unit Kerja </td>
+            <td class="td2"> : </td>
+            <td class="td3">'.$karyawan->unit_kerja.'</td>
+        </tr>
+    </table>';
+}else{
+
+}
 $pdf->SetFont('times', '', 12, '', 'false');
 $pdf->writeHTML($html, true, true, true, false, '');
 
 $tgl_awal_cuti = indonesian_date("d F Y", strtotime($cuti->tgl_mulai_cuti),'');
 $tgl_akhir_cuti = indonesian_date("d F Y", strtotime($cuti->tgl_selesai_cuti),'');
 $tgl_kembali  = indonesian_date("d F Y", strtotime($cuti->tgl_kembali));
-
-$html2 = '
+if($cuti->jenis_cuti == 'Cuti Tahunan'){
+    $html2 = '
         <br>
         <table border="0" cellpadding="1" cellspacing="1">
             <tr>
@@ -178,8 +224,49 @@ $html2 = '
             <tr>
                 <td>Demikian Surat Izin '.$cuti->jenis_cuti.' ini dibuat untuk dapat dipergunakan sebagaimana mestinya.</td>
             </tr>
-        </table>
-';
+        </table>';
+}elseif($cuti->jenis_cuti == 'Cuti Karena Alasan Penting'){
+    $html2 = '
+        <br>
+        <table border="0" cellpadding="1" cellspacing="1">
+            <tr>
+                <td>Selama '.$cuti->jumlah_cuti.' hari untuk '.$cuti->alasan_pengajuan.' pada tanggal '.$tgl_awal_cuti.' s.d '.$tgl_akhir_cuti.' dengan ketentuan sebagai berikut : </td>
+            </tr>
+            <tr><td></td></tr>
+            <tr>
+                <td>a. 
+                    <table>
+                        <tr>
+                            <td>Sebelum menjalankan '.$cuti->jenis_cuti.', wajib menyerahkan pekerjaannya kepada atasan langsung atau kepada pejabat lain yang ditunjuk. </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td>b. 
+                    <table>
+                        <tr>
+                            <td>Setelah selesai menjalankan '.$cuti->jenis_cuti.', wajib melaporkan diri kepada atasan langsung dan bekerja kembali sebagaimana mestinya.</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Demikian Surat Izin '.$cuti->jenis_cuti.' ini dibuat untuk dapat dipergunakan sebagaimana mestinya.</td>
+            </tr>
+        </table>';
+}else{
+
+}
 $pdf->writeHTML($html2, true, true, true, false, '');
 
 $html3 = '

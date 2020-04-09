@@ -238,6 +238,11 @@ class Cuti extends MY_Controller{
         $pejabat_setuju     = $this->input->post('pejabat_setuju');
         $pejabat_wewenang   = $this->input->post('pejabat_wewenang');
         $kota_cuti          = $this->input->post('kota_cuti');
+        
+        if(isset($_POST['alasan_pengajuan']))
+            $alasan_pengajuan = $this->input->post('alasan_pengajuan');
+        else
+            $alasan_pengajuan = '';
 
         $tanggal_skrg = $tgl_cuti_awal->format('Y-m-d');
         $date_awal  = date_create($tgl_cuti_awal->format('Y-m-d'));
@@ -246,20 +251,20 @@ class Cuti extends MY_Controller{
         $jmlh_cuti = (int)($selisih_tgl->format('%a'));
         $jmlh_cuti++;
 
-        for($i=0;$i<(int)($selisih_tgl->format('%a'));$i++){
-            $day = (new DateTime($tanggal_skrg))->format('D');
-            $cek_libur = $this->cuti->cekHariLibur($tanggal_skrg);
-            
-            if($day == 'Sat' || $day == 'Sun' || $cek_libur == TRUE){
-                $jmlh_cuti-=1;
-            }
-            
-            $new_date = new DateTime($tanggal_skrg);
-            $new_date->modify('+1 day');
-            $tanggal_skrg = $new_date->format('Y-m-d');
-        }
-
         if($jenis_cuti == 'CUTTAHUNAN'){
+            for($i=0;$i<(int)($selisih_tgl->format('%a'));$i++){
+                $day = (new DateTime($tanggal_skrg))->format('D');
+                $cek_libur = $this->cuti->cekHariLibur($tanggal_skrg);
+                
+                if($day == 'Sat' || $day == 'Sun' || $cek_libur == TRUE){
+                    $jmlh_cuti-=1;
+                }
+                
+                $new_date = new DateTime($tanggal_skrg);
+                $new_date->modify('+1 day');
+                $tanggal_skrg = $new_date->format('Y-m-d');
+            }
+
             $sisa_cuti = (int)($this->pegawai->getSisaCuti($karyawan));
         
             if($sisa_cuti > $jmlh_cuti){
@@ -275,7 +280,8 @@ class Cuti extends MY_Controller{
                     'jumlah_cuti'           => $jmlh_cuti,
                     'pejabat_setuju'        => $pejabat_setuju,
                     'pejabat_wewenang'      => $pejabat_wewenang,
-                    'kota_cuti'             => $kota_cuti
+                    'kota_cuti'             => $kota_cuti,
+                    'alasan_pengajuan'      => $alasan_pengajuan
                 );
                 $result = $this->cuti->saveData($data);                
             } else{
@@ -293,12 +299,12 @@ class Cuti extends MY_Controller{
                     'jumlah_cuti'           => $jmlh_cuti,
                     'pejabat_setuju'        => $pejabat_setuju,
                     'pejabat_wewenang'      => $pejabat_wewenang,
-                    'kota_cuti'             => $kota_cuti
+                    'kota_cuti'             => $kota_cuti,
+                    'alasan_pengajuan'      => $alasan_pengajuan
             );
             $result = $this->cuti->saveData($data);
         }
 
-        
         if ($result)
             $this->session->set_flashdata('notif', 
             '<div class="alert alert-success" role="alert"> 
@@ -565,7 +571,9 @@ class Cuti extends MY_Controller{
             'id_karyawan'  => $dataCuti->id_karyawan,
             'cuti_tahunan' => $dataCuti->jumlah_cuti
         );
-        $this->pegawai->updateSisaCuti($data_cuti_karyawan);
+        if($dataCuti->jenis_cuti == 'CUTTAHUNAN')
+            $this->pegawai->updateSisaCuti($data_cuti_karyawan);
+        
         $result = $this->cuti->updatePersetujuanCuti($data);
         print_r($data);
         echo $result;

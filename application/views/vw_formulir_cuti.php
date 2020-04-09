@@ -75,7 +75,8 @@ $pdf->SetFont('times', '', 12, '', 'false');
 $pdf->writeHTML($html, true, true, true, false, '');
 $tgl_awal_cuti = date("d-m-Y", strtotime($cuti->tgl_mulai_cuti));
 $tgl_akhir_cuti = date("d-m-Y", strtotime($cuti->tgl_selesai_cuti));
-$html2 = '
+if($cuti->jenis_cuti == "Cuti Tahunan"){
+    $html2 = '
         <table cellspacing="2">
             <tr>
                 <td>Dengan ini mengajukan permintaan '.$cuti->jenis_cuti.' selama '.$cuti->jumlah_cuti.' hari kerja, 
@@ -87,8 +88,22 @@ $html2 = '
             <tr>
                 <td>Demikian permintaan cuti ini saya buat mohon pertimbangan selanjutnya</td>
             </tr>
-        </table>
-';
+        </table>';
+}else{
+    $html2 = '
+    <table cellspacing="2">
+        <tr>
+            <td>Dengan ini mengajukan permintaan '.$cuti->jenis_cuti.' selama '.$cuti->jumlah_cuti.' hari, 
+                pada tanggal '.$tgl_awal_cuti.' s.d '.$tgl_akhir_cuti.' untuk '.$cuti->alasan_pengajuan.'.</td>
+        </tr>
+        <tr>
+            <td>Selama menjalankan cuti '.$cuti->jenis_cuti.' alamat saya adalah di '.$cuti->kota_cuti.' dan nomor telepon yang dapat dihubungi adalah '.$data->no_hp.'</td>
+        </tr>
+        <tr>
+            <td>Demikian permintaan cuti '.$cuti->jenis_cuti.' ini saya buat mohon pertimbangan selanjutnya</td>
+        </tr>
+    </table>';
+}
 $pdf->writeHTML($html2, true, true, true, false, '');
 
 $html3 = '
@@ -127,8 +142,8 @@ $html3 = '
         </table>
 ';
 $pdf->writeHTML($html3, true, true, true, false, '');
-if($cuti->jenis_cuti != "Cuti Tahunan")
-    $karyawan->sisa_cuti = "";
+//if($cuti->jenis_cuti != "Cuti Tahunan")
+//    $karyawan->sisa_cuti = "";
 
 $html4 = '<br>
 <style>
@@ -252,7 +267,7 @@ $html4 = '<br>
                         $html4 .='<tr>
                             <td style="width:5% !important;"></td>
                             <td style="width:60% !important;">Sisa Cuti </td>
-                            <td style="width:10% !important; text-align : center !important;">: &nbsp;&nbsp;</td>
+                            <td style="width:10% !important; text-align : center !important;">: &nbsp;&nbsp;'.$karyawan->sisa_cuti.'</td>
                             <td style="width:25% !important;"> hari</td>
                         </tr>';
                     }
