@@ -75,16 +75,17 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	//'hostname' => '47.74.234.241',
-	'hostname' => 'localhost',
+	//'hostname' => '149.129.55.189',
+	'hostname' => 'qapps.site',
+	//'hostname' => 'localhost',
 	/*
 	'username' => 'fendy',
 	'password' => 'dbFend1#2019',
 	*/
-	//'username' => 'fendy',
-	//'password' => 'fendy123',
-	'username' => 'root',
-	'password' => '',
+	'username' => 'fendy',
+	'password' => 'fendy123',
+	//'username' => 'root',
+	//'password' => '',
 	'database' => 'db_simpers',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

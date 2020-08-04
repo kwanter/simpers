@@ -114,9 +114,9 @@ if($cuti->jenis_cuti == 'Cuti Tahunan'){
             <td class="td3">'.$cuti->nik.'</td>
         </tr>
         <tr>
-            <td class="td1">Jabatan/Posisi </td>
+            <td class="td1">Jabatan/KJ </td>
             <td class="td2"> : </td>
-            <td class="td3">'.$karyawan->jabatan_terakhir.'</td>
+            <td class="td3">'.$karyawan->jabatan_terakhir.'/'.$karyawan->kelas_jabatan.'</td>
         </tr>
         <tr>
             <td class="td1">Unit Kerja </td>
