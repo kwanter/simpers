@@ -387,5 +387,23 @@ class M_cuti extends MY_Model {
 
         return $result;
     }
+
+    public function getJmlhBersalin($id){
+        $query = $this->db->select('*')
+                 ->from($this->table)
+                 ->where('id_karyawan',$id)
+                 ->where('jenis_cuti','CUTBERSALIN')
+                 ->where('disetujui != 0')
+                 ->where('soft_delete','not-deleted')
+                 ->get();
+        
+        if($query->num_rows() > 0){
+            $result = $query->num_rows();
+        }else{
+            $result = 0;
+        } 
+
+        return $result;
+    }
 }
 ?>

@@ -60,9 +60,9 @@ $html = '<br><br><br>
             <td class="td3">'.$cuti->nik.'</td>
         </tr>
         <tr>
-            <td class="td1">Jabatan/Posisi </td>
+            <td class="td1">Jabatan/KJ </td>
             <td class="td2"> : </td>
-            <td class="td3">'.$karyawan->jabatan_terakhir.'</td>
+            <td class="td3">'.$karyawan->jabatan_terakhir.'/'.$karyawan->kelas_jabatan.'</td>
         </tr>
         <tr>
             <td class="td1">Unit Kerja </td>
@@ -93,11 +93,10 @@ if($cuti->jenis_cuti == "Cuti Tahunan"){
     $html2 = '
     <table cellspacing="2">
         <tr>
-            <td>Dengan ini mengajukan permintaan '.$cuti->jenis_cuti.' selama '.$cuti->jumlah_cuti.' hari, 
-                pada tanggal '.$tgl_awal_cuti.' s.d '.$tgl_akhir_cuti.' untuk '.$cuti->alasan_pengajuan.'.</td>
+            <td>Dengan ini mengajukan permintaan '.$cuti->jenis_cuti.' untuk persalinan yang <b>'.$bersalin.'</b> terhitung mulai tanggal '.$tgl_awal_cuti.' s.d '.$tgl_akhir_cuti.'.</td>
         </tr>
         <tr>
-            <td>Selama menjalankan cuti '.$cuti->jenis_cuti.' alamat saya adalah di '.$cuti->kota_cuti.' dan nomor telepon yang dapat dihubungi adalah '.$data->no_hp.'</td>
+            <td></td>
         </tr>
         <tr>
             <td>Demikian permintaan cuti '.$cuti->jenis_cuti.' ini saya buat mohon pertimbangan selanjutnya</td>
@@ -120,11 +119,12 @@ if($cuti->jenis_cuti == "Cuti Tahunan"){
 }
 $pdf->writeHTML($html2, true, true, true, false, '');
 
-$html3 = '
+if($cuti->jenis_cuti == "Cuti Bersalin"){
+    $html3 = '
         <br>
         <table width="100%" border="0">
             <tr>
-                <td style="text-align: center !important; width:47.5% !important;">Yang Menerima Pekerjaan,</td>
+                <td style="text-align: center !important; width:47.5% !important;"></td>
                 <td style="width:5% !important;"></td>
                 <td style="text-align: center !important; width:47.5% !important;">Hormat saya,</td>
             </tr>
@@ -144,17 +144,55 @@ $html3 = '
                 <td style="width:47.5% !important;"></td>
             </tr>
             <tr>
-                <td style="text-align: center !important; text-decoration: underline !important;"width:47.5% !important;"">'.$cuti->nama_karyawan_pengganti.'</td>
+                <td style="text-align: center !important; text-decoration: underline !important;"width:47.5% !important;""></td>
                 <td style="width:5% !important;"></td>
                 <td style="text-align: center !important; text-decoration: underline !important;"width:47.5% !important;"">'.$cuti->nama_karyawan.'</td>
             </tr>
             <tr>
-                <td style="text-align: center !important;"width:47.5% !important;"">'.$cuti->nik_pengganti.'</td>
+                <td style="text-align: center !important;"width:47.5% !important;""></td>
                 <td style="text-align: center !important;"width:5% !important;""></td>
                 <td style="text-align: center !important;"width:47.5% !important;"">'.$cuti->nik.'</td>
             </tr>
         </table>
 ';
+}else{
+    $html3 = '
+        <br>
+        <table width="100%" border="0">
+            <tr>
+                <td style="text-align: center !important; width:47.5% !important;"></td>
+                <td style="width:5% !important;"></td>
+                <td style="text-align: center !important; width:47.5% !important;">Hormat saya,</td>
+            </tr>
+            <tr>
+                <td style="width:47.5% !important;"></td>
+                <td style="width:5% !important;"></td>
+                <td style="width:47.5% !important;"></td>
+            </tr>
+            <tr>
+                <td style="width:47.5% !important;"></td>
+                <td style="width:5% !important;"></td>
+                <td style="width:47.5% !important;"></td>
+            </tr>
+            <tr>
+                <td style="width:47.5% !important;"></td>
+                <td style="width:5% !important;"></td>
+                <td style="width:47.5% !important;"></td>
+            </tr>
+            <tr>
+                <td style="text-align: center !important; text-decoration: underline !important;"width:47.5% !important;"">'.$cuti->nama_karyawan.'</td>
+                <td style="width:5% !important;"></td>
+                <td style="text-align: center !important; text-decoration: underline !important;"width:47.5% !important;"">'.$cuti->nama_karyawan.'</td>
+            </tr>
+            <tr>
+                <td style="text-align: center !important;"width:47.5% !important;"">'.$cuti->nik.'</td>
+                <td style="text-align: center !important;"width:5% !important;""></td>
+                <td style="text-align: center !important;"width:47.5% !important;"">'.$cuti->nik.'</td>
+            </tr>
+        </table>
+';
+}
+
 $pdf->writeHTML($html3, true, true, true, false, '');
 //if($cuti->jenis_cuti != "Cuti Tahunan")
 //    $karyawan->sisa_cuti = "";

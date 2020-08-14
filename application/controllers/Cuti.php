@@ -287,20 +287,37 @@ class Cuti extends MY_Controller{
             } else{
                 $result = FALSE;
             }
+        }else if($jenis_cuti == 'CUTBERSALIN'){
+            $jmlh_cuti = 90;
+            $data = array(
+                'id_karyawan'           => $karyawan,
+                'id_karyawan_pengganti' => $karyawan_pengganti,
+                'tgl_mulai_cuti'        => $tgl_cuti_awal->format('Y-m-d'),
+                'tgl_selesai_cuti'      => $tgl_cuti_akhir->format('Y-m-d'),
+                'tgl_kembali'           => $tgl_cuti_kembali->format('Y-m-d'),
+                'tgl_dokumen_formulir'  => $tgl_formulir_cuti->format('Y-m-d'),
+                'jenis_cuti'            => $jenis_cuti,
+                'jumlah_cuti'           => $jmlh_cuti,
+                'pejabat_setuju'        => $pejabat_setuju,
+                'pejabat_wewenang'      => $pejabat_wewenang,
+                'kota_cuti'             => $kota_cuti,
+                'alasan_pengajuan'      => $alasan_pengajuan
+            );
+            $result = $this->cuti->saveData($data);
         }else{
              $data = array(
-                    'id_karyawan'           => $karyawan,
-                    'id_karyawan_pengganti' => $karyawan_pengganti,
-                    'tgl_mulai_cuti'        => $tgl_cuti_awal->format('Y-m-d'),
-                    'tgl_selesai_cuti'      => $tgl_cuti_akhir->format('Y-m-d'),
-                    'tgl_kembali'           => $tgl_cuti_kembali->format('Y-m-d'),
-                    'tgl_dokumen_formulir'  => $tgl_formulir_cuti->format('Y-m-d'),
-                    'jenis_cuti'            => $jenis_cuti,
-                    'jumlah_cuti'           => $jmlh_cuti,
-                    'pejabat_setuju'        => $pejabat_setuju,
-                    'pejabat_wewenang'      => $pejabat_wewenang,
-                    'kota_cuti'             => $kota_cuti,
-                    'alasan_pengajuan'      => $alasan_pengajuan
+                'id_karyawan'           => $karyawan,
+                'id_karyawan_pengganti' => $karyawan_pengganti,
+                'tgl_mulai_cuti'        => $tgl_cuti_awal->format('Y-m-d'),
+                'tgl_selesai_cuti'      => $tgl_cuti_akhir->format('Y-m-d'),
+                'tgl_kembali'           => $tgl_cuti_kembali->format('Y-m-d'),
+                'tgl_dokumen_formulir'  => $tgl_formulir_cuti->format('Y-m-d'),
+                'jenis_cuti'            => $jenis_cuti,
+                'jumlah_cuti'           => $jmlh_cuti,
+                'pejabat_setuju'        => $pejabat_setuju,
+                'pejabat_wewenang'      => $pejabat_wewenang,
+                'kota_cuti'             => $kota_cuti,
+                'alasan_pengajuan'      => $alasan_pengajuan
             );
             $result = $this->cuti->saveData($data);
         }
@@ -352,6 +369,11 @@ class Cuti extends MY_Controller{
         $pejabat_wewenang   = $this->input->post('pejabat_wewenang');
         $kota_cuti          = $this->input->post('kota_cuti');
 
+        if(isset($_POST['alasan_pengajuan']))
+            $alasan_pengajuan = $this->input->post('alasan_pengajuan');
+        else
+            $alasan_pengajuan = '';
+
         $tanggal_skrg = $tgl_cuti_awal->format('Y-m-d');
         $date_awal  = date_create($tgl_cuti_awal->format('Y-m-d'));
         $date_akhir = date_create($tgl_cuti_akhir->format('Y-m-d'));
@@ -389,24 +411,43 @@ class Cuti extends MY_Controller{
                     'jumlah_cuti'           => $jmlh_cuti,
                     'pejabat_setuju'        => $pejabat_setuju,
                     'pejabat_wewenang'      => $pejabat_wewenang,
-                    'kota_cuti'             => $kota_cuti
+                    'kota_cuti'             => $kota_cuti,
+                    'alasan_pengajuan'      => $alasan_pengajuan
                 );
                 $result = $this->cuti->updateData($data);
             } else{
                 $result = FALSE;
             }
+        }else if($jenis_cuti == 'CUTBERSALIN'){
+            $jmlh_cuti = 90;
+            $data = array(
+                'id_karyawan'           => $karyawan,
+                'id_karyawan_pengganti' => $karyawan_pengganti,
+                'tgl_mulai_cuti'        => $tgl_cuti_awal->format('Y-m-d'),
+                'tgl_selesai_cuti'      => $tgl_cuti_akhir->format('Y-m-d'),
+                'tgl_kembali'           => $tgl_cuti_kembali->format('Y-m-d'),
+                'tgl_dokumen_formulir'  => $tgl_formulir_cuti->format('Y-m-d'),
+                'jenis_cuti'            => $jenis_cuti,
+                'jumlah_cuti'           => $jmlh_cuti,
+                'pejabat_setuju'        => $pejabat_setuju,
+                'pejabat_wewenang'      => $pejabat_wewenang,
+                'kota_cuti'             => $kota_cuti,
+                'alasan_pengajuan'      => $alasan_pengajuan
+            );
+            $result = $this->cuti->updateData($data);
         }else{
              $data = array(
-                    'id_datacuti'           => $id_datacuti,
-                    'id_karyawan_pengganti' => $karyawan_pengganti,
-                    'tgl_mulai_cuti'        => $tgl_cuti_awal->format('Y-m-d'),
-                    'tgl_selesai_cuti'      => $tgl_cuti_akhir->format('Y-m-d'),
-                    'tgl_kembali'           => $tgl_cuti_kembali->format('Y-m-d'),
-                    'tgl_dokumen_formulir'  => $tgl_formulir_cuti->format('Y-m-d'),
-                    'jumlah_cuti'           => $jmlh_cuti,
-                    'pejabat_setuju'        => $pejabat_setuju,
-                    'pejabat_wewenang'      => $pejabat_wewenang,
-                    'kota_cuti'             => $kota_cuti
+                'id_datacuti'           => $id_datacuti,
+                'id_karyawan_pengganti' => $karyawan_pengganti,
+                'tgl_mulai_cuti'        => $tgl_cuti_awal->format('Y-m-d'),
+                'tgl_selesai_cuti'      => $tgl_cuti_akhir->format('Y-m-d'),
+                'tgl_kembali'           => $tgl_cuti_kembali->format('Y-m-d'),
+                'tgl_dokumen_formulir'  => $tgl_formulir_cuti->format('Y-m-d'),
+                'jumlah_cuti'           => $jmlh_cuti,
+                'pejabat_setuju'        => $pejabat_setuju,
+                'pejabat_wewenang'      => $pejabat_wewenang,
+                'kota_cuti'             => $kota_cuti,
+                'alasan_pengajuan'      => $alasan_pengajuan
             );
             $result = $this->cuti->updateData($data);
         }
@@ -697,6 +738,13 @@ class Cuti extends MY_Controller{
         $data['cuti']       = $this->cuti->getData($id);
         $tgl_surat          = $data['cuti']->tgl_dokumen_formulir;
         $data['tanggal']    = $this->indonesian_date('d F Y',$tgl_surat,'');
+        $sisa_bersalin      = $this->cuti->getJmlhBersalin($data['cuti']->id_karyawan);
+        if($sisa_bersalin == 0)
+            $sisa_bersalin = 1;
+        else
+            $sisa_bersalin += 1;
+        $sisa_bersalin      = $this->convert_number_to_words($sisa_bersalin);
+        $data['bersalin']   = $sisa_bersalin;
         $data['karyawan']   = $this->pegawai->getKaryawanDataCuti($data['cuti']->id_karyawan);
         $data['data']       = $this->pegawai->getAlamatKaryawan($data['cuti']->id_karyawan);
         $this->load->view('vw_formulir_cuti',$data);

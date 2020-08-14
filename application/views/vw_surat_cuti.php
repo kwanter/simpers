@@ -158,9 +158,53 @@ if($cuti->jenis_cuti == 'Cuti Tahunan'){
             <td class="td3">'.$cuti->nik.'</td>
         </tr>
         <tr>
-            <td class="td1">Jabatan/Posisi </td>
+            <td class="td1">Jabatan/KJ </td>
             <td class="td2"> : </td>
-            <td class="td3">'.$karyawan->jabatan_terakhir.'</td>
+            <td class="td3">'.$karyawan->jabatan_terakhir.'/'.$karyawan->kelas_jabatan.'</td>
+        </tr>
+        <tr>
+            <td class="td1">Unit Kerja </td>
+            <td class="td2"> : </td>
+            <td class="td3">'.$karyawan->unit_kerja.'</td>
+        </tr>
+    </table>';
+}else if($cuti->jenis_cuti == 'Cuti Bersalin'){
+    $html = '<br><br>
+    <table border="0" cellpadding="1" cellspacing="1">
+        <tr>
+            <td>Diberikan Cuti Bersalin kepada karyawan PT. Kaltim Kariangau Terminal : </td>
+        </tr>
+    </table>
+    <br><br>
+    <style type="text/css">
+        .td1 {
+            width : 25% !important;
+            text-align  : left !important;
+        }  
+        .td2 {
+            width : 5% !important;
+            text-align  : center !important;
+        }  
+        .td3 {
+            width : 70% !important;
+            text-align  : left !important;
+        }
+    </style>
+    <table border="0" cellpadding="1" cellspacing="1">
+        <tr>
+            <td class="td1">Nama </td>
+            <td class="td2"> : </td>
+            <td class="td3"><strong>'.$cuti->nama_karyawan.'</strong></td>
+        </tr>
+        <tr>
+            <td class="td1">NIK </td>
+            <td class="td2"> : </td>
+            <td class="td3">'.$cuti->nik.'</td>
+        </tr>
+        <tr>
+            <td class="td1">Jabatan/KJ </td>
+            <td class="td2"> : </td>
+            <td class="td3">'.$karyawan->jabatan_terakhir.'/'.$karyawan->kelas_jabatan.'</td>
         </tr>
         <tr>
             <td class="td1">Unit Kerja </td>
@@ -256,6 +300,54 @@ if($cuti->jenis_cuti == 'Cuti Tahunan'){
             </tr>
             <tr>
                 <td></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Demikian Surat Izin '.$cuti->jenis_cuti.' ini dibuat untuk dapat dipergunakan sebagaimana mestinya.</td>
+            </tr>
+        </table>';
+}elseif($cuti->jenis_cuti == 'Cuti Bersalin'){
+    $html2 = '
+        <br>
+        <table border="0" cellpadding="1" cellspacing="1">
+            <tr>
+                <td>Terhitung mulai tanggal '.$tgl_awal_cuti.' dengan ketentuan sebagai berikut : </td>
+            </tr>
+            <tr><td></td></tr>
+            <tr>
+                <td>a. 
+                    <table>
+                        <tr>
+                            <td>Sebelum menjalankan '.$cuti->jenis_cuti.', wajib menyerahkan pekerjaannya kepada atasan langsung atau kepada pejabat lain yang ditunjuk. </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td>b. 
+                    <table>
+                        <tr>
+                            <td>Setelah selesai menjalankan '.$cuti->jenis_cuti.', wajib melaporkan diri kepada atasan langsung dan bekerja kembali sebagaimana mestinya.</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td>c. 
+                    <table>
+                        <tr>
+                            <td>Adapun tanggal kembali bekerja di hitung selama 2 (dua) bulan sejak tanggal persalinan.</td>
+                        </tr>
+                    </table>
+                </td>
             </tr>
             <tr>
                 <td></td>

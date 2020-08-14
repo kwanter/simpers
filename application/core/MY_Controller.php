@@ -145,10 +145,10 @@ class MY_Controller extends CI_Controller
             70 => 'tujuh puluh',
             80 => 'delapan puluh',
             90 => 'sembilan puluh',
-            100 => 'ratus',
-            1000 => 'ribu',
-            1000000 => 'juta',
-            1000000000 => 'miliar',
+            100 => 'seratus',
+            1000 => 'seribu',
+            1000000 => 'sejuta',
+            1000000000 => 'semiliar',
         );
         /*
         $dictionary  = array(
@@ -215,10 +215,11 @@ class MY_Controller extends CI_Controller
         switch (true) {
             case $number == 1:
                 $string = 'pertama';
-            case $number < 21:
+                break;
+            case $number > 1 && $number < 21:
                 $string = 'ke'.$dictionary[$number];
                 break;
-            case $number < 100:
+            case $number > 1 && $number > 21 && $number < 100:
                 $tens   = ((int) ($number / 10)) * 10;
                 $units  = $number % 10;
                 $string = 'ke'.$dictionary[$tens];
@@ -226,7 +227,7 @@ class MY_Controller extends CI_Controller
                     $string .= $hyphen . $dictionary[$units];
                 }
                 break;
-            case $number < 1000:
+            case $number > 1 && $number > 21 && $number > 100 && $number < 1000:
                 $hundreds  = $number / 100;
                 $remainder = $number % 100;
                 $string = 'ke'.$dictionary[$hundreds] . ' ' . $dictionary[100];
@@ -238,7 +239,7 @@ class MY_Controller extends CI_Controller
                 $baseUnit = pow(1000, floor(log($number, 1000)));
                 $numBaseUnits = (int) ($number / $baseUnit);
                 $remainder = $number % $baseUnit;
-                $string = 'ke'.convert_number_to_words($numBaseUnits) . ' ' . $dictionary[$baseUnit];
+                $string = 'Ke'.convert_number_to_words($numBaseUnits) . ' ' . $dictionary[$baseUnit];
                 if ($remainder) {
                     $string .= $remainder < 100 ? $conjunction : $separator;
                     $string .= convert_number_to_words($remainder);
