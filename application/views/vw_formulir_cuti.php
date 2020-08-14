@@ -160,7 +160,7 @@ if($cuti->jenis_cuti == "Cuti Bersalin"){
         <br>
         <table width="100%" border="0">
             <tr>
-                <td style="text-align: center !important; width:47.5% !important;"></td>
+                <td style="text-align: center !important; width:47.5% !important;">Yang Menerima Pekerjaan,</td>
                 <td style="width:5% !important;"></td>
                 <td style="text-align: center !important; width:47.5% !important;">Hormat saya,</td>
             </tr>
@@ -180,12 +180,12 @@ if($cuti->jenis_cuti == "Cuti Bersalin"){
                 <td style="width:47.5% !important;"></td>
             </tr>
             <tr>
-                <td style="text-align: center !important; text-decoration: underline !important;"width:47.5% !important;"">'.$cuti->nama_karyawan.'</td>
+                <td style="text-align: center !important; text-decoration: underline !important;"width:47.5% !important;"">'.$cuti->nama_karyawan_pengganti.'</td>
                 <td style="width:5% !important;"></td>
                 <td style="text-align: center !important; text-decoration: underline !important;"width:47.5% !important;"">'.$cuti->nama_karyawan.'</td>
             </tr>
             <tr>
-                <td style="text-align: center !important;"width:47.5% !important;"">'.$cuti->nik.'</td>
+                <td style="text-align: center !important;"width:47.5% !important;"">'.$cuti->nik_pengganti.'</td>
                 <td style="text-align: center !important;"width:5% !important;""></td>
                 <td style="text-align: center !important;"width:47.5% !important;"">'.$cuti->nik.'</td>
             </tr>
