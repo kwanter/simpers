@@ -44,6 +44,7 @@ class MY_Controller extends CI_Controller
         $this->load->model('M_diklat','diklat');
         $this->load->model('M_dokumen','dokumen');
         $this->load->model('M_cuti','cuti');
+        $this->load->library('email');
     }
 
     public function imageThumbnail($source_path,$target_path) {
@@ -374,5 +375,30 @@ class MY_Controller extends CI_Controller
         }
         return ($hsl);
     }
+
+    public function kirim(){
+        $config = Array(
+                  'protocol'  => 'smtp',
+                  'smtp_host' => 'ssl://smtp.googlemail.com',
+                  'smtp_port' => 465,
+                  'smtp_user' => 'xxxxxxxxxxxxxxxxxxxx',
+                  'smtp_pass' => 'xxxxxxxxxxxxxxxxxxxx',
+                  'mailtype'  => 'html',
+                  'starttls'  => true,
+                  'newline'   => "\r\n"
+        );
+        
+        $this->email->initialize($config);
+        $this->email->from('xxxxxxxxxxxxxxxxxxxx','KKT System');
+        $this->email->to('xxxxxxxxxxxxxxxxxxxx');
+        $this->email->subject('Coba aja');
+        $this->email->message('Hello world !');
+        
+        if ($this->email->send())
+            echo "Sukses kirim email";
+        else
+            echo "Gagal kirim email";
+    }
+
 }
 ?>

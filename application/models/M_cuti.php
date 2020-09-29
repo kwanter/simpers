@@ -202,7 +202,8 @@ class M_cuti extends MY_Model {
             'jumlah_cuti'           => $post['jumlah_cuti'],
             'pejabat_setuju'        => $post['pejabat_setuju'],
             'pejabat_wewenang'      => $post['pejabat_wewenang'],
-            'kota_cuti'             => $post['kota_cuti']
+            'kota_cuti'             => $post['kota_cuti'],
+            'alasan_pengajuan'      => $post['alasan_pengajuan'],
             );
 
         $result= $this->update_where($this->table,$where,$data);

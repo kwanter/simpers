@@ -260,7 +260,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </section>
 <script type="text/javascript">
     $(document).ready(function(){
-            $('#nik').on('change',function(){
+        $('#nik').on('change',function(){
             var data = $(this).val();
             if(data){
                 $.ajax({

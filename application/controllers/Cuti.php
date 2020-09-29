@@ -244,7 +244,7 @@ class Cuti extends MY_Controller{
         else
             $alasan_pengajuan = '';
 
-        $tanggal_skrg = $tgl_cuti_awal->format('Y-m-d');
+        //$tanggal_skrg = $tgl_cuti_awal->format('Y-m-d');
         $date_awal  = date_create($tgl_cuti_awal->format('Y-m-d'));
         $date_akhir = date_create($tgl_cuti_akhir->format('Y-m-d'));
         $selisih_tgl = date_diff($date_awal,$date_akhir);
@@ -252,22 +252,24 @@ class Cuti extends MY_Controller{
         $jmlh_cuti++;
 
         if($jenis_cuti == 'CUTTAHUNAN'){
+            $tgl_sekarang = new DateTime($tgl_awal);
+
             for($i=0;$i<(int)($selisih_tgl->format('%a'));$i++){
-                $day = (new DateTime($tanggal_skrg))->format('D');
-                $cek_libur = $this->cuti->cekHariLibur($tanggal_skrg);
+                $day = $tgl_sekarang->format('l');
+                $cek_libur = $this->cuti->cekHariLibur($tgl_sekarang->format('Y-m-d'));
                 
-                if($day == 'Sat' || $day == 'Sun' || $cek_libur == TRUE){
+                if($day == 'Saturday' || $day == 'Sunday' || $day == 'Sabtu' ||$day == 'Minggu' || $cek_libur == TRUE){
                     $jmlh_cuti-=1;
                 }
                 
-                $new_date = new DateTime($tanggal_skrg);
+                $new_date = new DateTime($tgl_sekarang->format('Y-m-d'));
                 $new_date->modify('+1 day');
-                $tanggal_skrg = $new_date->format('Y-m-d');
+                $tgl_sekarang = $new_date;
             }
 
             $sisa_cuti = (int)($this->pegawai->getSisaCuti($karyawan));
         
-            if($sisa_cuti > $jmlh_cuti){
+            if($sisa_cuti >= $jmlh_cuti){
                 $sisa_cuti = $sisa_cuti - $jmlh_cuti;
                 $data = array(
                     'id_karyawan'           => $karyawan,
@@ -374,7 +376,7 @@ class Cuti extends MY_Controller{
         else
             $alasan_pengajuan = '';
 
-        $tanggal_skrg = $tgl_cuti_awal->format('Y-m-d');
+        //$tanggal_skrg = $tgl_cuti_awal->format('Y-m-d');
         $date_awal  = date_create($tgl_cuti_awal->format('Y-m-d'));
         $date_akhir = date_create($tgl_cuti_akhir->format('Y-m-d'));
         $selisih_tgl = date_diff($date_awal,$date_akhir);
@@ -382,24 +384,26 @@ class Cuti extends MY_Controller{
         $jmlh_cuti++;
 
         if($jenis_cuti == 'CUTTAHUNAN'){
+            $tgl_sekarang = new DateTime($tgl_awal);
+
             for($i=0;$i<(int)($selisih_tgl->format('%a'));$i++){
-                $day = (new DateTime($tanggal_skrg))->format('D');
-                $cek_libur = $this->cuti->cekHariLibur($tanggal_skrg);
+                $day = $tgl_sekarang->format('l');
+                $cek_libur = $this->cuti->cekHariLibur($tgl_sekarang->format('Y-m-d'));
                 
-                if($day == 'Sat' || $day == 'Sun' || $cek_libur == TRUE){
+                if($day == 'Saturday' || $day == 'Sunday' || $day == 'Sabtu' ||$day == 'Minggu' || $cek_libur == TRUE){
                     $jmlh_cuti-=1;
                 }
                 
-                $new_date = new DateTime($tanggal_skrg);
+                $new_date = new DateTime($tgl_sekarang->format('Y-m-d'));
                 $new_date->modify('+1 day');
-                $tanggal_skrg = $new_date->format('Y-m-d');
+                $tgl_sekarang = $new_date;
             }
 
             $sisa_cuti      = (int)($this->pegawai->getSisaCuti($karyawan));
             $jmlh_cuti_lama = (int)($this->cuti->getJmlhCutiLama($id_datacuti)); 
             $sisa_cuti += $jmlh_cuti_lama;
         
-            if($sisa_cuti > $jmlh_cuti){
+            if($sisa_cuti >= $jmlh_cuti){
                 $sisa_cuti = $sisa_cuti - $jmlh_cuti;
                 $data = array(
                     'id_datacuti'           => $id_datacuti,

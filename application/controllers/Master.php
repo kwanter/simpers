@@ -53,6 +53,12 @@ class Master extends MY_Controller{
         $this->navmenu('Data '.ucwords($title).' Karyawan','vw_data_'.$page,'','',$data);
     }
 
+    public function karyawan($page){
+        $data['karyawan'] = $this->pegawai->getKaryawanData();
+        $title = str_replace('_',' ',$page);
+        $this->navmenu('Data '.ucwords($title).'','vw_data_'.$page,'','',$data);
+    }
+
     public function login(){
         $data['title'] = 'Login';
         $this->load->view('vw_login',$data,'');

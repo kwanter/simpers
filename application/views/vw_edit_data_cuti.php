@@ -115,12 +115,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <span class="input-group-addon">
                                             <i class="material-icons">format_list_numbered</i>
                                         </span>
-                                        <select disabled title="Pilih Jenis Cuti" id="jenis_cuti" name="jenis_cuti" required="required" class="form-control">
+                                        <select disabled title="Pilih Jenis Cuti" id="jenis_cuti" name="jenis_cuti_hidden" class="form-control">
                                             <?php
                                             foreach ($attr['jeniscuti'] as $jenis_cuti){
                                                 if($attr['data']->jenis_cuti == $jenis_cuti->id_jeniscuti){
                                             ?>
                                                     <option selected value="<?php echo $jenis_cuti->id_jeniscuti?>"><?php echo $jenis_cuti->nama_cuti?></option>
+                                                    <input type="hidden" name="jenis_cuti" value="<?php echo $jenis_cuti->id_jeniscuti?>" id="jenis_cuti_hidden"/>
                                             <?php        
                                                 } else {
                                                 ?>
@@ -159,7 +160,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="tgl_diklat" class="form-label">Alasan Pengajuan Cuti</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">title</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input id="alasan_pengajuan" value="<?php echo $attr['data']->alasan_pengajuan?>" name="alasan_pengajuan" class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="tgl_diklat" class="form-label">Tanggal Pengajuan Awal Cuti</label>
                                     <div class="input-group">
@@ -172,7 +186,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                             <div class="col-md-6">
+                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="tgl_diklat" class="form-label">Tanggal Pengajuan Akhir Cuti</label>
                                     <div class="input-group">

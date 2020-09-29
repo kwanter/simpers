@@ -92,7 +92,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     extend: "excel",
                     className: "btn-sm",
                     exportOptions: {
-                        columns: [1,2,3,4,5,6,7,8]
+                        columns: [0,1,2,3,4,5,6]
                     }
                 },
                 {
@@ -104,7 +104,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     },
                     className: "btn-sm",
                     exportOptions: {
-                        columns: [1,2,3,4,5,6,7,8]
+                        columns: [0,1,2,3,4,5,6]
                     }
                 },
             ],

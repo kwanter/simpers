@@ -292,6 +292,16 @@
                             <li <?php if($this->uri->segment(3)=="rekap_cuti"){echo ' class="active"';}?>><a href="<?php echo base_url("master/cuti/rekap_cuti");?>">Rekap Cuti Pegawai</a></li>
                         </ul>                           
                     </li>
+                    <li <?php if($this->uri->segment(2)=="karyawan") echo ' class="active"'; ?>>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">accessibility</i>
+                            <span>Karyawan OC</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li <?php if($this->uri->segment(3)=="karyawan"){echo ' class="active"';}?>><a href="<?php echo base_url("master/karyawan/karyawan_oc");?>">Data Karyawan OC</a></li>
+                            <li <?php if($this->uri->segment(3)=="karyawan_kartu"){echo ' class="active"';}?>><a href="<?php echo base_url("master/karyawan/karyawan_kartu_oc");?>">Data Dokumen Karyawan OC</a></li>
+                        </ul>                           
+                    </li>
                 </ul>
             </div>
         </div>
