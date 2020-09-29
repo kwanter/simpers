@@ -1,18 +1,33 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<section class="content">
-    <div class="container-fluid">
-        <div class="row clearfix">
+<style>
+   .modal {
+        text-align: center;
+    }
+
+    .modal-dialog {
+        text-align: left; /* you'll likely want this */
+        max-width: 80%;
+        width: auto !important;
+        display: inline-block;
+    }
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">X</button>
+    <h3>Data Karyawan Outsourcing</h3>
+</div>
+<div class="modal-body">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h3 class="modal-title">Input Data Karyawan Outsourcing    </h3> 
+        </div>
+        <div class="panel-body">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="card">
-                    <div class="header">
-                        <h2>Input Data Karyawan Outsourcing</h2>
-                    </div>
                     <div class="body">
-                        <?php echo $this->session->flashdata('notif');?>
-                        <form id="form_input_pegawai" action="<?php echo base_url('karyawan/addData')?>" method="POST" enctype="multipart/form-data">
-                            <div class="col-md-6">
+                        <form id="form_input_pegawai" action="#" method="POST" enctype="multipart/form-data">
+                            <div class="col-md-4">
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input id="nik" name="nik" class="form-control" type="text">
@@ -20,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input id="nama_karyawan" name="nama_karyawan" required class="form-control" type="text">
@@ -28,7 +43,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <b>Jenis Kelamin</b><br><br>
                                     <div class="input-group">
@@ -43,7 +58,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input id="alamat_ktp" name="alamat_ktp" required="required" class="form-control" type="text">
@@ -51,7 +66,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input id="kode_pos_ktp" name="kode_pos_ktp" class="form-control" type="text">
@@ -59,7 +74,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input id="kelurahan_ktp" name="kelurahan_ktp" required="required" class="form-control" type="text">
@@ -67,7 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input id="kecamatan_ktp" name="kecamatan_ktp" required="required" class="form-control" type="text">
@@ -75,7 +90,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input id="kota_ktp" name="kota_ktp" required="required" class="form-control" type="text">
@@ -83,7 +98,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input id="provinsi_ktp" name="provinsi_ktp" required="required" class="form-control" type="text">
@@ -100,7 +115,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                             </div>
                             <div id="domisili">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group form-float">
                                         <div class="form-line">
                                             <input id="alamat_domisili" name="alamat_domisili" required="required" class="form-control" type="text">
@@ -108,7 +123,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group form-float">
                                         <div class="form-line">
                                             <input id="kode_pos_domisili" name="kode_pos_domisili" class="form-control" type="text">
@@ -116,7 +131,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group form-float">
                                         <div class="form-line">
                                             <input id="kelurahan_domisili" name="kelurahan_domisili" required="required" class="form-control" type="text">
@@ -124,7 +139,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group form-float">
                                         <div class="form-line">
                                             <input id="kecamatan_domisili" name="kecamatan_domisili" required="required" class="form-control" type="text">
@@ -132,7 +147,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group form-float">
                                         <div class="form-line">
                                             <input id="kota_domisili" name="kota_domisili" required="required" class="form-control" type="text">
@@ -140,7 +155,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group form-float">
                                         <div class="form-line">
                                             <input id="provinsi_domisili" name="provinsi_domisili" required="required" class="form-control" type="text">
@@ -149,7 +164,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="form-line">
                                         <input id="tmpt_lahir" name="tmpt_lahir" class="form-control" type="text">
@@ -157,7 +172,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="form-line">
                                         <input id="tgl_lahir" required="required" name="tgl_lahir" class="form-control datepicker" type="text">
@@ -197,7 +212,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <b>Agama</b>
                                 <div class="input-group">
                                     <span class="input-group-addon">
@@ -215,7 +230,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <b>Status Nikah</b>
                                 <div class="input-group">
                                     <span class="input-group-addon">
@@ -233,7 +248,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="form-line">
                                         <input id="no_hp2" name="no_hp2" class="form-control no_hp" type="text">
@@ -250,98 +265,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                             </div>
                             <br>
-                            <button class="btn bg-red waves-effect" onclick="cancel();" type="button"><i class="material-icons">undo</i><span>Cancel</span></button>
-                            <button class="btn bg-blue waves-effect" type="reset"><i class="material-icons">clear</i><span>Reset</span></button>
-                            <button type="submit" class="btn bg-orange waves-effect"><i class="material-icons">save</i><span>Simpan</span></button>
                         </form>
                     </div>
-                </div>
+                
             </div>
         </div>
     </div>
-</section>
-<script type="text/javascript">
-    function cancel() {
-        window.location.replace('<?php echo site_url('master/page/karyawan_oc')?>')
-    }
-
-    function master() {
-        window.location.replace('<?php echo site_url('master/page/karyawan_oc')?>')
-    }
-
-    $(document).ready(function () {
-        $("#nik").inputmask("KKT9999999",{ "placeholder": "" });
-        $("#nipp").inputmask("9999999",{ "placeholder": "" });
-        $("#kode_pos_ktp").inputmask("99999",{ "placeholder": "" });
-        $("#tgl_lahir").inputmask("9999-99-99",{ "placeholder": "1970-02-01" });
-
-        $('.dropify').dropify({
-            messages: {
-                default : 'Drag atau drop untuk memilih gambar',
-                replace : 'Ganti',
-                remove  : 'Hapus',
-                error   : 'error'
-            }
-        });
-    });
-
-    $(function(){
-        $('#pilihan_domisili').click(function() {
-            if($(this).is(':checked')){
-                $('#domisili').attr("class","hidden");
-                $('#pilihan_domisili').val('1');
-                $('#alamat_domisili').removeAttr("required");
-                $('#kode_pos_domisili').removeAttr("required");
-                $('#kelurahan_domisili').removeAttr("required");
-                $('#kecamatan_domisili').removeAttr("required");
-                $('#kota_domisili').removeAttr("required");
-                $('#provinsi_domisili').removeAttr("required");
-            }
-            else{
-                $('#domisili').attr("class","");
-                $('#pilihan_domisili').val('');
-                $('#alamat_domisili').attr("required","required");
-                $('#kode_pos_domisili').attr("required","required");
-                $('#kelurahan_domisili').attr("required","required");
-                $('#kecamatan_domisili').attr("required","required");
-                $('#kota_domisili').attr("required","required");
-                $('#provinsi_domisili').attr("required","required");
-            }
-        });
-        var form = $('#form_input_pegawai');
-        form.find('.no_telp').inputmask('9999-9999999', { placeholder: '____-_______' });
-        form.find('.no_hp').inputmask('9999-9999-9999', { placeholder: '____-____-____' });
-        form.find('.email').inputmask({alias :"email"});
-
-        form.validate({
-            rules: {
-                'jk': {
-                    required: true
-                },
-                'agama' :{
-                    required: true
-                },
-                'status_nikah' : {
-                    required: true
-                }
-            },
-            highlight: function (input) {
-                $(input).parents('.form-line').addClass('error');
-            },
-            unhighlight: function (input) {
-                $(input).parents('.form-line').removeClass('error');
-            },
-            errorPlacement: function (error, element) {
-                $(element).parents('.form-group').append(error);
-                $(element).parents('.input-group').append(error);
-            }
-        });
-    });
-
-    $('.datepicker').bootstrapMaterialDatePicker({
-        format: 'YYYY-MM-DD',
-        clearButton: true,
-        weekStart: 1,
-        time: false
-    });
-</script>
+    <div class="modal-footer">
+        <div class="panel-footer">
+            <button class="btn bg-red waves-effect" onclick="cancel();" type="button"><i class="material-icons">undo</i><span></span></button>
+            <button class="btn bg-blue waves-effect" type="reset"><i class="material-icons">clear</i><span></span></button>
+            <button type="submit" class="btn bg-orange waves-effect"><i class="material-icons">save</i><span></span></button>
+            <div class="col-xs-10" id="lblstatus"></div>
+        </div>
+    </div>
+</div>

@@ -33,7 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </a>
                                 <ul class="dropdown-menu pull-right">
                                     <li><a onclick="reload_table();"><i class="material-icons">refresh</i> <span>Reload Tabel</span> </a></li>
-                                    <li><a onclick="add()"><i class="material-icons">add</i> <span>Tambah Data</span></a></li>
+                                    <li><a href="<?php echo site_url('karyawan')?>" data-toggle="modal" data-target="#theModal"><i class="material-icons">add</i> <span>Tambah Data</span></a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -72,6 +72,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         </div>
         <!-- #END# Horizontal Layout -->
+    </div>
+    <div id="theModal" class="modal fade text-center" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content"></div>
+        </div>
     </div>
 </section>
 <script type="text/javascript">
@@ -121,6 +126,79 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 }
             ]
         });
+
+        $("#nik").inputmask("KKT9999999",{ "placeholder": "" });
+        $("#nipp").inputmask("9999999",{ "placeholder": "" });
+        $("#kode_pos_ktp").inputmask("99999",{ "placeholder": "" });
+        $("#tgl_lahir").inputmask("9999-99-99",{ "placeholder": "1970-02-01" });
+
+        $('.dropify').dropify({
+            messages: {
+                default : 'Drag atau drop untuk memilih gambar',
+                replace : 'Ganti',
+                remove  : 'Hapus',
+                error   : 'error'
+            }
+        });
+    });
+
+    $(function(){
+        $('#pilihan_domisili').click(function() {
+            if($(this).is(':checked')){
+                var alamat = $('#alamat_ktp').val();
+                var kode_pos = $('#kode_pos_ktp').val();
+                var kelurahan = $('#kelurahan_ktp').val();
+                var kecamatan = $('#kecamatan_ktp').val();
+                var kota = $('#kota_ktp').val();
+                var provinsi = $('#provinsi_ktp').val();
+
+                $('#pilihan_domisili').val('1');
+                $('#alamat_domisili').val("required");
+                $('#kode_pos_domisili').val("required");
+                $('#kelurahan_domisili').val("required");
+                $('#kecamatan_domisili').val("required");
+                $('#kota_domisili').val("required");
+                $('#provinsi_domisili').removeAttr("required");
+            }else{
+                $('#pilihan_domisili').val('0');
+                $('#alamat_domisili').val(alamat);
+                $('#kode_pos_domisili').val(kode_pos);
+                $('#kelurahan_domisili').val(kelurahan);
+                $('#kecamatan_domisili').val(kecamatan);
+                $('#kota_domisili').val(kota);
+                $('#provinsi_domisili').val(provinsi);
+            }
+        });
+
+        var form = $('#form_input_pegawai');
+        
+        form.find('.no_telp').inputmask('9999-9999999', { placeholder: '____-_______' });
+        form.find('.no_hp').inputmask('9999-9999-9999', { placeholder: '____-____-____' });
+        form.find('.email').inputmask({alias :"email"});
+
+        form.validate({
+            rules: {
+                'jk': {
+                    required: true
+                },
+                'agama' :{
+                    required: true
+                },
+                'status_nikah' : {
+                    required: true
+                }
+            },
+            highlight: function (input) {
+                $(input).parents('.form-line').addClass('error');
+            },
+            unhighlight: function (input) {
+                $(input).parents('.form-line').removeClass('error');
+            },
+            errorPlacement: function (error, element) {
+                $(element).parents('.form-group').append(error);
+                $(element).parents('.input-group').append(error);
+            }
+        });
     });
 
     function reload_table() {
@@ -128,11 +206,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
 
     function add() {
-        window.location.replace('<?php echo site_url('karyawan')?>');
+        $('#content').load("<?php echo site_url('karyawan')?>");
+        //window.location.replace('<?php echo site_url('karyawan')?>');
     }
 
     function edit(id) {
-        window.location.replace('<?php echo site_url('karyawan/edit/')?>'+id);
+        $('#content').load("<?php echo site_url('karyawan/edit')?>");
+        //window.location.replace('<?php echo site_url('karyawan/edit/')?>'+id);
     }
 
     function alamat_ktp(id) {
@@ -227,4 +307,156 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             }
         });
     }
+</script>
+
+<script type="text/javascript">
+    var table;
+    var save_method; //for save method string
+
+    $('#frmadd').on('keyup keypress', function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) { 
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    function reload_table() {
+        table.ajax.reload(null,false);
+    }
+
+    function add(){
+        save_method = 'add';
+        $('#frmadd')[0].reset(); // reset form on modals
+        $('.form-group').removeClass('has-error'); // clear error class
+        $('.help-block').empty(); // clear error string
+        $('#mdadd').modal('show'); // show bootstrap modal
+        $('.modal-title').text('New Jenis Document Data'); // Set Title to Bootstrap modal title
+	}
+
+    function save(){
+        $('#btnSave').text('Saving...'); //change button text
+        $('#btnSave').attr('disabled',true); //set button disable 
+        
+        $('#btnUpdate').text('Updating...'); //change button text
+        $('#btnUpdate').attr('disabled',true); //set button disable 
+        
+        var url;
+
+        if(save_method == 'add') {
+            url = "<?php echo site_url('document/ajax_add/');?>";
+        } else {
+            url = "<?php echo site_url('document/ajax_update');?>";
+        }
+        formData = new FormData();        
+        formData.append( 'id', $('input[name=id]').val() );
+        formData.append( 'jenis_doc', $('input[name=jenis_doc]').val() );
+        
+        // ajax adding data to database
+        $.ajax({
+            url : url,
+            type: "POST",
+            data: formData,
+            dataType: "JSON",
+            contentType: false,
+            processData: false,
+            success: function(data){
+                //if success close modal and reload ajax table
+                if(data.status){
+                    $('#mdadd').modal('hide');
+                    $('#mdedit').modal('hide');
+                    reload_table();
+                    $('input[name=jenis_doc]').val('');
+                }
+                else{
+                    for (var i = 0; i < data.inputerror.length; i++) {
+                        $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                        $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
+                    }
+                }
+                $('#btnSave').text('Save'); //change button text
+                $('#btnSave').attr('disabled',false); //set button enable 
+                $('#btnUpdate').text('Update'); //change button text
+                $('#btnUpdate').attr('disabled',false); //set button enable 
+            },
+            error: function (jqXHR, textStatus, errorThrown){
+                alert('Error adding data');
+                $('#btnSave').text('Save'); //change button text
+                $('#btnSave').attr('disabled',false); //set button enable 
+                $('#btnUpdate').text('Update'); //change button text
+                $('#btnUpdate').attr('disabled',false); //set button enable 
+            }
+        });
+    }
+
+    function edit(id){
+        save_method = 'update';
+        $('#frmadd')[0].reset(); // reset form on modals
+        $('.form-group').removeClass('has-error'); // clear error class
+        $('.help-block').empty(); // clear error string
+        
+        //Ajax Load data from ajax
+        $.ajax({
+            url : "<?php echo site_url('document/ajax_edit/')?>" + id,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data)
+            {		
+                $('[name="id"]').val(data.idm_document);
+                $('[name="jenis_doc"]').val(data.jenis_doc);
+                $('#mdadd').modal('show'); // show bootstrap modal when complete loaded
+                $('.modal-title').text('Edit Jenis Document Data'); // Set title to Bootstrap modal title
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error get data from ajax');
+            }
+        });
+    }
+
+    function del(id) {
+        swal.fire({
+            title: 'Apakah Anda Yakin ?',
+            text: 'Anda Tidak Akan Bisa Merecover Kembali Data Yang Sudah Anda Hapus !',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Batal',
+            reverseButtons: true
+        }).then((willDelete) => {
+            if (willDelete.value) {
+                $.ajax({
+                    url : "<?php echo site_url('document/delete')?>/"+id,
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function(data)
+                    {
+                        swal.fire('Terhapus','Data Anda Sudah Dihapus','success');
+                        reload_table();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        swal.fire("Gagal","Data Anda Tidak Jadi Dihapus","error");
+                    }
+                });
+            } else {
+                swal.fire("Batal","Data Anda Tidak Jadi Dihapus","warning");
+            }
+        });
+    }
+
+    function cancel() {
+        //window.location.replace('<?php echo site_url('master/page/karyawan_oc')?>')
+    }
+
+    function master() {
+        //window.location.replace('<?php echo site_url('master/page/karyawan_oc')?>')
+    }
+
+    $('.datepicker').bootstrapMaterialDatePicker({
+        format: 'YYYY-MM-DD',
+        clearButton: true,
+        weekStart: 1,
+        time: false
+    });
 </script>

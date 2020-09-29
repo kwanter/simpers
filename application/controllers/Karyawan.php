@@ -4,7 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Karyawan extends MY_Controller{
     public function index(){
         $data['karyawan']  = $this->pegawai->getKaryawanData();
-        $this->navmenu('Pengajuan Cuti Karyawan','vw_input_data_karyawan_oc','','',$data);
+        $this->load->view('vw_input_data_karyawan_oc',$data);
+        //$this->navmenu('Pengajuan Cuti Karyawan','vw_input_data_karyawan_oc','','',$data);
     }
 
     public function edit($id){

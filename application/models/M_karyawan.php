@@ -179,18 +179,5 @@ class M_karyawan extends MY_Model {
         return $result;
     }
 
-    public function getDataLibur($id){
-        $query = $this->db->select('*')
-                 ->from($this->table_libur)
-                 ->where('id_harilibur',$id)
-                 ->get();
-        
-        if($query->num_rows() === 1){
-            $result = $query->row();
-        } 
-
-        return $result;
-    }
-
 }
 ?>
