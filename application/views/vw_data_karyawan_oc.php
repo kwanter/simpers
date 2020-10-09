@@ -9,6 +9,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     .th2{
         width: 20% !important;
     }
+
+    .animated {
+        animation-duration: 1s;
+        animation-fill-mode: backwards;
+    }
+
+    .modal {
+        text-align: center;
+    }
+
+    .modal-dialog {
+        text-align: left; /* you'll likely want this */
+        max-width: 80%;
+        width: auto !important;
+        display: inline-block;
+    }
 </style>
 
 <section class="content">
@@ -33,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </a>
                                 <ul class="dropdown-menu pull-right">
                                     <li><a onclick="reload_table();"><i class="material-icons">refresh</i> <span>Reload Tabel</span> </a></li>
-                                    <li><a href="<?php echo site_url('karyawan')?>" data-toggle="modal" data-target="#theModal"><i class="material-icons">add</i> <span>Tambah Data</span></a></li>
+                                    <li><a onclick="add();"><i class="material-icons">add</i> <span>Tambah Data</span></a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -43,6 +59,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <table id="tabel" class="table table-bordered table-striped table-hover js-basic-example dataTable" cellspacing="0" width="100%" role="grid" >
                                 <thead>
                                 <tr>
+                                    <th><center>NIK</th>
                                     <th><center>Nama Karyawan</th>
                                     <th><center>Tmpt Lahir</th>
                                     <th><center>Tgl Lahir</th>
@@ -56,6 +73,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </tbody>
                                 <tfoot>
                                 <tr>
+                                    <th><center>NIK</th>
                                     <th><center>Nama Karyawan</th>
                                     <th><center>Tmpt Lahir</th>
                                     <th><center>Tgl Lahir</th>
@@ -75,12 +93,256 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
     <div id="theModal" class="modal fade text-center" role="dialog">
         <div class="modal-dialog">
-            <div class="modal-content"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">X</button>
+                    <h3>Data Karyawan Outsourcing</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                        <div class="panel-heading text-center">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h3 class="modal-title">Input Data Karyawan Outsourcing</h3> 
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="body">
+                                    <form id="form_input_pegawai" action="#" method="POST" enctype="multipart/form-data">
+                                        <div class="col-md-4">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input type="hidden" name="id_karyawan" id="id_karyawan"/>
+                                                    <input id="nik" name="nik" class="form-control" type="text">
+                                                    <label for="nik" class="form-label">NIK</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input id="nama_karyawan" name="nama_karyawan" class="form-control" type="text">
+                                                    <label for="nama_karyawan" class="form-label">Nama Karyawan</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <b>Jenis Kelamin</b><br><br>
+                                                <div class="input-group">
+                                                    <span>
+                                                        <input id="lk" type="radio" class="with-gap" checked value="P" name="jk">
+                                                        <label for="lk" class="form-label">Laki - Laki</label>
+                                                    </span>
+                                                    <span>
+                                                        <input id="pr" type="radio" class="with-gap" value="W" name="jk">
+                                                        <label for="pr" class="form-label">Perempuan</label>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input id="alamat_ktp" name="alamat_ktp" class="form-control" type="text">
+                                                    <label for="alamat_ktp" class="form-label">Alamat KTP</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input id="kode_pos_ktp" name="kode_pos_ktp" class="form-control" type="text">
+                                                    <label for="kode_pos_ktp" class="form-label">Kode Pos KTP</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input id="kelurahan_ktp" name="kelurahan_ktp" class="form-control" type="text">
+                                                    <label for="kelurahan_ktp" class="form-label">Kelurahan KTP</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input id="kecamatan_ktp" name="kecamatan_ktp" class="form-control" type="text">
+                                                    <label for="kecamatan_ktp" class="form-label">Kecamatan KTP</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input id="kota_ktp" name="kota_ktp" class="form-control" type="text">
+                                                    <label for="kota_ktp" class="form-label">Kota KTP</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input id="provinsi_ktp" name="provinsi_ktp" class="form-control" type="text">
+                                                    <label for="provinsi_ktp" class="form-label">Provinsi KTP</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <span>
+                                                    <input type="checkbox" class="filled-in" id="pilihan_domisili" name="pilihan_domisili" value="0">
+                                                    <label class="form-label" for="pilihan_domisili">Alamat Domisili Sama Dengan Alamat KTP</label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div id="domisili">
+                                            <div class="col-md-6">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input id="alamat_domisili" name="alamat_domisili" class="form-control" type="text">
+                                                        <label for="alamat_domisili" class="form-label">Alamat Domisili</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input id="kode_pos_domisili" name="kode_pos_domisili" class="form-control" type="text">
+                                                        <label for="kode_pos_domisili" class="form-label">Kode Pos Domisili</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input id="kelurahan_domisili" name="kelurahan_domisili" class="form-control" type="text">
+                                                        <label for="kelurahan_domisili" class="form-label">Kelurahan Domisili</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input id="kecamatan_domisili" name="kecamatan_domisili" class="form-control" type="text">
+                                                        <label for="kecamatan_domisili" class="form-label">Kecamatan Domisili</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input id="kota_domisili" name="kota_domisili" class="form-control" type="text">
+                                                        <label for="kota_domisili" class="form-label">Kota Domisili</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input id="provinsi_domisili" name="provinsi_domisili" class="form-control" type="text">
+                                                        <label for="provinsi_domisili" class="form-label">Provinsi Domisili</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <input id="tmpt_lahir" required="required" name="tmpt_lahir" class="form-control" type="text">
+                                                    <label for="tmpt_lahir" class="form-label">Tempat Lahir</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <input id="tgl_lahir" required="required" name="tgl_lahir" class="form-control datepicker" type="text">
+                                                    <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <input id="no_telp" name="no_telp" class="form-control no_telp" type="text">
+                                                    <label for="no_telp" class="form-label">No Telepon</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <input id="no_hp" name="no_hp" class="form-control no_hp" type="text">
+                                                    <label for="no_hp" class="form-label">No Handphone</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <input id="no_hp2" name="no_hp2" class="form-control no_hp" type="text">
+                                                    <label for="no_hp2" class="form-label">No Handphone 2</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <b>Agama</b>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">group_work</i>
+                                                </span>
+                                                <select required="required" id="agama" name="agama" class="form-control selectpicker show-tick agama">
+                                                    <option value="">-----</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <b>Status Nikah</b>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">supervised_user_circle</i>
+                                                </span>
+                                                <select required="required" id="status_nikah" name="status_nikah" class="form-control selectpicker show-tick status_nikah">
+                                                    <option value="">-----</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <input id="jumlah_anak" name="jumlah_anak" class="form-control" type="text">
+                                                    <label for="jumlah_anak" class="form-label">Jumlah Anak</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="panel-footer">
+                            <button class="btn bg-red waves-effect" onclick="cancel();" type="button"><i class="material-icons">undo</i><span></span></button>
+                            <button class="btn bg-blue waves-effect" type="reset"><i class="material-icons">clear</i><span></span></button>
+                            <button id="btnSave" type="button" onclick="save();" class="btn bg-orange waves-effect"><i class="material-icons">save</i><span></span></button>
+                            <div class="col-xs-10" id="lblstatus"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
+
 <script type="text/javascript">
     var table;
+    $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+
+    $('.modal').on('hidden.bs.modal', function () {
+        reload_table();
+    });
 
     $(document).ready(function() {
         table = $('#tabel').DataTable({
@@ -127,92 +389,97 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             ]
         });
 
-        $("#nik").inputmask("KKT9999999",{ "placeholder": "" });
-        $("#nipp").inputmask("9999999",{ "placeholder": "" });
-        $("#kode_pos_ktp").inputmask("99999",{ "placeholder": "" });
-        $("#tgl_lahir").inputmask("9999-99-99",{ "placeholder": "1970-02-01" });
+        init_select();
 
-        $('.dropify').dropify({
-            messages: {
-                default : 'Drag atau drop untuk memilih gambar',
-                replace : 'Ganti',
-                remove  : 'Hapus',
-                error   : 'error'
-            }
-        });
-    });
+        $(document).on("ajaxComplete", function(e){
+            $.AdminBSB.input.activate();
+            $.AdminBSB.select.activate();
+            $.AdminBSB.search.activate();
+            
+            $('#theModal').find('.modal-title').text('Input Data Karyawan Outsourcing');
 
-    $(function(){
-        $('#pilihan_domisili').click(function() {
-            if($(this).is(':checked')){
-                var alamat = $('#alamat_ktp').val();
-                var kode_pos = $('#kode_pos_ktp').val();
-                var kelurahan = $('#kelurahan_ktp').val();
-                var kecamatan = $('#kecamatan_ktp').val();
-                var kota = $('#kota_ktp').val();
-                var provinsi = $('#provinsi_ktp').val();
+            $('.selectpicker').selectpicker();
+            $("#kode_pos_ktp").inputmask("99999",{ "placeholder": "" });
+            $("#tgl_lahir").inputmask("9999-99-99",{ "placeholder": "1970-02-01" });
 
-                $('#pilihan_domisili').val('1');
-                $('#alamat_domisili').val("required");
-                $('#kode_pos_domisili').val("required");
-                $('#kelurahan_domisili').val("required");
-                $('#kecamatan_domisili').val("required");
-                $('#kota_domisili').val("required");
-                $('#provinsi_domisili').removeAttr("required");
-            }else{
-                $('#pilihan_domisili').val('0');
-                $('#alamat_domisili').val(alamat);
-                $('#kode_pos_domisili').val(kode_pos);
-                $('#kelurahan_domisili').val(kelurahan);
-                $('#kecamatan_domisili').val(kecamatan);
-                $('#kota_domisili').val(kota);
-                $('#provinsi_domisili').val(provinsi);
-            }
-        });
-
-        var form = $('#form_input_pegawai');
-        
-        form.find('.no_telp').inputmask('9999-9999999', { placeholder: '____-_______' });
-        form.find('.no_hp').inputmask('9999-9999-9999', { placeholder: '____-____-____' });
-        form.find('.email').inputmask({alias :"email"});
-
-        form.validate({
-            rules: {
-                'jk': {
-                    required: true
-                },
-                'agama' :{
-                    required: true
-                },
-                'status_nikah' : {
-                    required: true
+            $('.dropify').dropify({
+                messages: {
+                    default : 'Drag atau drop untuk memilih gambar',
+                    replace : 'Ganti',
+                    remove  : 'Hapus',
+                    error   : 'error'
                 }
-            },
-            highlight: function (input) {
-                $(input).parents('.form-line').addClass('error');
-            },
-            unhighlight: function (input) {
-                $(input).parents('.form-line').removeClass('error');
-            },
-            errorPlacement: function (error, element) {
-                $(element).parents('.form-group').append(error);
-                $(element).parents('.input-group').append(error);
-            }
+            });
+
+            $(function(){
+                $('#pilihan_domisili').click(function() {
+                    if($(this).is(':checked')){
+                        var alamat = $('#alamat_ktp').val();
+                        var kode_pos = $('#kode_pos_ktp').val();
+                        var kelurahan = $('#kelurahan_ktp').val();
+                        var kecamatan = $('#kecamatan_ktp').val();
+                        var kota = $('#kota_ktp').val();
+                        var provinsi = $('#provinsi_ktp').val();
+
+                        $('#pilihan_domisili').val('1');
+                        $('#alamat_domisili').val(alamat);
+                        $('#alamat_domisili').parent().addClass("focused");
+                        $('#kode_pos_domisili').val(kode_pos);
+                        $('#kode_pos_domisili').parent().addClass("focused");
+                        $('#kelurahan_domisili').val(kelurahan);
+                        $('#kelurahan_domisili').parent().addClass("focused");
+                        $('#kecamatan_domisili').val(kecamatan);
+                        $('#kecamatan_domisili').parent().addClass("focused");
+                        $('#kota_domisili').val(kota);
+                        $('#kota_domisili').parent().addClass("focused");
+                        $('#provinsi_domisili').val(provinsi);
+                        $('#provinsi_domisili').parent().addClass("focused");
+                    }else{
+                        $('#pilihan_domisili').val('0');
+                        $('#alamat_domisili').val('');
+                        $('#alamat_domisili').parent().removeClass("focused");
+                        $('#kode_pos_domisili').val('');
+                        $('#kode_pos_domisili').parent().removeClass("focused");
+                        $('#kelurahan_domisili').val('');
+                        $('#kelurahan_domisili').parent().removeClass("focused");
+                        $('#kecamatan_domisili').val('');
+                        $('#kecamatan_domisili').parent().removeClass("focused");
+                        $('#kota_domisili').val('');
+                        $('#kota_domisili').parent().removeClass("focused");
+                        $('#provinsi_domisili').val('');
+                        $('#provinsi_domisili').parent().removeClass("focused");
+                    }
+                });
+
+                var form = $('#form_input_pegawai');
+                
+                form.find('.no_telp').inputmask('9999-9999999', { placeholder: '____-_______' });
+                form.find('.no_hp').inputmask('9999-9999-9999', { placeholder: '____-____-____' });
+                form.find('.email').inputmask({alias :"email"});
+            });
         });
     });
+
+    function add(){
+        save_method = 'add';
+        $('#form_input_pegawai')[0].reset(); // reset form on modals
+        $('.form-group').removeClass('has-error'); // clear error class
+        $('.help-block').empty(); // clear error string
+        $('#btnSave').text('Save');
+        $('#theModal').modal('show');
+        $('.selectpicker').selectpicker('refresh');
+        $('.modal-title').text('Tambah Data Karyawan Outsourcing'); // Set title to Bootstrap modal title
+    }
+
+    function batal(){
+        $('#form_input_pegawai')[0].reset();
+        $('#btnSave').text('Save'); //change button text
+        $('#btnSave').attr('class','btn btn-primary'); //set button disable 
+        $('#md-form').modal('hide');
+    }
 
     function reload_table() {
         table.ajax.reload(null,false);
-    }
-
-    function add() {
-        $('#content').load("<?php echo site_url('karyawan')?>");
-        //window.location.replace('<?php echo site_url('karyawan')?>');
-    }
-
-    function edit(id) {
-        $('#content').load("<?php echo site_url('karyawan/edit')?>");
-        //window.location.replace('<?php echo site_url('karyawan/edit/')?>'+id);
     }
 
     function alamat_ktp(id) {
@@ -271,10 +538,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         });
     }
 
-    function cetak_cv(id) {
-        window.open('<?php echo base_url('karyawan/cetak_cv/')?>' + id,'_blank');
-    }
-
     function del(id) {
         swal({
             title: "Apakah Anda Yakin ?",
@@ -307,32 +570,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             }
         });
     }
+
+    function init_select(){
+        //Unit Select Box
+        let dropdown_agama = $('#agama');
+        dropdown_agama.empty();
+        dropdown_agama.append('<option value="">Pilih Agama</option>');
+        dropdown_agama.prop('selectedIndex', 0);
+        const url_agama = '<?php echo base_url('karyawan/getPilihanData/agama');?>';
+
+        // Populate dropdown with list
+        $.getJSON(url_agama, function (data) {
+            $.each(data, function (key, entry) {
+                dropdown_agama.append($('<option></option>').attr('value', entry.subID).text(entry.value));
+            })
+        });
+
+        //Unit Select Box
+        let dropdown_status_nikah = $('#status_nikah');
+        dropdown_status_nikah.empty();
+        dropdown_status_nikah.append('<option value="">Pilih Status Nikah</option>');
+        dropdown_status_nikah.prop('selectedIndex', 0);
+        const url_status_nikah = '<?php echo base_url('karyawan/getPilihanData/status_nikah');?>';
+
+        // Populate dropdown with list
+        $.getJSON(url_status_nikah, function (data) {
+            $.each(data, function (key, entry) {
+                dropdown_status_nikah.append($('<option></option>').attr('value', entry.subID).text(entry.value));
+            })
+        });
+    }
+
 </script>
 
 <script type="text/javascript">
-    var table;
     var save_method; //for save method string
-
-    $('#frmadd').on('keyup keypress', function(e) {
-        var keyCode = e.keyCode || e.which;
-        if (keyCode === 13) { 
-            e.preventDefault();
-            return false;
-        }
-    });
 
     function reload_table() {
         table.ajax.reload(null,false);
     }
-
-    function add(){
-        save_method = 'add';
-        $('#frmadd')[0].reset(); // reset form on modals
-        $('.form-group').removeClass('has-error'); // clear error class
-        $('.help-block').empty(); // clear error string
-        $('#mdadd').modal('show'); // show bootstrap modal
-        $('.modal-title').text('New Jenis Document Data'); // Set Title to Bootstrap modal title
-	}
 
     function save(){
         $('#btnSave').text('Saving...'); //change button text
@@ -344,13 +620,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         var url;
 
         if(save_method == 'add') {
-            url = "<?php echo site_url('document/ajax_add/');?>";
+            url = "<?php echo site_url('karyawan/ajax_add/');?>";
         } else {
-            url = "<?php echo site_url('document/ajax_update');?>";
+            url = "<?php echo site_url('karyawan/ajax_update');?>";
         }
-        formData = new FormData();        
-        formData.append( 'id', $('input[name=id]').val() );
-        formData.append( 'jenis_doc', $('input[name=jenis_doc]').val() );
+        
+        formData = new FormData($('#form_input_pegawai')[0]);
+        formData.append( 'save_method', save_method );    
         
         // ajax adding data to database
         $.ajax({
@@ -363,16 +639,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             success: function(data){
                 //if success close modal and reload ajax table
                 if(data.status){
-                    $('#mdadd').modal('hide');
-                    $('#mdedit').modal('hide');
                     reload_table();
-                    $('input[name=jenis_doc]').val('');
+                    alert(data.info);
+                    $('#form_input_pegawai')[0].reset();
+                    $('#btnSave').text('Save'); //change button text
+                    $('#btnSave').attr('disabled',false); //set button enable 
+                    $('#theModal').modal('hide');
                 }
                 else{
                     for (var i = 0; i < data.inputerror.length; i++) {
                         $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
                         $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
                     }
+                    alert(data.info);
                 }
                 $('#btnSave').text('Save'); //change button text
                 $('#btnSave').attr('disabled',false); //set button enable 
@@ -391,21 +670,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     function edit(id){
         save_method = 'update';
-        $('#frmadd')[0].reset(); // reset form on modals
+        $('#form_input_pegawai')[0].reset(); // reset form on modals
         $('.form-group').removeClass('has-error'); // clear error class
         $('.help-block').empty(); // clear error string
+        $('#btnSave').text('Update');
         
         //Ajax Load data from ajax
         $.ajax({
-            url : "<?php echo site_url('document/ajax_edit/')?>" + id,
+            url : "<?php echo site_url('karyawan/ajax_edit/')?>" + id,
             type: "GET",
             dataType: "JSON",
             success: function(data)
             {		
-                $('[name="id"]').val(data.idm_document);
-                $('[name="jenis_doc"]').val(data.jenis_doc);
-                $('#mdadd').modal('show'); // show bootstrap modal when complete loaded
-                $('.modal-title').text('Edit Jenis Document Data'); // Set title to Bootstrap modal title
+                $('[name="id_karyawan"]').val(id);
+                $('[name="nik"]').val(data.nik);
+                $('[name="nama_karyawan"]').val(data.nama_karyawan);
+                $("input[name=jk][value=" + data.jenis_kelamin + "]").prop('checked', true);
+                $('[name="alamat_ktp"]').val(data.alamat_ktp);
+                $('[name="kode_pos_ktp"]').val(data.kode_pos_ktp);
+                $('[name="kelurahan_ktp"]').val(data.kelurahan_ktp);
+                $('[name="kecamatan_ktp"]').val(data.kecamatan_ktp);
+                $('[name="kota_ktp"]').val(data.kota_ktp);
+                $('[name="provinsi_ktp"]').val(data.provinsi_ktp);
+                $('[name="alamat_domisili"]').val(data.alamat_domisili);
+                $('[name="kode_pos_domisili"]').val(data.kode_pos_domisili);
+                $('[name="kelurahan_domisili"]').val(data.kelurahan_domisili);
+                $('[name="kecamatan_domisili"]').val(data.kecamatan_domisili);
+                $('[name="kota_domisili"]').val(data.kota_domisili);
+                $('[name="provinsi_domisili"]').val(data.provinsi_domisili);
+                $('[name="tmpt_lahir"]').val(data.tmpt_lahir);
+                $('[name="tgl_lahir"]').val(data.tgl_lahir);
+                $('[name="no_telp"]').val(data.no_telp);
+                $('[name="no_hp"]').val(data.no_hp);
+                $('[name="no_hp2"]').val(data.no_hp_2);
+                $('[name="agama"]').val(data.agama).change();
+                $('[name="status_nikah"]').val(data.status_nikah).change();
+                $('[name="jumlah_anak"]').val(data.jmlh_anak);
+
+                $('.selectpicker').selectpicker('refresh');
+
+                $('#theModal').modal('show'); // show bootstrap modal when complete loaded
+                $('.modal-title').text('Edit Data Karyawan OC'); // Set title to Bootstrap modal title
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
@@ -426,7 +731,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }).then((willDelete) => {
             if (willDelete.value) {
                 $.ajax({
-                    url : "<?php echo site_url('document/delete')?>/"+id,
+                    url : "<?php echo site_url('karyawan/delete')?>/"+id,
                     type: "POST",
                     dataType: "JSON",
                     success: function(data)
@@ -446,11 +751,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
 
     function cancel() {
-        //window.location.replace('<?php echo site_url('master/page/karyawan_oc')?>')
-    }
-
-    function master() {
-        //window.location.replace('<?php echo site_url('master/page/karyawan_oc')?>')
+        save_method_doc = 'add';
+        $('#form_input_pegawai')[0].reset();
+        $('#btnSave').text('Save'); //change button text
+        $('#btnSave').attr('class','btn btn-primary'); //set button disable 
+        $('#theModal').modal('hide');
     }
 
     $('.datepicker').bootstrapMaterialDatePicker({
@@ -459,4 +764,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         weekStart: 1,
         time: false
     });
+
 </script>

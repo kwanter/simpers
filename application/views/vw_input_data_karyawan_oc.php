@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="panel panel-default">
         <div class="panel-heading text-center">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h3 class="modal-title">Input Data Karyawan Outsourcing    </h3> 
+            <h3 class="modal-title">Input Data Karyawan Outsourcing</h3> 
         </div>
         <div class="panel-body">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -38,7 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="col-md-4">
                                 <div class="form-group form-float">
                                     <div class="form-line">
-                                        <input id="nama_karyawan" name="nama_karyawan" required class="form-control" type="text">
+                                        <input id="nama_karyawan" name="nama_karyawan" class="form-control" type="text">
                                         <label for="nama_karyawan" class="form-label">Nama Karyawan</label>
                                     </div>
                                 </div>
@@ -61,7 +61,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group form-float">
                                     <div class="form-line">
-                                        <input id="alamat_ktp" name="alamat_ktp" required="required" class="form-control" type="text">
+                                        <input id="alamat_ktp" name="alamat_ktp" class="form-control" type="text">
                                         <label for="alamat_ktp" class="form-label">Alamat KTP</label>
                                     </div>
                                 </div>
@@ -77,7 +77,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group form-float">
                                     <div class="form-line">
-                                        <input id="kelurahan_ktp" name="kelurahan_ktp" required="required" class="form-control" type="text">
+                                        <input id="kelurahan_ktp" name="kelurahan_ktp" class="form-control" type="text">
                                         <label for="kelurahan_ktp" class="form-label">Kelurahan KTP</label>
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group form-float">
                                     <div class="form-line">
-                                        <input id="kecamatan_ktp" name="kecamatan_ktp" required="required" class="form-control" type="text">
+                                        <input id="kecamatan_ktp" name="kecamatan_ktp" class="form-control" type="text">
                                         <label for="kecamatan_ktp" class="form-label">Kecamatan KTP</label>
                                     </div>
                                 </div>
@@ -93,7 +93,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group form-float">
                                     <div class="form-line">
-                                        <input id="kota_ktp" name="kota_ktp" required="required" class="form-control" type="text">
+                                        <input id="kota_ktp" name="kota_ktp" class="form-control" type="text">
                                         <label for="kota_ktp" class="form-label">Kota KTP</label>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group form-float">
                                     <div class="form-line">
-                                        <input id="provinsi_ktp" name="provinsi_ktp" required="required" class="form-control" type="text">
+                                        <input id="provinsi_ktp" name="provinsi_ktp" class="form-control" type="text">
                                         <label for="provinsi_ktp" class="form-label">Provinsi KTP</label>
                                     </div>
                                 </div>
@@ -118,7 +118,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="col-md-6">
                                     <div class="form-group form-float">
                                         <div class="form-line">
-                                            <input id="alamat_domisili" name="alamat_domisili" required="required" class="form-control" type="text">
+                                            <input id="alamat_domisili" name="alamat_domisili" class="form-control" type="text">
                                             <label for="alamat_domisili" class="form-label">Alamat Domisili</label>
                                         </div>
                                     </div>
@@ -134,7 +134,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="col-md-6">
                                     <div class="form-group form-float">
                                         <div class="form-line">
-                                            <input id="kelurahan_domisili" name="kelurahan_domisili" required="required" class="form-control" type="text">
+                                            <input id="kelurahan_domisili" name="kelurahan_domisili" class="form-control" type="text">
                                             <label for="kelurahan_domisili" class="form-label">Kelurahan Domisili</label>
                                         </div>
                                     </div>
@@ -142,7 +142,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="col-md-6">
                                     <div class="form-group form-float">
                                         <div class="form-line">
-                                            <input id="kecamatan_domisili" name="kecamatan_domisili" required="required" class="form-control" type="text">
+                                            <input id="kecamatan_domisili" name="kecamatan_domisili" class="form-control" type="text">
                                             <label for="kecamatan_domisili" class="form-label">Kecamatan Domisili</label>
                                         </div>
                                     </div>
@@ -150,7 +150,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="col-md-6">
                                     <div class="form-group form-float">
                                         <div class="form-line">
-                                            <input id="kota_domisili" name="kota_domisili" required="required" class="form-control" type="text">
+                                            <input id="kota_domisili" name="kota_domisili" class="form-control" type="text">
                                             <label for="kota_domisili" class="form-label">Kota Domisili</label>
                                         </div>
                                     </div>
@@ -158,21 +158,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="col-md-6">
                                     <div class="form-group form-float">
                                         <div class="form-line">
-                                            <input id="provinsi_domisili" name="provinsi_domisili" required="required" class="form-control" type="text">
+                                            <input id="provinsi_domisili" name="provinsi_domisili" class="form-control" type="text">
                                             <label for="provinsi_domisili" class="form-label">Provinsi Domisili</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input id="tmpt_lahir" name="tmpt_lahir" class="form-control" type="text">
+                                        <input id="tmpt_lahir" required="required" name="tmpt_lahir" class="form-control" type="text">
                                         <label for="tmpt_lahir" class="form-label">Tempat Lahir</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="form-line">
                                         <input id="tgl_lahir" required="required" name="tgl_lahir" class="form-control datepicker" type="text">
@@ -180,7 +180,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input id="email" class="form-control email" name="email" type="email">
+                                        <label for="email" class="form-label">Email</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="form-line">
                                         <input id="no_telp" name="no_telp" class="form-control no_telp" type="text">
@@ -188,7 +196,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="form-line">
                                         <input id="no_hp" name="no_hp" class="form-control no_hp" type="text">
@@ -196,19 +204,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="form-line">
                                         <input id="no_hp2" name="no_hp2" class="form-control no_hp" type="text">
                                         <label for="no_hp2" class="form-label">No Handphone 2</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input id="email" class="form-control email" name="email" type="email">
-                                        <label for="email" class="form-label">Email</label>
                                     </div>
                                 </div>
                             </div>
@@ -218,15 +218,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <span class="input-group-addon">
                                         <i class="material-icons">group_work</i>
                                     </span>
-                                    <select required="required" id="agama" name="agama" class="form-control show-tick">
+                                    <select required="required" id="agama" name="agama" class="form-control selectpicker show-tick agama">
                                         <option value="">-----</option>
-                                        <?php
-                                        foreach ($attr['agama'] as $agama){
-                                            ?>
-                                            <option value="<?php echo $agama->subID?>"><?php echo $agama->value?></option>
-                                            <?php
-                                        }
-                                        ?>
                                     </select>
                                 </div>
                             </div>
@@ -236,23 +229,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <span class="input-group-addon">
                                         <i class="material-icons">supervised_user_circle</i>
                                     </span>
-                                    <select required="required" id="status_nikah" name="status_nikah" class="form-control show-tick">
+                                    <select required="required" id="status_nikah" name="status_nikah" class="form-control selectpicker show-tick status_nikah">
                                         <option value="">-----</option>
-                                        <?php
-                                        foreach ($attr['status_nikah'] as $status){
-                                            ?>
-                                            <option value="<?php echo $status->subID?>"><?php echo $status->value?></option>
-                                            <?php
-                                        }
-                                        ?>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input id="no_hp2" name="no_hp2" class="form-control no_hp" type="text">
-                                        <label for="no_hp2" class="form-label">Jumlah Anak</label>
+                                        <input id="jumlah_anak" name="jumlah_anak" class="form-control" type="text">
+                                        <label for="jumlah_anak" class="form-label">Jumlah Anak</label>
                                     </div>
                                 </div>
                             </div>
@@ -275,7 +261,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="panel-footer">
             <button class="btn bg-red waves-effect" onclick="cancel();" type="button"><i class="material-icons">undo</i><span></span></button>
             <button class="btn bg-blue waves-effect" type="reset"><i class="material-icons">clear</i><span></span></button>
-            <button type="submit" class="btn bg-orange waves-effect"><i class="material-icons">save</i><span></span></button>
+            <button id="btnSave" type="button" onclick="save();" class="btn bg-orange waves-effect"><i class="material-icons">save</i><span></span></button>
             <div class="col-xs-10" id="lblstatus"></div>
         </div>
     </div>
