@@ -380,6 +380,11 @@ class Dokumen extends MY_Controller{
         echo json_encode($data); 
     }
 
+    public function getJenisDokumen(){
+        $data = $this->dokumen_oc->getJenisDokumen();
+        echo json_encode($data); 
+    }
+
 }
 ?>
 

@@ -45,6 +45,7 @@ class MY_Controller extends CI_Controller
         $this->load->model('M_dokumen','dokumen');
         $this->load->model('M_cuti','cuti');
         $this->load->model('M_karyawan','karyawan_oc');
+        $this->load->model('M_dokumen_oc','dokumen_oc');
         $this->load->library('email');
     }
 

@@ -20,7 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <span class="input-group-addon">
                                             <i class="material-icons">perm_identity</i>
                                         </span>
-                                        <select title="Pegawai Yang Ingin Cuti" id="nik" name="nik" required="required" class="form-control selectpicker show-tick" data-live-search="true">
+                                        <select title="Pegawai Yang Ingin Cuti" id="nik" name="nik" required="required" class="form-control selectpicker show-tick" data-dropup-auto="false" data-size="5" data-live-search="true">
                                             <?php
                                             foreach ($attr['karyawan'] as $karyawan){
                                                 ?>
@@ -61,7 +61,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <span class="input-group-addon">
                                             <i class="material-icons">perm_identity</i>
                                         </span>
-                                        <select title="Pegawai Pengganti" id="nik_pengganti" name="nik_pengganti" required="required" class="form-control selectpicker show-tick" data-live-search="true">
+                                        <select title="Pegawai Pengganti" id="nik_pengganti" name="nik_pengganti" required="required" class="form-control selectpicker show-tick" data-dropup-auto="false" data-size="5" data-live-search="true">
                                             <?php
                                             foreach ($attr['karyawan'] as $karyawan){
                                                 ?>
@@ -213,7 +213,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <i class="material-icons">title</i>
                                         </span>
                                         <div class="form-line">
-                                            <select title="Pilih Pejabat Yang Menyetujui" id="pejabat_setuju" name="pejabat_setuju" required="required" class="form-control selectpicker show-tick" data-live-search="true">
+                                            <select title="Pilih Pejabat Yang Menyetujui" id="pejabat_setuju" name="pejabat_setuju" required="required" class="form-control selectpicker show-tick" data-dropup-auto="false" data-size="4">
                                                 <?php
                                                 foreach ($attr['pejabat'] as $pejabat){
                                                     ?>
@@ -234,7 +234,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <i class="material-icons">title</i>
                                         </span>
                                         <div class="form-line">
-                                            <select title="Pilih Pejabat Yang Berwenang" id="pejabat_wewenang" name="pejabat_wewenang" required="required" class="selectpicker form-control show-tick" data-live-search="true">
+                                            <select title="Pilih Pejabat Yang Berwenang" id="pejabat_wewenang" name="pejabat_wewenang" required="required" class="selectpicker form-control show-tick" data-dropup-auto="false" data-size="4">
                                                 <?php
                                                 foreach ($attr['pejabat'] as $pejabat){
                                                     ?>

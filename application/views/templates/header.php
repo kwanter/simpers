@@ -50,12 +50,9 @@
 
     <!-- noUISlider Css -->
     <link href="<?php echo base_url('assets/plugins/nouislider/nouislider.min.css')?>" rel="stylesheet" />
-
-    <!-- Sweet Alert Css -->
-    <link href="<?php echo base_url('assets/plugins/sweetalert/sweetalert.css')?>" rel="stylesheet" />
     
     <!-- Sweet Alert 2 Css -->
-    <link href="<?php echo base_url('assets/plugins/sweetalert2/sweetalert2.css')?>" rel="stylesheet" />
+    <link href="<?php echo base_url('assets/plugins/sweetalert2/dist/sweetalert2.css')?>" rel="stylesheet" />
 
     <!-- Jquery UI Css -->
     <link href="<?php echo base_url('assets/plugins/jquery-ui/jquery-ui.css')?>" rel="stylesheet" />
@@ -161,12 +158,9 @@
     <!-- JQuery Steps Plugin Js -->
     <script src="<?php echo base_url('assets/plugins/jquery-steps/jquery.steps.js')?>"></script>
 
-    <!-- Sweet Alert Plugin Js -->
-    <script src="<?php echo base_url('assets/plugins/sweetalert/sweetalert.min.js')?>"></script>
-
     <!-- Sweet Alert 2 Plugin Js -->
-    <script src="<?php echo base_url('assets/plugins/sweetalert2/sweetalert2.min.js')?>"></script>
-    <script src="<?php echo base_url('assets/plugins/sweetalert2/polyfill.js')?>"></script>
+    <script src="<?php echo base_url('assets/plugins/sweetalert2/dist/sweetalert2.min.js')?>"></script>
+    <script src="<?php echo base_url('assets/plugins/sweetalert2/dist/polyfill.js')?>"></script>
 
     <!-- Bootstrap Material Datetime Picker Plugin Js -->
     <script src="<?php echo base_url('assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')?>"></script>

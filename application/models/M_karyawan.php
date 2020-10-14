@@ -3,21 +3,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_karyawan extends MY_Model {
     var $table             = 'm_karyawan_oc';
-    var $table_dokumen     = 'm_karyawan_oc_kartu';
     var $table_pilihan     = 'm_pilihan';
 
     var $column_order      = array('id_karyawan_oc'); //set column field database for datatable orderable
     var $column_search     = array(null); //set column field database for datatable searchable
     var $order             = array('id_karyawan_oc' => 'desc'); // default order
 
-    var $column_order_dokumen      = array('id_harilibur'); //set column field database for datatable orderable
-    var $column_search_dokumen     = array('tgl_libur','deskripsi_libur'); //set column field database for datatable searchable
-    var $order_dokumen             = array('tgl_libur' => 'asc'); // default order
-
     public function get_datatable(){
         $this->_get_datatables_query();
         if($_POST['length'] != -1)
             $this->db->limit($_POST['length'], $_POST['start']);
+        $this->db->where('soft_delete','not-deleted');
         $query = $this->db->get();
 
         return $query->result();
@@ -25,70 +21,17 @@ class M_karyawan extends MY_Model {
 
     function countFiltered() {
         $this->_get_datatables_query();
+        $this->db->where('soft_delete','not-deleted');
         $query = $this->db->get();
         return $query->num_rows();
     }
 
     public function countAll(){
         $this->db->from($this->table);
+        $this->db->where('soft_delete','not-deleted');
         return $this->db->count_all_results();
     }
 
-    function _get_datatables_query_dokumen() {
-        $this->db->from($this->table_dokumen);
-        $i = 0;
-
-        foreach ($this->column_search_dokumen as $item) // loop column
-        {
-            if($_POST['search']['value']) // if datatable send POST for search
-            {
-                if($i===0) // first loop
-                {
-                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
-                    $this->db->like($item, $_POST['search']['value']);
-                }
-                else
-                {
-                    $this->db->or_like($item, $_POST['search']['value']);
-                }
-
-                if(count($this->column_search_dokumen) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
-            }
-            $i++;
-        }
-
-        if(isset($_POST['order'])) // here order processing
-        {
-            $this->db->order_by($this->column_order_dokumen[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
-        }
-        else if(isset($this->order_dokumen))
-        {
-            $order = $this->order_dokumen;
-            $this->db->order_by(key($order), $order[key($order)]);
-        }
-    }
-
-    public function get_datatable_dokumen(){
-        $this->_get_datatables_query_dokumen();
-        if($_POST['length'] != -1)
-            $this->db->limit($_POST['length'], $_POST['start']);
-        $query = $this->db->get();
-
-        return $query->result();
-    }
-
-    function countFilteredDokumen() {
-        $this->_get_datatables_query_dokumen();
-        $query = $this->db->get();
-        return $query->num_rows();
-    }
-
-    public function countAllCuti(){
-        $this->db->from($this->table_cuti);
-        $this->db->where('disetujui',NULL);
-        return $this->db->count_all_results();
-    }
 
     public function saveData($post){
         if (!empty($post['pilihan_domisili']))
@@ -256,44 +199,10 @@ class M_karyawan extends MY_Model {
             return $query->row();
     }
 
-    public function saveDataDokumen($post){
-        $result = $this->save_where($this->table_dokumen, $post);
-
-        if($result['status'])
-            return TRUE;
-        else
-            return FALSE;
-    }
-
-    public function updateDataDokumen($post){
-        $where = array(
-            'id_dokumen' => $this->db->escape_str($post['id_dokumen'])
-        );
-
-        $data = array(
-            'tgl_libur' => $post['tgl_libur'],
-            'deskripsi_libur' => $post['deskripsi_libur'],
-        );
-
-        $result= $this->update_where($this->table_dokumen,$where,$data);
-
-        if($result)
-            return TRUE;
-        else
-            return FALSE;
-    }
-
     public function deleteData($id){
         $this->db->set('soft_delete','deleted');
-        $this->db->where('id_datacuti', $id);
+        $this->db->where('id_karyawan_oc', $id);
         $this->db->update($this->table);
-
-        return $this->db->affected_rows();
-    }
-
-    public function deleteDataDokumen($id){
-        $this->db->where('id_harilibur', $id);
-        $this->db->delete($this->table_libur);
 
         return $this->db->affected_rows();
     }

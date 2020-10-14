@@ -15,7 +15,7 @@ class Karyawan extends MY_Controller{
     }
 
     public function ajax_list(){
-        $list = $this->karyawan_oc->get_datatables();
+        $list = $this->karyawan_oc->get_datatable();
         $data = array();
         $no = $_POST['start'];
 
@@ -34,10 +34,14 @@ class Karyawan extends MY_Controller{
 
             $row[] = '<center style="font-size: small">'.$pegawai->jenis_kelamin;
             $row[] = '<center style="font-size: small">'.$this->main->getAgama($pegawai->agama);
-            $row[] = '<center style="font-size: small">'.$this->main->getStatusNikah($pegawai->status_nikah);
+            
+            $row[] = '<a href="javascript:void(0)" title="Pendidikan" onclick="edu('."'".$pegawai->id_karyawan_oc."'".')"><i class="material-icons">book</i></a>';
+            
+            $row[] = '<center style="font-size: small">'.$this->main->getStatusNikah($pegawai->status_nikah).'/'.$pegawai->jmlh_anak;
 
             //add html for action
             $row[] = '<center><a href="javascript:void(0)" title="Edit" onclick="edit('."'".$pegawai->id_karyawan_oc."'".')"><i class="material-icons">launch</i></a>
+                              <a href="javascript:void(0)" title="Edit" onclick="doc('."'".$pegawai->id_karyawan_oc."'".')"><i class="material-icons">assignment</i></a>
                               <a class="js-sweetalert waves-effect" data-type="confirm" href="javascript:void(0)" title="Hapus" onclick="del('."'".$pegawai->id_karyawan_oc."'".')"><i class="material-icons">delete_forever</i></a>
                               
                               ';
@@ -55,14 +59,22 @@ class Karyawan extends MY_Controller{
         echo json_encode($output);
     }
 
+    public function getDataKaryawan($id){
+        $data = $this->karyawan_oc->getData($id);
+        echo json_encode($data);
+    }
+
     public function getPilihanData($pilihan){
         $result = $this->karyawan_oc->getPilihanData($pilihan);
         echo json_encode($result);
     }
 
     public function delete($id){
-        $this->karyawan_oc->deleteData($id);
-        echo json_encode(array("status" => TRUE));
+        $result = $this->karyawan_oc->deleteData($id);
+        if($result)
+            echo json_encode(array("status" => TRUE,"info" => "Hapus data sukses"));
+        else
+            echo json_encode(array("status" => FALSE,"info" => "Hapus data gagal"));
     }
 
     public function ajax_add() {

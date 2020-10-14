@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     .modal-dialog {
         text-align: left; /* you'll likely want this */
-        max-width: 80%;
+        max-width: 80% !important;
         width: auto !important;
         display: inline-block;
     }
@@ -29,12 +29,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <section class="content">
     <div class="container-fluid">
-        <!--
-        <div class="block-header">
-            <h2>DATA KARYAWAN</h2>
-        </div>
-        --->
-        <!-- Horizontal Layout -->
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
@@ -65,6 +59,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <th><center>Tgl Lahir</th>
                                     <th><center>J.K.</th>
                                     <th><center>Agama</th>
+                                    <th><center>Pendidikan Terakhir</th>
                                     <th><center>Status Nikah</th>
                                     <th><center>Aksi</th>
                                 </tr>
@@ -79,6 +74,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <th><center>Tgl Lahir</th>
                                     <th><center>J.K.</th>
                                     <th><center>Agama</th>
+                                    <th><center>Pendidikan Terakhir</th>
                                     <th><center>Status Nikah</th>
                                     <th><center>Aksi</th>
                                 </tr>
@@ -91,6 +87,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <!-- #END# Horizontal Layout -->
     </div>
+    
     <div id="theModal" class="modal fade text-center" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -111,7 +108,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <div class="col-md-4">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input type="hidden" name="id_karyawan" id="id_karyawan"/>
+                                                    <input type="hidden" name="id_karyawan" id="id_karyawan">
                                                     <input id="nik" name="nik" class="form-control" type="text">
                                                     <label for="nik" class="form-label">NIK</label>
                                                 </div>
@@ -325,7 +322,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="modal-footer">
                         <div class="panel-footer">
                             <button class="btn bg-red waves-effect" onclick="cancel();" type="button"><i class="material-icons">undo</i><span></span></button>
-                            <button class="btn bg-blue waves-effect" type="reset"><i class="material-icons">clear</i><span></span></button>
+                            <button class="btn bg-blue waves-effect" onclick="reset();" type="button"><i class="material-icons">clear</i><span></span></button>
                             <button id="btnSave" type="button" onclick="save();" class="btn bg-orange waves-effect"><i class="material-icons">save</i><span></span></button>
                             <div class="col-xs-10" id="lblstatus"></div>
                         </div>
@@ -334,17 +331,91 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         </div>
     </div>
+
+    <!-- Bootstrap modal For Datatable-->
+    <div class="modal fade text-center" id="docModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title">Dokumen Karyawan OC</h3>
+                </div>
+                <div class="modal-body form table-responsive">
+                    <table id="tb_doc" class="table table-bordered table-striped table-hover js-basic-example dataTable" cellspacing="0" width="100%" role="grid" >
+                        <thead>
+                            <tr>
+                            <th style="width:5% !important;"><center>#</th>
+                            <th style="width:20% !important;"><center>Jenis Dokumen</th>
+                            <th style="width:35% !important;"><center>No Dokumen</th>
+                            <th style="width:20% !important;"><center>Masa Berakhir Dokumen</th>
+                            <th style="width:20% !important;"><center>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>	
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer bg-warning" >
+                    <div class="form-group">
+                        <form id="form_doc_pegawai" action="#" method="POST" enctype="multipart/form-data">
+                            <div class="col-md-4">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="hidden" name="id_karyawan_oc" id="id_karyawan_oc">
+                                        <input type="hidden" name="id_doc" id="id_doc">
+                                        <select id="jenis_doc" name="jenis_doc" class="form-control selectpicker show-tick agama" data-dropup-auto="false" data-size="5">
+                                            <option value="">-----</option>
+                                        </select>
+                                        <label for="jenis_dokumen" class="form-label">Jenis Dokumen</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input id="no_dokumen" name="no_dokumen" class="form-control" type="text">
+                                        <label for="no_dokumen" class="form-label">No Dokumen</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input id="masa_berakhir_dokumen" name="masa_berakhir_dokumen" class="form-control datepicker" type="text">
+                                        <label for="masa_berakhir_dokumen" class="form-label">Masa Berakhir Dokumen</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </form>
+                        <div class="panel-footer">
+                            <button class="btn bg-red waves-effect" onclick="cancelDoc();" type="button"><i class="material-icons">undo</i><span></span></button>
+                            <button class="btn bg-blue waves-effect" onclick="resetDoc();" type="button"><i class="material-icons">clear</i><span></span></button>
+                            <button id="btnSaveDoc" type="button" onclick="saveDoc();" class="btn bg-orange waves-effect"><i class="material-icons">save</i><span></span></button>
+                            <div class="col-xs-10" id="lblstatus"></div>
+                        </div>
+                    </div>
+                </div>				
+            </div>
+        </div>
+    </div>
+<!-- End Bootstrap modal -->
 </section>
 
 <script type="text/javascript">
     var table;
+    var save_method; //for save method string
+    var save_method_doc = 'add';
+
     $.fn.modal.Constructor.prototype.enforceFocus = function() {};
 
     $('.modal').on('hidden.bs.modal', function () {
         reload_table();
     });
 
-    $(document).ready(function() {
+    $(document).ready(function() {    
+        //$('select:not(.swal2-select)').formSelect();
+
         table = $('#tabel').DataTable({
             processing: true, //Feature control the processing indicator.
             serverSide: true, //Feature control DataTables' server-side processing mode.
@@ -460,6 +531,48 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         });
     });
 
+    function doc(id){
+        save_method_doc = 'add';
+        $('.selectpicker').selectpicker('refresh');
+        $('.form-group').removeClass('has-error'); // clear error class
+        $('.help-block').empty(); // clear error string
+        $('#id_karyawan_oc').val(id);
+
+        $.ajax({
+            url : "<?php echo site_url('karyawan/getDataKaryawan/')?>" + id,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data){
+                //console.log(data);
+                //tabel untuk dokumen kapal
+                table_doc = $('#tb_doc').DataTable({
+                    processing  : true, //Feature control the processing indicator.
+                    serverSide  : true, //Feature control DataTables' server-side processing mode.
+                    order       : [], //Initial no order.
+                    autowidth   : true,
+                    ordering    : false,
+                    destroy     : true,
+                    pageLength  : 5,
+                    lengthMenu: [5, 10, 20, 50, 100],
+                    ajax : {
+                        url : "<?php echo base_url('dokumen_oc/ajax_list/');?>" + id,
+                        type : 'POST',
+                    },
+                });
+
+                // show bootstrap modal
+                $('#docModal').modal('show'); 
+                
+                title = data.nama_karyawan;
+                $('.modal-title').text('Dokumen Karyawan OC : ' + ' [ ' + title + " ]"); // Set Title to Bootstrap modal title                
+            },
+            error: function (jqXHR, textStatus, errorThrown){
+                alert('Error get data from ajax');
+            }
+        });
+
+    }
+
     function add(){
         save_method = 'add';
         $('#form_input_pegawai')[0].reset(); // reset form on modals
@@ -478,8 +591,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $('#md-form').modal('hide');
     }
 
-    function reload_table() {
-        table.ajax.reload(null,false);
+    function reset(){
+        $('#form_input_pegawai')[0].reset();
+    }
+
+    function resetDoc(){
+        $('#form_doc_pegawai')[0].reset();
     }
 
     function alamat_ktp(id) {
@@ -599,15 +716,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 dropdown_status_nikah.append($('<option></option>').attr('value', entry.subID).text(entry.value));
             })
         });
+
+        //Unit Select Box
+        let dropdown_jenis_doc = $('#jenis_doc');
+        dropdown_jenis_doc.empty();
+        dropdown_jenis_doc.append('<option value="">Pilih Jenis Dokumen</option>');
+        dropdown_jenis_doc.prop('selectedIndex', 0);
+
+        const url_jenis_doc = '<?php echo base_url('dokumen/getJenisDokumen/');?>';
+
+        // Populate dropdown with list
+        $.getJSON(url_jenis_doc, function (data) {
+            $.each(data, function (key, entry) {
+                dropdown_jenis_doc.append($('<option></option>').attr('value', entry.jenis_kartu).text(entry.deskripsi_kartu));
+            })
+        });
     }
 
-</script>
+    function init_jenis_doc_select(){
+        //Unit Select Box
+        let dropdown_jenis_doc = $('#jenis_doc');
+        dropdown_jenis_doc.empty();
+        dropdown_jenis_doc.append('<option value="">Pilih Jenis Dokumen</option>');
+        dropdown_jenis_doc.prop('selectedIndex', 0);
 
-<script type="text/javascript">
-    var save_method; //for save method string
+        const url_jenis_doc = '<?php echo base_url('dokumen/getJenisDokumen/');?>';
+
+        // Populate dropdown with list
+        $.getJSON(url_jenis_doc, function (data) {
+            $.each(data, function (key, entry) {
+                dropdown_jenis_doc.append($('<option></option>').attr('value', entry.jenis_kartu).text(entry.deskripsi_kartu));
+            })
+        });
+    }
 
     function reload_table() {
         table.ajax.reload(null,false);
+    }
+
+    function reload_table_doc() {
+        table_doc.ajax.reload(null,false);
     }
 
     function save(){
@@ -640,7 +788,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 //if success close modal and reload ajax table
                 if(data.status){
                     reload_table();
-                    alert(data.info);
+                    alert('Sukses');
                     $('#form_input_pegawai')[0].reset();
                     $('#btnSave').text('Save'); //change button text
                     $('#btnSave').attr('disabled',false); //set button enable 
@@ -651,7 +799,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
                         $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
                     }
-                    alert(data.info);
+                   alert('Gagal');
                 }
                 $('#btnSave').text('Save'); //change button text
                 $('#btnSave').attr('disabled',false); //set button enable 
@@ -719,7 +867,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         });
     }
 
-    function del(id) {
+    function edit_doc(id){
+        save_method_doc = 'update';
+        $('#form_doc_pegawai')[0].reset(); // reset form on modals
+        $('.form-group').removeClass('has-error'); // clear error class
+        $('.help-block').empty(); // clear error string
+        
+        //Ajax Load data from ajax
+        $.ajax({
+            url : "<?php echo site_url('dokumen_oc/ajax_edit/')?>" + id,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data)
+            {		
+                $('[name="id_doc"]').val(data.id_kartu_karyawan_oc);
+                $('[name="jenis_doc"]').val(data.kartu_singkat).change();
+                $('.selectpicker').selectpicker('refresh');
+                $('[name="no_dokumen"]').val(data.kartu_no);
+                $('[name="masa_berakhir_dokumen"]').val(data.kartu_tgl_akhir);
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error get data from ajax');
+            }
+        });
+    }
+
+
+    function del_doc(id) {
         swal.fire({
             title: 'Apakah Anda Yakin ?',
             text: 'Anda Tidak Akan Bisa Merecover Kembali Data Yang Sudah Anda Hapus !',
@@ -731,13 +906,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }).then((willDelete) => {
             if (willDelete.value) {
                 $.ajax({
-                    url : "<?php echo site_url('karyawan/delete')?>/"+id,
+                    url : "<?php echo site_url('dokumen_oc/delete')?>/"+id,
                     type: "POST",
                     dataType: "JSON",
                     success: function(data)
                     {
                         swal.fire('Terhapus','Data Anda Sudah Dihapus','success');
-                        reload_table();
+                        reload_table_doc();
                     },
                     error: function (jqXHR, textStatus, errorThrown)
                     {
@@ -750,12 +925,73 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         });
     }
 
-    function cancel() {
+    function cancelDoc() {
         save_method_doc = 'add';
-        $('#form_input_pegawai')[0].reset();
-        $('#btnSave').text('Save'); //change button text
-        $('#btnSave').attr('class','btn btn-primary'); //set button disable 
-        $('#theModal').modal('hide');
+        $('#form_doc_pegawai')[0].reset();
+        $('#btnSaveDoc').text('Save'); //change button text
+        $('#btnSaveDoc').attr('class','btn btn-primary'); //set button disable 
+        $('#docModal').modal('hide');
+    }
+
+    function saveDoc(){
+        $('#btnSaveDoc').text('Saving...'); //change button text
+        $('#btnSaveDoc').attr('disabled',true); //set button disable 
+        
+        $('#btnUpdateDoc').text('Updating...'); //change button text
+        $('#btnUpdateDoc').attr('disabled',true); //set button disable 
+        
+        var url;
+
+        if(save_method_doc == 'add') {
+            url = "<?php echo site_url('dokumen_oc/ajax_add/');?>";
+        } else {
+            url = "<?php echo site_url('dokumen_oc/ajax_update');?>";
+        }
+        
+        formData = new FormData($('#form_doc_pegawai')[0]);
+        formData.append( 'save_method', save_method_doc );    
+        
+        // ajax adding data to database
+        $.ajax({
+            url : url,
+            type: "POST",
+            data: formData,
+            dataType: "JSON",
+            contentType: false,
+            processData: false,
+            success: function(data){
+                //if success close modal and reload ajax table
+                if(data.status){
+                    save_method_doc = 'add';
+                    reload_table_doc();
+                    alert('Sukses');
+                    $('#form_doc_pegawai')[0].reset();
+                    init_jenis_doc_select();
+                    $('.selectpicker').selectpicker('refresh');
+                    $('#btnSaveDoc').text('Save'); //change button text
+                    $('#btnSaveDoc').attr('disabled',false); //set button enable 
+                }
+                else{
+                    for (var i = 0; i < data.inputerror.length; i++) {
+                        $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                        $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
+                    }
+                    alert('Gagal');
+                }
+
+                $('#btnSaveDoc').text('Save'); //change button text
+                $('#btnSaveDoc').attr('disabled',false); //set button enable 
+                $('#btnUpdateDoc').text('Update'); //change button text
+                $('#btnUpdateDoc').attr('disabled',false); //set button enable 
+            },
+            error: function (jqXHR, textStatus, errorThrown){
+                alert('Error adding data');
+                $('#btnSaveDoc').text('Save'); //change button text
+                $('#btnSaveDoc').attr('disabled',false); //set button enable 
+                $('#btnUpdateDoc').text('Update'); //change button text
+                $('#btnUpdateDoc').attr('disabled',false); //set button enable 
+            }
+        });
     }
 
     $('.datepicker').bootstrapMaterialDatePicker({
