@@ -611,11 +611,16 @@ class Cuti extends MY_Controller{
                 'pejabat_ttd'       => $pejabat_ttd
             );
         }
-        $dataCuti = $this->cuti->getDataCuti($id_cuti);
+
+        $dataCuti  = $this->cuti->getDataCuti($id_cuti);
+        $sisa_cuti = (int)($this->pegawai->getSisaCuti($dataCuti->id_karyawan));
+        $sisa_cuti_tahunan = $sisa_cuti - (int)($dataCuti->jumlah_cuti);
+
         $data_cuti_karyawan = array(
             'id_karyawan'  => $dataCuti->id_karyawan,
-            'cuti_tahunan' => $dataCuti->jumlah_cuti
+            'cuti_tahunan' => $sisa_cuti_tahunan,
         );
+        
         if($dataCuti->jenis_cuti == 'CUTTAHUNAN')
             $this->pegawai->updateSisaCuti($data_cuti_karyawan);
         

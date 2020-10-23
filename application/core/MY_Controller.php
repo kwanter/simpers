@@ -46,6 +46,8 @@ class MY_Controller extends CI_Controller
         $this->load->model('M_cuti','cuti');
         $this->load->model('M_karyawan','karyawan_oc');
         $this->load->model('M_dokumen_oc','dokumen_oc');
+        $this->load->model('M_pendidikan_oc','pendidikan_oc');
+        $this->load->model('M_riwayatkontrak','riwayatkontrak');
         $this->load->library('email');
     }
 

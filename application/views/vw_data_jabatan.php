@@ -164,35 +164,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
 
     function del(id) {
-        swal({
-            title: "Apakah Anda Yakin ?",
-            text: "Anda Tidak Akan Bisa Merecover Kembali Data Yang Sudah Anda Hapus !",
-            type: "warning",
+        swal.fire({
+            title: 'Apakah Anda Yakin ?',
+            text: 'Anda Tidak Akan Bisa Merecover Kembali Data Yang Sudah Anda Hapus !',
+            type: 'warning',
             showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Ya",
-            cancelButtonText: "Batal",
-            closeOnConfirm: false,
-            closeOnCancel: false
-        }, function (isConfirm) {
-            if (isConfirm) {
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Batal',
+            reverseButtons: true
+        }).then((willDelete) => {
+            if (willDelete.value) {
                 $.ajax({
                     url : "<?php echo site_url('jabatan/delete')?>/"+id,
                     type: "POST",
                     dataType: "JSON",
                     success: function(data)
                     {
-                        swal("Terhapus !", "Data Anda Sudah Dihapus", "success");
+                        swal.fire('Terhapus','Data Anda Sudah Dihapus','success');
                         reload_table();
                     },
                     error: function (jqXHR, textStatus, errorThrown)
                     {
-                        swal("Dibatalkan", "Data Anda Tidak Jadi Dihapus", "error");
+                        swal.fire("Gagal","Data Anda Tidak Jadi Dihapus","error");
                     }
                 });
             } else {
-                swal("Dibatalkan", "Data Anda Tidak Jadi Dihapus", "error");
+                swal.fire("Batal","Data Anda Tidak Jadi Dihapus","warning");
             }
         });
+
     }
 </script>

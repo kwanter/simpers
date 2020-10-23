@@ -24,8 +24,8 @@ class Karyawan extends MY_Controller{
             $row = array();
             $row[] = '<center><a style="font-size: small" href="javascript:void(0)" >'.$pegawai->nik.'</a>';
             $row[] = '<center style="font-size: small">'.$pegawai->nama_karyawan;
-            $row[] = '<center style="font-size: small">'.$pegawai->tmpt_lahir;
-            $row[] = '<center style="font-size: small">'.$this->indonesian_date('d M Y',$pegawai->tgl_lahir,'');
+            $row[] = '<center style="font-size: small">'.$pegawai->tmpt_lahir.'/'.$this->indonesian_date('d M Y',$pegawai->tgl_lahir,'');
+            $row[] = '<center style="font-size: small"><a href="javascript:void(0)" title="Alamat" onclick="alamat_ktp('."'".$pegawai->id_karyawan_oc."'".')">'.$pegawai->alamat_ktp.'</a>';
 
             if($pegawai->jenis_kelamin == 'P')
                 $pegawai->jenis_kelamin = 'PRIA';
@@ -35,13 +35,28 @@ class Karyawan extends MY_Controller{
             $row[] = '<center style="font-size: small">'.$pegawai->jenis_kelamin;
             $row[] = '<center style="font-size: small">'.$this->main->getAgama($pegawai->agama);
             
-            $row[] = '<a href="javascript:void(0)" title="Pendidikan" onclick="edu('."'".$pegawai->id_karyawan_oc."'".')"><i class="material-icons">book</i></a>';
+            $cek_pendidikan = $this->pendidikan_oc->checkEdu($pegawai->id_karyawan_oc); 
+
+            if($cek_pendidikan){
+                $row[] = '<center style="font-size: small"><a href="javascript:void(0)" title="Pendidikan" onclick="edu('."'".$pegawai->id_karyawan_oc."'".')">'.$cek_pendidikan->id_jenjangpendidikan.' '.$cek_pendidikan->nama_jurusan.'</a>';
+            }else{
+                $row[] = '<center style="font-size: small"><a href="javascript:void(0)" title="Pendidikan" onclick="edu('."'".$pegawai->id_karyawan_oc."'".')"><i class="material-icons">book</i></a>';
+            }
+
+            //$row[] = '<center style="font-size: small">'.$this->main->getStatusNikah($pegawai->status_nikah).'/'.$pegawai->jmlh_anak.' Anak';
+            $row[] = '<center style="font-size: small">'.$pegawai->status_nikah.'/'.$pegawai->jmlh_anak;
             
-            $row[] = '<center style="font-size: small">'.$this->main->getStatusNikah($pegawai->status_nikah).'/'.$pegawai->jmlh_anak;
+            $cek_kontrak = $this->riwayatkontrak->cekKontrak($pegawai->id_karyawan_oc);
+
+            if($cek_kontrak){
+                $row[] = '<center style="font-size: small"><a href="javascript:void(0)" title="Riwayat Kontrak" onclick="kontrak('."'".$pegawai->id_karyawan_oc."'".')">'.$this->indonesian_date('d M Y',$cek_kontrak->tmt_berlaku).'</a>';
+            }else{
+                $row[] = '<center style="font-size: small"><a href="javascript:void(0)" title="Riwayat Kontrak" onclick="kontrak('."'".$pegawai->id_karyawan_oc."'".')"><i class="material-icons">work</i></a>';
+            }
 
             //add html for action
             $row[] = '<center><a href="javascript:void(0)" title="Edit" onclick="edit('."'".$pegawai->id_karyawan_oc."'".')"><i class="material-icons">launch</i></a>
-                              <a href="javascript:void(0)" title="Edit" onclick="doc('."'".$pegawai->id_karyawan_oc."'".')"><i class="material-icons">assignment</i></a>
+                              <a href="javascript:void(0)" title="Dokumen" onclick="doc('."'".$pegawai->id_karyawan_oc."'".')"><i class="material-icons">assignment</i></a>
                               <a class="js-sweetalert waves-effect" data-type="confirm" href="javascript:void(0)" title="Hapus" onclick="del('."'".$pegawai->id_karyawan_oc."'".')"><i class="material-icons">delete_forever</i></a>
                               
                               ';
@@ -182,6 +197,15 @@ class Karyawan extends MY_Controller{
             echo $this->upload->display_errors('<p>', '</p>');
             return FALSE;
         }
+    }
+
+    public function getAlamatLengkap($id) {
+        $where = array(
+            'id_karyawan_oc' => $id,
+        );
+        $table = 'm_karyawan_oc';
+        $data = $this->karyawan_oc->get_by_id($where,$table);
+        echo json_encode($data);
     }
 
 }

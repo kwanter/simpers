@@ -157,7 +157,7 @@
 
     <!-- JQuery Steps Plugin Js -->
     <script src="<?php echo base_url('assets/plugins/jquery-steps/jquery.steps.js')?>"></script>
-
+    
     <!-- Sweet Alert 2 Plugin Js -->
     <script src="<?php echo base_url('assets/plugins/sweetalert2/dist/sweetalert2.min.js')?>"></script>
     <script src="<?php echo base_url('assets/plugins/sweetalert2/dist/polyfill.js')?>"></script>
@@ -289,7 +289,7 @@
                             <li <?php if($this->uri->segment(3)=="cuti"){echo ' class="active"';}?>><a href="<?php echo base_url("master/cuti/cuti");?>">Daftar Pengajuan Cuti Pegawai</a></li>
                             <li <?php if($this->uri->segment(3)=="persetujuan_cuti"){echo ' class="active"';}?>><a href="<?php echo base_url("master/cuti/persetujuan_cuti");?>">Persetujuan Cuti Pegawai</a></li>
                             <li <?php if($this->uri->segment(3)=="dokumen_cuti"){echo ' class="active"';}?>><a href="<?php echo base_url("master/cuti/dokumen_cuti");?>">Dokumen Cuti Pegawai</a></li>
-                            <li <?php if($this->uri->segment(3)=="sisa_cuti"){echo ' class="active"';}?>><a href="<?php echo base_url("master/cuti/sisa_cuti");?>">Sisa Cuti Pegawai</a></li>
+                            <!---<li <?php if($this->uri->segment(3)=="sisa_cuti"){echo ' class="active"';}?>><a href="<?php echo base_url("master/cuti/sisa_cuti");?>">Sisa Cuti Pegawai</a></li> --->
                             <li <?php if($this->uri->segment(3)=="rekap_cuti"){echo ' class="active"';}?>><a href="<?php echo base_url("master/cuti/rekap_cuti");?>">Rekap Cuti Pegawai</a></li>
                         </ul>                           
                     </li>
@@ -300,9 +300,9 @@
                         </a>
                         <ul class="ml-menu">
                             <li <?php if($this->uri->segment(3)=="karyawan_oc"){echo ' class="active"';}?>><a href="<?php echo base_url("master/karyawan/karyawan_oc");?>">Data Karyawan OC</a></li>
-                            <li <?php if($this->uri->segment(3)=="karyawan_kartu_oc"){echo ' class="active"';}?>><a href="<?php echo base_url("master/karyawan/karyawan_kartu_oc");?>">Data Dokumen Karyawan OC</a></li>
                         </ul>                           
                     </li>
+                    
                 </ul>
             </div>
         </div>

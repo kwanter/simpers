@@ -7,15 +7,13 @@ class Pendidikan_oc extends MY_Controller {
         
     }
 
-    public function edit($id){
-        $data['karyawan'] = $this->pegawai->getData($this->pendidikan->getIdKaryawan($id));
-        $data['pendidikan'] = $this->pendidikan->getData($id);
-        $data['jenjang'] = $this->pendidikan->getJenjang();
+    public function ajax_edit($id){
+        $data = $this->pendidikan_oc->getData($id);
         echo json_encode($data);
     }
 
-    public function ajax_list(){
-        $id = $this->input->post('id');
+    public function ajax_list($id){
+        //$id = $this->input->post('id');
         $list = $this->pendidikan_oc->get_datatable($id);
         $data = array();
         $no = $_POST['start'];
@@ -23,19 +21,13 @@ class Pendidikan_oc extends MY_Controller {
         foreach ($list as $pendidikan) {
             $no++;
             $row = array();
-            $row[] = '<center style="font-size: small">'.$this->pegawai->getNama($pendidikan->id_karyawan);
-            $row[] = '<center style="font-size: small">'.$this->pendidikan->getJenjangPendidikan($pendidikan->id_jenjangpendidikan);
+            $row[] = '<center style="font-size: small">'.$this->pendidikan_oc->getJenjangPendidikan($pendidikan->id_jenjangpendidikan);
             $row[] = '<center style="font-size: small">'.$pendidikan->nama_jurusan;
-            $row[] = '<center style="font-size: small">'.$pendidikan->peminatan;
-            $row[] = '<center style="font-size: small">'.$pendidikan->asal_lembaga_pendidikan;
-            $row[] = '<center style="font-size: small">'.$pendidikan->asal_kota_lp;
             $row[] = '<center style="font-size: small">'.$pendidikan->tgl_kelulusan;
-            $row[] = '<center style="font-size: small">'.$pendidikan->nilai_kelulusan;
-            $row[] = '<center style="font-size: small">'.$pendidikan->skala_nilai;
 
             //add html for action
-            $row[] = '<center><a href="javascript:void(0)" title="Edit" onclick="edit('."'".$pendidikan->id_riwayatpendidikan."'".')"><i class="material-icons">launch</i></a>
-                              <a href="javascript:void(0)" title="Hapus" onclick="del('."'".$pendidikan->id_riwayatpendidikan."'".')"><i class="material-icons">delete_forever</i></a>';
+            $row[] = '<center><a href="javascript:void(0)" title="Edit" onclick="edit_edu('."'".$pendidikan->id_riwayatpendidikan_oc."'".')"><i class="material-icons">launch</i></a>
+                              <a href="javascript:void(0)" title="Hapus" onclick="del_edu('."'".$pendidikan->id_riwayatpendidikan_oc."'".')"><i class="material-icons">delete_forever</i></a>';
 
             $data[] = $row;
         }
@@ -55,49 +47,24 @@ class Pendidikan_oc extends MY_Controller {
         echo json_encode(array("status" => TRUE));
     }
 
-    public function addData()
+    public function ajax_add()
     {
-        $result = $this->pendidikan_oc->saveData($_POST);
+        $result = $this->pendidikan_oc->saveData($this->input->post());
 
         if ($result)
-            $this->session->set_flashdata('notif', '<div class="alert alert-success" role="alert"> 
-                                                                    Data Berhasil Ditambahkan , <a href="javascript:void(0)" title="Kembali Ke Halaman Depan" onclick="master();"> Kembali...</a>
-                                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>');
+            echo json_encode(array("status" => TRUE,"info" => "Simpan data sukses"));
         else
-            $this->session->set_flashdata('notif',
-                '<div class="alert alert-danger" role="alert"> Data Gagal Ditambahkan..Silahkan Periksa Kembali Inputan Anda 
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                       </div>');
-
-        $this->index();
+            echo json_encode(array("status" => FALSE,"info" => "Simpan data gagal"));
     }
 
-    public function updateData()
+    public function ajax_update()
     {
-        $id = $this->input->post('id_riwayat');
-        $result = $this->pendidikan_oc->updateData($_POST);
+        $result = $this->pendidikan_oc->updateData($this->input->post());
 
         if ($result)
-            $this->session->set_flashdata('notif', '<div class="alert alert-success" role="alert"> 
-                                                                    Data Berhasil Di Update, <a href="javascript:void(0)" title="Kembali Ke Halaman Depan" onclick="master();"> Kembali...</a>
-                                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>');
+            echo json_encode(array("status" => TRUE,"info" => "Update data sukses"));
         else
-            $this->session->set_flashdata('notif',
-                '<div class="alert alert-danger" role="alert"> Data Gagal Di Update..Silahkan Periksa Kembali Inputan Anda 
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                       </div>');
-
-        $this->edit($id);
+            echo json_encode(array("status" => FALSE,"info" => "Update data gagal"));
     }
 
     public function getLevel(){
@@ -108,6 +75,11 @@ class Pendidikan_oc extends MY_Controller {
             $result = '';
 
         echo json_encode($result,JSON_NUMERIC_CHECK);
+    }
+
+    public function getJenjangPendidikan(){
+        $result = $this->pendidikan_oc->getJenjang();
+        echo json_encode($result);
     }
 }
 ?>
