@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_karyawan extends MY_Model {
     var $table             = 'm_karyawan_oc';
     var $table_pilihan     = 'm_pilihan';
-
+    var $view              = 'vw_pdf_karyawan_oc';
     var $column_order      = array('id_karyawan_oc'); //set column field database for datatable orderable
     var $column_search     = array(null); //set column field database for datatable searchable
     var $order             = array('id_karyawan_oc' => 'desc'); // default order
@@ -217,6 +217,15 @@ class M_karyawan extends MY_Model {
             return $query->row();
     }
 
+    public function getAllData(){
+        $this->db->from($this->table);
+        $this->db->where('soft_delete','not-deleted');
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+            return $query->result();
+    }
+
     public function getPilihanData($pilihan){
         $this->db->from($this->table_pilihan);
         $this->db->where('nama_grup',$pilihan);
@@ -225,6 +234,14 @@ class M_karyawan extends MY_Model {
         if($query->num_rows() > 0){
             return $query->result();
         }  
+    }
+
+    public function getPdfData(){
+        $this->db->from($this->view);
+        $data =  $this->db->get();
+
+        if($data->num_rows() > 0)
+            return $data->result();
     }
 
 }

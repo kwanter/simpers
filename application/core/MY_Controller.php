@@ -49,6 +49,7 @@ class MY_Controller extends CI_Controller
         $this->load->model('M_pendidikan_oc','pendidikan_oc');
         $this->load->model('M_riwayatkontrak','riwayatkontrak');
         $this->load->library('email');
+        $this->load->library('Excel/PHPExcel');
     }
 
     public function imageThumbnail($source_path,$target_path) {

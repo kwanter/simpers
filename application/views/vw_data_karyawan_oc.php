@@ -49,6 +49,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </ul>
                     </div>
                     <div class="body">
+                        <button class="btn btn-info" onclick="report();"><i class="material-icons">assignment</i> <span>Report</span></button>
+                        <button class="btn btn-success" onclick="excel();"><i class="material-icons">assessment</i> <span>Excel</span></button>
+                        <br><br>
                         <div class="table-responsive">
                             <table id="tabel" class="table table-bordered table-striped table-hover js-basic-example dataTable" cellspacing="0" width="100%" role="grid" >
                                 <thead>
@@ -57,6 +60,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <th><center>Nama Karyawan</th>
                                     <th><center>Tmpt/Tgl Lahir</th>
                                     <th><center>Alamat</th>
+                                    <th><center>No HandPhone</th>
                                     <th><center>J.K.</th>
                                     <th><center>Agama</th>
                                     <th><center>Pendidikan Terakhir</th>
@@ -73,6 +77,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <th><center>Nama Karyawan</th>
                                     <th><center>Tmpt/Tgl Lahir</th>
                                     <th><center>Alamat</th>
+                                    <th><center>No HandPhone</th>
                                     <th><center>J.K.</th>
                                     <th><center>Agama</th>
                                     <th><center>Pendidikan Terakhir</th>
@@ -632,28 +637,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             order: [], //Initial no order.
             autowidth : true,
             responsive: true,
-            dom: "Blfrtip",
-            buttons: [
-                {
-                    extend: "excel",
-                    className: "btn-sm",
-                    exportOptions: {
-                        columns: [0,1,2,3,4,5,6]
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    orientation: 'landscape',
-                    pageSize: 'A4',
-                    customize: function (doc) {
-                        doc.defaultStyle.fontSize = 9;
-                    },
-                    className: "btn-sm",
-                    exportOptions: {
-                        columns: [0,1,2,3,4,5,6]
-                    }
-                },
-            ],
 
             // Load data for the table's content from an Ajax source
             ajax: {
@@ -1575,5 +1558,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 alert('Error Mengambil Data Dari Ajax');
             }
         });
+    }
+
+    function report(){
+        window.open('<?php echo site_url('karyawan/pdf')?>','_blank');
+        window.focus();
+    }
+
+    function excel(){
+        window.open('<?php echo site_url('karyawan/excel')?>','_blank');
+        window.focus();
     }
 </script>
