@@ -1112,10 +1112,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         dropdown_jenis_doc.append('<option value="">Pilih Jenis Dokumen</option>');
         dropdown_jenis_doc.prop('selectedIndex', 0);
 
-        const url_jenis_doc = '<?php echo base_url('dokumen/getJenisDokumen/');?>';
+        const url_jenis_doc1 = '<?php echo base_url('dokumen/getJenisDokumen/');?>';
 
         // Populate dropdown with list
-        $.getJSON(url_jenis_doc, function (data) {
+        $.getJSON(url_jenis_doc1, function (data) {
             $.each(data, function (key, entry) {
                 dropdown_jenis_doc.append($('<option></option>').attr('value', entry.jenis_kartu).text(entry.deskripsi_kartu));
             })
@@ -1246,8 +1246,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     reload_table_doc();
                     alert('Sukses');
                     $('#form_doc_pegawai')[0].reset();
-                    init_jenis_doc_select();
-                    $('.selectpicker').selectpicker('refresh');
+                    //init_jenis_doc_select();
+                    //$('.selectpicker').selectpicker('refresh');
                     $('#btnSaveDoc').text('Save'); //change button text
                     $('#btnSaveDoc').attr('disabled',false); //set button enable 
                 }

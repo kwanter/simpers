@@ -21,14 +21,14 @@ $table='
        <table border="1" cellpadding="2" cellspacing="1">
             <tr>
                 <td width="3%">No</td>
-                <td width="14%">Nama</td>
-                <td width="15%">Tempat, Tgl.Lahir</td>
-                <td width="10%">No Handphone</td>
-                <td width="10%">Jenis Kelamin</td>
-                <td width="12%">Pendidikan</td>
+                <td width="14%">Nama Karyawan</td>
                 <td width="13%">Nama Jabatan</td>
-                <td width="13%">Nama PJTK</td>
+                <td width="12%">Pendidikan</td>
+                <td width="15%">Tempat, Tgl.Lahir</td>
+                <td width="10%">Jenis Kelamin</td>
                 <td width="10%">TMT Kontrak</td>
+                <td width="13%">Nama PJTK</td>
+                <td width="10%">No Handphone</td>
             </tr>';
 $no = 0;
 foreach($data as $karyawan){
@@ -36,13 +36,13 @@ foreach($data as $karyawan){
     $table .= '<tr>';
     $table .= '<td>'.$no.'</td>';
     $table .= '<td>'.$karyawan->nama.'</td>';
-    $table .= '<td>'.$karyawan->tmpt_lahir.', '.$karyawan->tgl_lahir.'</td>';
-    $table .= '<td>'.$karyawan->no_hp.'</td>';
-    $table .= '<td>'.$karyawan->jenis_kelamin.'</td>';
-    $table .= '<td>'.$karyawan->jurusan.'</td>';
     $table .= '<td>'.$karyawan->jabatan.'</td>';
-    $table .= '<td>'.$karyawan->pjtk.'</td>';
+    $table .= '<td>'.$karyawan->jurusan.'</td>';
+    $table .= '<td>'.$karyawan->tmpt_lahir.', '.$karyawan->tgl_lahir.'</td>';
+    $table .= '<td>'.$karyawan->jenis_kelamin.'</td>';
     $table .= '<td>'.$karyawan->tmt_kontrak.'</td>';
+    $table .= '<td>'.$karyawan->pjtk.'</td>';
+    $table .= '<td>'.$karyawan->no_hp.'</td>';
     $table .= '</tr>';
 }
 $table .='</table>';
